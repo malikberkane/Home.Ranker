@@ -55,6 +55,21 @@ namespace Home.Ranker.Views
                 MaxWidthHeight = 2000,
                 DefaultCamera = CameraDevice.Front
             });
+
+            if (file == null)
+                return;
+
+            await DisplayAlert("File Location", file.Path, "OK");
+
+
+
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });
+
         }
 
         protected override void OnAppearing()
