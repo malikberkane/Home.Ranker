@@ -5,6 +5,7 @@ using Xamarin.Forms.Xaml;
 
 using Home.Ranker.Models;
 using Home.Ranker.ViewModels;
+using Home.Ranker.Data;
 
 namespace Home.Ranker.Views
 {
@@ -26,10 +27,10 @@ namespace Home.Ranker.Views
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new Apartment
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Name = "Item 1",
+                Adresse = "This is an item description."
             };
 
             viewModel = new ItemDetailViewModel(item);

@@ -1,0 +1,12 @@
+﻿
+
+namespace Home.Ranker.Data
+{
+    public class Rate
+    {
+        public int CriteriaId { get; set; }
+       
+        public int ApartmentId { get; set; }
+
+    }
+}

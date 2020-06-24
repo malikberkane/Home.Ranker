@@ -1,16 +1,16 @@
 ﻿using System;
-
+using Home.Ranker.Data;
 using Home.Ranker.Models;
 
 namespace Home.Ranker.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public Apartment Apartment { get; set; }
+        public ItemDetailViewModel(Apartment item = null)
         {
-            Title = item?.Text;
-            Item = item;
+            Title = item?.Name;
+            Apartment = item;
         }
     }
 }
