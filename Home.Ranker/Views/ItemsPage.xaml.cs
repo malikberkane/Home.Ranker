@@ -40,7 +40,13 @@ namespace Home.Ranker.Views
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            var newApartmentLabel = await DisplayPromptAsync("New visit","Enter name or adress");
+
+            if (!string.IsNullOrEmpty(newApartmentLabel))
+            {
+                await Navigation.PushModalAsync(new NavigationPage(new NewItemPage(newApartmentLabel)));
+
+            }
         }
 
         protected override void OnAppearing()

@@ -6,9 +6,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\MaterialFontFamily.ttf" />
+    <None Remove="Images\rating_empty.png" />
+    <None Remove="Images\rating_full.png" />
+    <None Remove="Images\rating_half.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\MaterialFontFamily.ttf" />
+    <EmbeddedResource Include="Images\rating_empty.png" />
+    <EmbeddedResource Include="Images\rating_full.png" />
+    <EmbeddedResource Include="Images\rating_half.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>

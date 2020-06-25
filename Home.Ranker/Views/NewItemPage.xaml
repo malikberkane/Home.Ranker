@@ -5,6 +5,7 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Home.Ranker"
+    xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     mc:Ignorable="d"
     x:Class="Home.Ranker.Views.NewItemPage"
     Title="New Item">
@@ -16,38 +17,48 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
-        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Cancel}, Color=Black, Size=20}" Clicked="Cancel_Clicked" />
+        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Save}, Color=Black, Size=20}" Clicked="Save_Clicked" />
+        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.PhotoCamera}, Color=Black, Size=20}" Clicked="Button_Clicked" />
+
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
 
-        <StackLayout Spacing="20" Padding="15">
+    <Grid RowDefinitions="*,3*">
+        <StackLayout>
+            <CarouselView
+                Margin="10"
+                x:Name="TheCarousel"
+                IndicatorView="indicatorView"
+                EmptyView="No pictures taken."
+                ItemsSource="{Binding Photos}">
 
-            <Button Text="Photos" Clicked="Button_Clicked" />
-
-            <CarouselView ItemsSource="{Binding Photos}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding PhotoUrl}" FontSize="11" />
-                            <Image Source="{Binding Source}" />
-                        </StackLayout>
+                        <Image
+                            Aspect="AspectFit"
+                            Source="{Binding Source}"
+                            Grid.Row="0" />
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-            <Label Text="Text" FontSize="Medium" />
-            <Entry
-                Text="{Binding Item.Name}"
-                d:Text="Item name"
-                FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor
-                Text="{Binding Item.Adresse}"
-                d:Text="Item adresse"
-                FontSize="Small"
-                Margin="0" />
+            <IndicatorView
+                x:Name="indicatorView"
+                IndicatorColor="LightGray"
+                SelectedIndicatorColor="Red"
+                HorizontalOptions="Center" />
         </StackLayout>
-    </ContentPage.Content>
 
+        <CollectionView Grid.Row="1" ItemsSource="{Binding CriteriasRatings}">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+                    <Frame>
+                        <Label Text="{Binding Criteria.Name}" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

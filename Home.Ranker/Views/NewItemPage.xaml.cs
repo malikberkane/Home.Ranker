@@ -10,6 +10,7 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
 using System.IO;
+using Home.Ranker.ViewModels;
 
 namespace Home.Ranker.Views
 {
@@ -22,7 +23,7 @@ namespace Home.Ranker.Views
 
         public ObservableCollection<Photo> Photos { get; set; }
 
-        public NewItemPage()
+        public NewItemPage(string name)
         {
             InitializeComponent();
 
@@ -32,12 +33,23 @@ namespace Home.Ranker.Views
 
             Item = new Apartment
             {
-                Name = "Item name",
-                Adresse = "Item adress"
+                Name = name
+            };
+
+            CriteriasRatings = new ObservableCollection<CriteriaViewModel>
+            {
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Luminosité"}},
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Prix"}},
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Espace"}},
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Emplacement"}},
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Coup de coeur"}},
+                new CriteriaViewModel{Criteria= new Criteria{Name= "Luminosité"}},
             };
 
             BindingContext = this;
         }
+
+        public ObservableCollection<CriteriaViewModel> CriteriasRatings { get; set; }
 
         public NewItemPage(Apartment appartment)
         {
@@ -69,6 +81,8 @@ namespace Home.Ranker.Views
             }
 
             Photos = new ObservableCollection<Photo>(photos);
+
+           
 
             BindingContext = this;
         }
@@ -126,7 +140,6 @@ namespace Home.Ranker.Views
             if (file == null)
                 return;
 
-            await DisplayAlert("File Location", file.Path, "OK");
 
 
             if (Photos == null)
@@ -145,25 +158,26 @@ namespace Home.Ranker.Views
                 PhotoUrl = file.Path,
                 ApartmentId = Item.Id,
                 //Base64=base64,
-                Source = ImageSource.FromStream(() => {
+                Source = ImageSource.FromStream(() =>
+                {
                     var fileStream = file.GetStream();
                     return fileStream;
                 })
 
-                };
+            };
 
 
-        //newPhoto.Source = ImageSource.FromStream(() =>
-        //{
-        //    var stream = file.GetStream();
-        //    return stream;
-        //});
+            //newPhoto.Source = ImageSource.FromStream(() =>
+            //{
+            //    var stream = file.GetStream();
+            //    return stream;
+            //});
 
-        Photos.Add(newPhoto);
+            Photos.Add(newPhoto);
 
             OnPropertyChanged(nameof(Photos));
 
-    }
+        }
 
-}
+    }
 }
