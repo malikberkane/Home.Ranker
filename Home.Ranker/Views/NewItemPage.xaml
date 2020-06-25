@@ -30,6 +30,7 @@
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
+                            <Label Text="{Binding PhotoUrl}" FontSize="11" />
                             <Image Source="{Binding Source}" />
                         </StackLayout>
                     </DataTemplate>

@@ -9,6 +9,7 @@ using Home.Ranker.Data;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Home.Ranker.Views
 {
@@ -27,6 +28,8 @@ namespace Home.Ranker.Views
 
             ApartmentRepository = new ApartmentRepository(new HomeRankerContext());
 
+            PhotoRepository = new PhotoRepository(new HomeRankerContext());
+
             Item = new Apartment
             {
                 Name = "Item name",
@@ -36,14 +39,60 @@ namespace Home.Ranker.Views
             BindingContext = this;
         }
 
+        public NewItemPage(Apartment appartment)
+        {
+            InitializeComponent();
+
+            var homeContext = new HomeRankerContext();
+            ApartmentRepository = new ApartmentRepository(homeContext);
+
+            PhotoRepository = new PhotoRepository(homeContext);
+
+
+            Item = appartment;
+
+            var photos = PhotoRepository.GetPhotos(p => p.ApartmentId == Item.Id);
+
+            foreach (var photo in photos)
+            {
+                photo.Source = ImageSource.FromStream(() =>
+                 {
+                     var bytes = File.ReadAllBytes(photo.PhotoUrl);
+                     return new MemoryStream(bytes);
+                 });
+                //photo.Source = ImageSource.FromStream(() => 
+                //{
+                //    var bytes = Convert.FromBase64String(photo.Base64);
+                //    return new MemoryStream(bytes);
+                //});
+
+            }
+
+            Photos = new ObservableCollection<Photo>(photos);
+
+            BindingContext = this;
+        }
+
+
 
         private readonly ApartmentRepository ApartmentRepository;
+        private readonly PhotoRepository PhotoRepository;
+
 
         async void Save_Clicked(object sender, EventArgs e)
         {
             ApartmentRepository.InsertAppartment(Item);
 
+
             ApartmentRepository.Save();
+
+            foreach (var photo in Photos)
+            {
+                photo.ApartmentId = Item.Id;
+                PhotoRepository.InsertPhoto(photo);
+            }
+
+            PhotoRepository.Save();
             MessagingCenter.Send(this, "AddItem", Item);
             await Navigation.PopModalAsync();
         }
@@ -67,7 +116,7 @@ namespace Home.Ranker.Views
             {
                 Directory = "Test",
                 SaveToAlbum = true,
-                CompressionQuality = 75,
+                CompressionQuality = 100,
                 CustomPhotoSize = 50,
                 PhotoSize = PhotoSize.MaxWidthHeight,
                 MaxWidthHeight = 2000,
@@ -85,20 +134,36 @@ namespace Home.Ranker.Views
                 Photos = new ObservableCollection<Photo>();
             }
 
-            var newPhoto = new Photo { PhotoUrl = file.Path, ApartmentId = Item.Id };
+            //var stream = file.GetStream();
+            //var bytes = new byte[stream.Length];
+            //await stream.ReadAsync(bytes, 0, (int)stream.Length);
+            //string base64 = System.Convert.ToBase64String(bytes);
 
-            newPhoto.Source = ImageSource.FromStream(() =>
+
+            var newPhoto = new Photo
             {
-                var stream = file.GetStream();
-                return stream;
-            });
+                PhotoUrl = file.Path,
+                ApartmentId = Item.Id,
+                //Base64=base64,
+                Source = ImageSource.FromStream(() => {
+                    var fileStream = file.GetStream();
+                    return fileStream;
+                })
+
+                };
 
 
-            Photos.Add(newPhoto);
+        //newPhoto.Source = ImageSource.FromStream(() =>
+        //{
+        //    var stream = file.GetStream();
+        //    return stream;
+        //});
 
+        Photos.Add(newPhoto);
 
-        }
+            OnPropertyChanged(nameof(Photos));
 
-        public ImageSource Source { get; set; }
     }
+
+}
 }

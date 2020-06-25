@@ -34,7 +34,7 @@ namespace Home.Ranker.Views
         {
             var layout = (BindableObject)sender;
             var item = (Apartment)layout.BindingContext;
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage(item)));
         }
 
 

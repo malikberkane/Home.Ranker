@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Home.Ranker.Data
 {
-    public class PhotoRepository
+    public class PhotoRepository: IDisposable
     {
         private readonly HomeRankerContext _currentContext;
 
@@ -39,6 +39,31 @@ namespace Home.Ranker.Data
         public void UpdatePhoto(Photo Photo)
         {
             _currentContext.Entry(Photo).State = EntityState.Modified;
+        }
+
+        public void Save()
+        {
+            _currentContext.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _currentContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 
