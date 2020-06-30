@@ -11,104 +11,94 @@ using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
 using System.IO;
 using Home.Ranker.ViewModels;
+using Home.Ranker.Services;
+using System.Collections;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 
 namespace Home.Ranker.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
+    
     public partial class NewItemPage : ContentPage
     {
-        public Apartment Item { get; set; }
+        public Apartment Apartment { get; set; }
 
-        public ObservableCollection<Photo> Photos { get; set; }
+        private  HomeRankerService HomeRankerService;
+
+        public ObservableCollection<Photo> Photos { get; set; } = new ObservableCollection<Photo>();
+
+        public ObservableCollection<CriteriaViewModel> Criterias { get; set; } = new ObservableCollection<CriteriaViewModel>();
+
+
+
 
         public NewItemPage(string name)
         {
             InitializeComponent();
 
-            ApartmentRepository = new ApartmentRepository(new HomeRankerContext());
 
-            PhotoRepository = new PhotoRepository(new HomeRankerContext());
-
-            Item = new Apartment
+            Apartment = new Apartment
             {
                 Name = name
             };
 
-            CriteriasRatings = new ObservableCollection<CriteriaViewModel>
-            {
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Luminosité"}},
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Prix"}},
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Espace"}},
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Emplacement"}},
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Coup de coeur"}},
-                new CriteriaViewModel{Criteria= new Criteria{Name= "Luminosité"}},
-            };
-
             BindingContext = this;
+
         }
 
-        public ObservableCollection<CriteriaViewModel> CriteriasRatings { get; set; }
+        protected override void OnBindingContextChanged()
+        {
+            HomeRankerService = new HomeRankerService();
+
+
+            var photos = HomeRankerService.GetPhotos(Apartment);
+
+            if (photos != null)
+            {
+
+                foreach (var item in photos)
+                {
+                    Photos.Add(item);
+                }
+            }
+
+            
+
+
+            var criterias = HomeRankerService.GetCriterias();
+
+            if (criterias != null)
+            {
+                Criterias = new ObservableCollection<CriteriaViewModel>(criterias);
+            }
+            base.OnBindingContextChanged();
+        }
+
 
         public NewItemPage(Apartment appartment)
         {
             InitializeComponent();
 
-            var homeContext = new HomeRankerContext();
-            ApartmentRepository = new ApartmentRepository(homeContext);
-
-            PhotoRepository = new PhotoRepository(homeContext);
-
-
-            Item = appartment;
-
-            var photos = PhotoRepository.GetPhotos(p => p.ApartmentId == Item.Id);
-
-            foreach (var photo in photos)
-            {
-                photo.Source = ImageSource.FromStream(() =>
-                 {
-                     var bytes = File.ReadAllBytes(photo.PhotoUrl);
-                     return new MemoryStream(bytes);
-                 });
-                //photo.Source = ImageSource.FromStream(() => 
-                //{
-                //    var bytes = Convert.FromBase64String(photo.Base64);
-                //    return new MemoryStream(bytes);
-                //});
-
-            }
-
-            Photos = new ObservableCollection<Photo>(photos);
-
-           
-
+            Apartment = appartment;
             BindingContext = this;
+
+
         }
 
 
 
-        private readonly ApartmentRepository ApartmentRepository;
-        private readonly PhotoRepository PhotoRepository;
-
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            ApartmentRepository.InsertAppartment(Item);
 
 
-            ApartmentRepository.Save();
+            HomeRankerService.InsertApartment(Apartment, Photos);
 
-            foreach (var photo in Photos)
-            {
-                photo.ApartmentId = Item.Id;
-                PhotoRepository.InsertPhoto(photo);
-            }
+            Apartment.FirstPictureImageSource = Photos.FirstOrDefault()?.Source;
 
-            PhotoRepository.Save();
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopModalAsync();
+            MessagingCenter.Send(this, "AddItem", Apartment);
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
@@ -118,7 +108,12 @@ namespace Home.Ranker.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            await TakePicture();
 
+        }
+
+        private async Task TakePicture()
+        {
             await CrossMedia.Current.Initialize();
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -142,21 +137,14 @@ namespace Home.Ranker.Views
 
 
 
-            if (Photos == null)
-            {
-                Photos = new ObservableCollection<Photo>();
-            }
 
-            //var stream = file.GetStream();
-            //var bytes = new byte[stream.Length];
-            //await stream.ReadAsync(bytes, 0, (int)stream.Length);
-            //string base64 = System.Convert.ToBase64String(bytes);
+
 
 
             var newPhoto = new Photo
             {
                 PhotoUrl = file.Path,
-                ApartmentId = Item.Id,
+                ApartmentId = Apartment.Id,
                 //Base64=base64,
                 Source = ImageSource.FromStream(() =>
                 {
@@ -166,18 +154,81 @@ namespace Home.Ranker.Views
 
             };
 
-
-            //newPhoto.Source = ImageSource.FromStream(() =>
-            //{
-            //    var stream = file.GetStream();
-            //    return stream;
-            //});
-
             Photos.Add(newPhoto);
 
-            OnPropertyChanged(nameof(Photos));
+            try
+            {
+                TheCarousel.Position = ((IList)TheCarousel.ItemsSource).Count - 1;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+
+        async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var current = (e.CurrentSelection.FirstOrDefault() as CriteriaViewModel);
+
+            await Navigation.PushModalAsync(new AboutPage() { CurrentCriteria= current});
 
         }
 
+
+
+        protected override void OnAppearing()
+        {
+            var currentCarousel = collectionView.ItemsSource;
+            base.OnAppearing();
+        }
+
+        private async void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            AddCriteriaModalPage = new ItemDetailPage();
+            AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
+            await Navigation.PushModalAsync(AddCriteriaModalPage);
+
+        }
+
+        private ItemDetailPage AddCriteriaModalPage;
+
+        private async void NewCriteriaValidatedInModal(object sender, CustomEventArgs e)
+        {
+
+            try
+            {
+                HomeRankerService.InsertCriteria(e.Criteria);
+
+                Criterias.Add(new CriteriaViewModel
+                {
+                    Criteria = e.Criteria
+                });
+
+            }
+            catch (Exception ex)
+            {
+
+                await DisplayAlert("Error", ex.Message, "Ok");
+            }
+            finally
+            {
+                AddCriteriaModalPage.CriteriaValidated -= this.NewCriteriaValidatedInModal;
+
+            }
+
+
+
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var layout = (BindableObject)sender;
+            var item = (CriteriaViewModel)layout.BindingContext;
+
+            await Navigation.PushModalAsync(new AboutPage() { CurrentCriteria = item, CurrentApartment= Apartment });
+        }
     }
 }

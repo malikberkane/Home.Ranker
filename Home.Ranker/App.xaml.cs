@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Home.Ranker.Services;
 using Home.Ranker.Views;
+using Plugin.SharedTransitions;
 
 namespace Home.Ranker
 {
@@ -14,7 +15,7 @@ namespace Home.Ranker
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            MainPage = new SharedTransitionNavigationPage(new ItemsPage());
         }
 
         protected override void OnStart()

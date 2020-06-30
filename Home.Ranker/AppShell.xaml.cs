@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Plugin.SharedTransitions;
+using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
 
 namespace Home.Ranker
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : SharedTransitionShell
     {
         public AppShell()
         {

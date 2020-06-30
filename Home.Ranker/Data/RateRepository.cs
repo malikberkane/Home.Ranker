@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Home.Ranker.Data
 {
-    public class RateRepository
+    public class RateRepository: IDisposable
     {
         private readonly HomeRankerContext _currentContext;
 
@@ -37,6 +38,31 @@ namespace Home.Ranker.Data
         public void UpdateRate(Rate Rate)
         {
             _currentContext.Entry(Rate).State = EntityState.Modified;
+        }
+
+        public void Save()
+        {
+            _currentContext.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _currentContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 

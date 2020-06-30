@@ -35,10 +35,12 @@ namespace Home.Ranker.Data
             
             modelBuilder.Entity<Apartment>()
                 .HasKey(c => c.Id);
+            modelBuilder.Entity<Apartment>()
+             .Ignore(c => c.FirstPictureImageSource);
             modelBuilder.Entity<Criteria>()
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Photo>()
-                .HasKey(c => new { c.PhotoUrl, c.ApartmentId });
+                .HasKey(c => new { c.PhotoId });
             modelBuilder.Entity<Photo>()
              .Ignore(c=>c.Source);
 

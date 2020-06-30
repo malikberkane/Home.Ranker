@@ -5,20 +5,32 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    x:Class="Home.Ranker.Views.ItemDetailPage"
-    Title="{Binding Title}">
+    x:Class="Home.Ranker.Views.ItemDetailPage">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label
-            Text="{Binding Apartment.Name}"
-            d:Text="Item name"
-            FontSize="Small" />
-        <Label Text="Description:" FontSize="Medium" />
-        <Label
-            Text="{Binding Item.Description}"
-            d:Text="Item description"
-            FontSize="Small" />
-    </StackLayout>
+    <Grid RowDefinitions="*,*,*">
+        <Entry
+            Grid.Row="0"
+            x:Name="CriteriaNameEntry"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            Placeholder="Criteria name" />
 
-</ContentPage>
+        <StackLayout Grid.Row="1">
+            <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
+            <Slider
+                x:Name="CriteriaImportanceSlider"
+                Maximum="10"
+                Minimum="1" />
+            <Label x:Name="ImportanceDescriptionLabel" VerticalOptions="CenterAndExpand" />
+
+        </StackLayout>
+
+        <Button
+            Text="Validate"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Clicked="Button_Clicked"
+            Grid.Row="2" />
+    </Grid>
+
+</ContentPage> 

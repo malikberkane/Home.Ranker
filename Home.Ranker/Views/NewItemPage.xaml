@@ -4,18 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Home.Ranker"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
+    xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
     mc:Ignorable="d"
+    x:Name="CurrentView"
     x:Class="Home.Ranker.Views.NewItemPage"
     Title="New Item">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
 
-        </ResourceDictionary>
-    </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Cancel}, Color=Black, Size=20}" Clicked="Cancel_Clicked" />
         <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Save}, Color=Black, Size=20}" Clicked="Save_Clicked" />
@@ -29,9 +26,10 @@
             <CarouselView
                 Margin="10"
                 x:Name="TheCarousel"
+                sharedTransitions:Transition.Name="firstImage"
                 IndicatorView="indicatorView"
-                EmptyView="No pictures taken."
-                ItemsSource="{Binding Photos}">
+                ItemsSource="{Binding Photos}"
+                EmptyView="No pictures taken.">
 
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
@@ -49,16 +47,55 @@
                 HorizontalOptions="Center" />
         </StackLayout>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding CriteriasRatings}">
+        <CollectionView
+            x:Name="collectionView"
+            Grid.Row="1"
+            ItemsSource="{Binding Criterias}"
+            SelectionMode="Single">
 
             <CollectionView.ItemTemplate>
 
                 <DataTemplate>
                     <Frame>
-                        <Label Text="{Binding Criteria.Name}" />
+                        <StackLayout>
+                            <Label Text="{Binding Criteria.Name}" />
+
+                            <Label Text="{Binding RateValue}" />
+
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <AbsoluteLayout Padding="10">
+                    <Rectangle
+                        AbsoluteLayout.LayoutBounds="0,0,.3,1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Stroke="Green"
+                        StrokeThickness="2"
+                        StrokeDashArray="1,1"
+                        StrokeDashOffset="6"
+                        HeightRequest="50"
+                        WidthRequest="150" />
+
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        AbsoluteLayout.LayoutBounds="0.1,.5,-1,-1"
+                        Clicked="ImageButton_Clicked"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                           Glyph={x:Static fonts:IconFont.Add},
+                                           Color=Green,
+                                           Size=20}" />
+
+
+
+                </AbsoluteLayout>
+            </CollectionView.Footer>
         </CollectionView>
     </Grid>
 </ContentPage>

@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 using Home.Ranker.Models;
 using Home.Ranker.ViewModels;
 using Home.Ranker.Data;
+using System.Linq;
 
 namespace Home.Ranker.Views
 {
@@ -14,27 +15,68 @@ namespace Home.Ranker.Views
     [DesignTimeVisible(false)]
     public partial class ItemDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        public Criteria Criteria { get; set; }
 
-        public ItemDetailPage(ItemDetailViewModel viewModel)
-        {
-            InitializeComponent();
+        public event EventHandler<CustomEventArgs> CriteriaValidated;
 
-            BindingContext = this.viewModel = viewModel;
-        }
 
         public ItemDetailPage()
         {
             InitializeComponent();
 
-            var item = new Apartment
+            CriteriaImportanceSlider.ValueChanged += (sender, args) =>
             {
-                Name = "Item 1",
-                Adresse = "This is an item description."
-            };
+                if (Enumerable.Range(1, 2).Contains((int)args.NewValue))
+                {
+                    ImportanceDescriptionLabel.Text = "très peu important";
 
-            viewModel = new ItemDetailViewModel(item);
-            BindingContext = viewModel;
+                }
+                else if (Enumerable.Range(2, 5).Contains((int)args.NewValue))
+                {
+                    ImportanceDescriptionLabel.Text = "Peu important";
+
+                }
+
+                else if (Enumerable.Range(5, 7).Contains((int)args.NewValue))
+                {
+                    ImportanceDescriptionLabel.Text = "Important";
+
+                }
+                else if (Enumerable.Range(7, 10).Contains((int)args.NewValue))
+                {
+                    ImportanceDescriptionLabel.Text = "Très important";
+
+                }
+            };
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(CriteriaNameEntry.Text) && CriteriaImportanceSlider.Value != 0)
+            {
+                CriteriaValidated?.Invoke(this, new CustomEventArgs(new Criteria
+                {
+                    Name = CriteriaNameEntry.Text
+                ,
+                    ImportanceLevel = (int)CriteriaImportanceSlider.Value
+                }));
+
+                Navigation.PopModalAsync();
+
+            }
+
+        }
+
+
+    }
+
+    public class CustomEventArgs : EventArgs
+    {
+        public CustomEventArgs(Criteria message)
+        {
+            Criteria = message;
+        }
+
+        public Criteria Criteria { get; set; }
     }
 }
