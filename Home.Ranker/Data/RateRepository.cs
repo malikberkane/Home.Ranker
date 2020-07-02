@@ -18,9 +18,16 @@ namespace Home.Ranker.Data
             return _currentContext.Rates.ToList();
         }
 
+        public IEnumerable<Rate> GetAllRates(Func<Rate,bool> predicate)
+        {
+            return _currentContext.Rates.Where(predicate);
+        }
+
+       
+
         public Rate GetRateById(int apartmentId, int criteriaId)
         {
-            return _currentContext.Rates.Find(apartmentId, criteriaId);
+            return _currentContext.Rates.AsNoTracking().FirstOrDefault(r=> r.ApartmentId==apartmentId && r.CriteriaId==criteriaId); 
         }
 
         public void InsertRate(Rate Rate)

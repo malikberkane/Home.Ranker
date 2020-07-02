@@ -44,7 +44,6 @@ namespace Home.Ranker.Views
 
 
 
-            HomeRankerService.InsertRate(new Rate { CriteriaId = CurrentCriteria.Criteria.Id, RateValue= CurrentCriteria.RateValue.Value, ApartmentId= CurrentApartment.Id });
 
                 Navigation.PopModalAsync();
 

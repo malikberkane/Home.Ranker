@@ -67,7 +67,7 @@ namespace Home.Ranker.Views
             
 
 
-            var criterias = HomeRankerService.GetCriterias();
+            var criterias = HomeRankerService.GetCriteriasAndRates(Apartment);
 
             if (criterias != null)
             {
@@ -94,7 +94,9 @@ namespace Home.Ranker.Views
         {
 
 
-            HomeRankerService.InsertApartment(Apartment, Photos);
+            HomeRankerService.InsertApartment(Apartment, Photos, Criterias);
+
+           
 
             Apartment.FirstPictureImageSource = Photos.FirstOrDefault()?.Source;
 

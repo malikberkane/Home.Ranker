@@ -84,13 +84,14 @@
 
                                 <StackLayout
                                     Margin="10"
-                                    Orientation="Horizontal"
                                     Grid.Row="1"
                                     Grid.Column="0">
 
-                                    <Label Text="4.5" VerticalOptions="CenterAndExpand" />
-                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
 
+                                        <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
 
                                 </StackLayout>
 

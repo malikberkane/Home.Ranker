@@ -11,157 +11,180 @@ namespace Home.Ranker.Services
 {
     public class HomeRankerService
     {
-        private readonly ApartmentRepository ApartmentRepository;
-
-        private readonly PhotoRepository PhotoRepository;
-
-        private readonly CriteriaRepository CriteriaRepository;
-
-        private readonly RateRepository RateRepository;
-
-
-
-        public HomeRankerService()
-        {
-            ApartmentRepository = new ApartmentRepository(new HomeRankerContext());
-            PhotoRepository = new PhotoRepository(new HomeRankerContext());
-
-            CriteriaRepository = new CriteriaRepository(new HomeRankerContext());
-
-            RateRepository = new RateRepository(new HomeRankerContext());
-
-
-
-        }
+     
+        
         public IEnumerable<Apartment> GetAllApartments()
         {
-            var appartments = ApartmentRepository.GetAllApartments();
-
-            foreach (var appart in appartments)
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                appart.FirstPictureImageSource = ImageSource.FromStream(() =>
-                {
-                    var bytes = File.ReadAllBytes(appart.FirstPictureUrl);
-                    return new MemoryStream(bytes);
-                });
-            }
+                var appartments = unitOfWork.ApartmentRepository.GetAllApartments();
 
-            return appartments;
+                foreach (var appart in appartments)
+                {
+                    appart.FirstPictureImageSource = ImageSource.FromStream(() =>
+                    {
+                        var bytes = File.ReadAllBytes(appart.FirstPictureUrl);
+                        return new MemoryStream(bytes);
+                    });
+
+                    var allRates = unitOfWork.RateRepository.GetAllRates(n => n.ApartmentId == appart.Id);
+                    if (allRates != null && allRates.Any())
+                    {
+                        appart.RatesAverage = allRates.Average(n=>n.RateValue);
+                    }
+                }
+
+                return appartments; 
+            }
         }
 
         public IEnumerable<Photo> GetPhotos(Apartment apartment)
         {
-            var photos = PhotoRepository.GetPhotos(p => p.ApartmentId == apartment.Id);
-
-            foreach (var photo in photos)
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                photo.Source = ImageSource.FromStream(() =>
+                var photos = unitOfWork.PhotoRepository.GetPhotos(p => p.ApartmentId == apartment.Id);
+
+                foreach (var photo in photos)
                 {
-                    var bytes = File.ReadAllBytes(photo.PhotoUrl);
-                    return new MemoryStream(bytes);
-                });
+                    photo.Source = ImageSource.FromStream(() =>
+                    {
+                        var bytes = File.ReadAllBytes(photo.PhotoUrl);
+                        return new MemoryStream(bytes);
+                    });
 
 
+                }
+
+                return photos; 
             }
-
-            return photos;
         }
 
-        public IEnumerable<CriteriaViewModel> GetCriterias()
-        {
-            return CriteriaRepository.GetAllCriterias()?.Select(n => new CriteriaViewModel { Criteria = n });
-        }
+        
 
         public IEnumerable<CriteriaViewModel> GetCriteriasAndRates(Apartment appartment)
         {
-            var result = CriteriaRepository.GetAllCriterias()?.Select(n => new CriteriaViewModel { Criteria = n });
-
-            result?.ForEach(n =>
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                var rate = RateRepository.GetRateById(appartment.Id, n.Criteria.Id);
+                var result = unitOfWork.CriteriaRepository.GetAllCriterias()?.Select(n => new CriteriaViewModel { Criteria = n }).ToList();
 
-                n.RateValue = rate?.RateValue;
-            });
+                if (result != null)
+                {
+                    foreach (var item in result)
+                    {
+                        var rate = unitOfWork.RateRepository.GetRateById(appartment.Id, item.Criteria.Id);
 
-            return result;
+                        item.RateValue = rate?.RateValue;
+                    }
+
+                }
+
+
+
+                return result; 
+            }
 
 
         }
 
-        public void InsertRate(Rate rate)
-        {
-
-            var existingRate = RateRepository.GetRateById(rate.ApartmentId, rate.CriteriaId);
-            if (existingRate != null)
-            {
-                RateRepository.UpdateRate(rate);
-
-            }
-            else
-            {
-                RateRepository.InsertRate(rate);
-
-            }
-
-
-
-
-            RateRepository.Save();
-
-        }
 
 
         public void InsertCriteria(Criteria criteria)
         {
-            if (criteria.Id == 0)
+            using (var unitOfWork= new UnitOfWork(new HomeRankerContext()))
             {
-                CriteriaRepository.InsertCriteria(criteria);
+                if (criteria.Id == 0)
+                {
+                    unitOfWork.CriteriaRepository.InsertCriteria(criteria);
 
+                }
+                else
+                {
+                    unitOfWork.CriteriaRepository.UpdateCriteria(criteria);
+
+                }
+
+                unitOfWork.Complete();
             }
-            else
-            {
-                CriteriaRepository.UpdateCriteria(criteria);
 
-            }
-
-            CriteriaRepository.Save();
 
         }
 
 
-        public void InsertApartment(Apartment apartment, IEnumerable<Photo> photos)
+        public void InsertApartment(Apartment apartment, IEnumerable<Photo> photos, IEnumerable<CriteriaViewModel> criteriaRates)
         {
 
-            if (photos.Any())
+            using (var unitOfWork= new UnitOfWork(new HomeRankerContext()))
             {
-                apartment.FirstPictureUrl = photos.First().PhotoUrl;
-
-            }
-
-            if (apartment.Id == 0)
-            {
-                ApartmentRepository.InsertAppartment(apartment);
-
-            }
-            else
-            {
-                ApartmentRepository.UpdateApartment(apartment);
-            }
-            ApartmentRepository.Save();
-
-            foreach (var photo in photos)
-            {
-                photo.ApartmentId = apartment.Id;
-
-                if (photo.PhotoId == 0)
+                if (photos.Any())
                 {
-                    PhotoRepository.InsertPhoto(photo);
+                    apartment.FirstPictureUrl = photos.First().PhotoUrl;
 
                 }
 
-            }
+                if (apartment.Id == 0)
+                {
+                    unitOfWork.ApartmentRepository.InsertAppartment(apartment);
 
-            PhotoRepository.Save();
+                }
+                else
+                {
+                    unitOfWork.ApartmentRepository.UpdateApartment(apartment);
+                }
+
+                unitOfWork.Complete();
+
+                foreach (var photo in photos)
+                {
+                    photo.ApartmentId = apartment.Id;
+
+                    if (photo.PhotoId == 0)
+                    {
+                        unitOfWork.PhotoRepository.InsertPhoto(photo);
+
+                    }
+
+
+                }
+
+                unitOfWork.Complete();
+
+                foreach (var criteria in criteriaRates)
+                {
+                    if (criteria.RateValue.HasValue)
+                    {
+                        var rate = new Rate
+                        {
+                            CriteriaId = criteria.Criteria.Id,
+                            RateValue = criteria.RateValue.Value,
+                            ApartmentId = apartment.Id
+                        };
+                        if (unitOfWork.RateRepository.GetRateById(rate.ApartmentId, rate.CriteriaId) == null)
+                        {
+                            unitOfWork.RateRepository.InsertRate(rate);
+
+                        }
+                        else
+                        {
+                            unitOfWork.RateRepository.UpdateRate(rate);
+
+                        }
+
+
+
+
+
+                    }
+
+                    unitOfWork.Complete();
+
+
+
+                }
+
+                apartment.RatesAverage = criteriaRates.Where(n => n.RateValue.HasValue).Average(n => n.RateValue);
+
+            }
+            
         }
     }
 }

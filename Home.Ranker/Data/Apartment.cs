@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace Home.Ranker.Data
 {
@@ -13,7 +14,23 @@ namespace Home.Ranker.Data
 
         public string FirstPictureUrl { get; set; }
 
+
+        public double? RatesAverage { get; set; }
+
         public ImageSource FirstPictureImageSource { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if(obj is Apartment other)
+            {
+                return other.Id == Id;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Id, this.Name, this.Adresse, this.FirstPictureUrl, this.RatesAverage, this.FirstPictureImageSource);
+        }
     }
 }

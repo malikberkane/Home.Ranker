@@ -37,6 +37,8 @@ namespace Home.Ranker.Data
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Apartment>()
              .Ignore(c => c.FirstPictureImageSource);
+            modelBuilder.Entity<Apartment>()
+           .Ignore(c => c.RatesAverage);
             modelBuilder.Entity<Criteria>()
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Photo>()

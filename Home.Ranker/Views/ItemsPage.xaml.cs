@@ -61,11 +61,14 @@ namespace Home.Ranker.Views
                     Apartments = new ObservableCollection<Apartment>();
                 }
 
-                if (!Apartments.Contains(item))
+                var existingIndex = Apartments.IndexOf(item);
+                if (existingIndex != -1)
                 {
-
+                    Apartments[existingIndex] = item;
+                }
+                else
+                {
                     Apartments.Add(item);
-
                 }
 
                 await Navigation.PopAsync();
