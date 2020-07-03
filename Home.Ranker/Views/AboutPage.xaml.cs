@@ -23,9 +23,11 @@ namespace Home.Ranker.Views
         private HomeRankerService HomeRankerService;
 
 
-        public AboutPage()
+        public AboutPage(CriteriaViewModel criteria, Apartment appartment)
         {
             InitializeComponent();
+            CurrentApartment = appartment;
+            CurrentCriteria = criteria;
             HomeRankerService = new HomeRankerService();
 
             BindingContext = this;

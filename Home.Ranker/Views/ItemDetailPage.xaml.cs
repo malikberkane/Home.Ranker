@@ -20,10 +20,12 @@ namespace Home.Ranker.Views
         public event EventHandler<CustomEventArgs> CriteriaValidated;
 
 
-        public ItemDetailPage()
+        public ItemDetailPage(Criteria criteria)
         {
             InitializeComponent();
+            Criteria = criteria;
 
+            BindingContext = this;
             CriteriaImportanceSlider.ValueChanged += (sender, args) =>
             {
                 if (Enumerable.Range(1, 2).Contains((int)args.NewValue))
@@ -54,12 +56,7 @@ namespace Home.Ranker.Views
         {
             if (!string.IsNullOrEmpty(CriteriaNameEntry.Text) && CriteriaImportanceSlider.Value != 0)
             {
-                CriteriaValidated?.Invoke(this, new CustomEventArgs(new Criteria
-                {
-                    Name = CriteriaNameEntry.Text
-                ,
-                    ImportanceLevel = (int)CriteriaImportanceSlider.Value
-                }));
+                CriteriaValidated?.Invoke(this, new CustomEventArgs(Criteria));
 
                 Navigation.PopModalAsync();
 

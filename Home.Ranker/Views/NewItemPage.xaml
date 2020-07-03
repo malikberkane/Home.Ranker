@@ -56,17 +56,39 @@
             <CollectionView.ItemTemplate>
 
                 <DataTemplate>
-                    <Frame>
-                        <StackLayout>
-                            <Label Text="{Binding Criteria.Name}" />
+                    <SwipeView>
+                        <SwipeView.RightItems>
 
-                            <Label Text="{Binding RateValue}" />
+                            <SwipeItems>
+                                <SwipeItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Delete}, Color=Black, Size=20}" BackgroundColor="Red" />
+                                <SwipeItem
+                                    Text="Edit"
+                                    BackgroundColor="Green"
+                                    Invoked="EditItem_Clicked"
+                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                Glyph={x:Static fonts:IconFont.Edit},
+                                                                Color=Black,
+                                                                Size=20}" />
 
-                        </StackLayout>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
+                            </SwipeItems>
+
+                        </SwipeView.RightItems>
+                        <Frame>
+                            <StackLayout>
+                                <Label Text="{Binding Criteria.Name}" />
+
+                                <Label Text="{Binding RateValue, StringFormat='Note: {0}'}" />
+
+                                <Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />
+
+
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 

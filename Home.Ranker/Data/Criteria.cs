@@ -8,7 +8,7 @@ namespace Home.Ranker.Data
 
             public string Name { get; set; }
 
-            public int ImportanceLevel { get; set; }
+            public int ImportanceLevel { get; set; } = 1;
 
         }
 

@@ -30,7 +30,13 @@ namespace Home.Ranker.Services
                     var allRates = unitOfWork.RateRepository.GetAllRates(n => n.ApartmentId == appart.Id);
                     if (allRates != null && allRates.Any())
                     {
-                        appart.RatesAverage = allRates.Average(n=>n.RateValue);
+                        appart.RatesAverage = allRates.WeightedAverage(n=>n.RateValue, w =>
+                        {
+                            var criteria = unitOfWork.CriteriaRepository.GetCriteriaById(w.CriteriaId);
+                            return criteria?.ImportanceLevel ?? default;
+                        });
+
+
                     }
                 }
 
@@ -181,7 +187,7 @@ namespace Home.Ranker.Services
 
                 }
 
-                apartment.RatesAverage = criteriaRates.Where(n => n.RateValue.HasValue).Average(n => n.RateValue);
+                apartment.RatesAverage = criteriaRates.Where(n => n.RateValue.HasValue).WeightedAverage(c=>c.RateValue.Value, w=>w.Criteria.ImportanceLevel);
 
             }
             

@@ -13,12 +13,16 @@
             x:Name="CriteriaNameEntry"
             VerticalOptions="CenterAndExpand"
             HorizontalOptions="CenterAndExpand"
+            Text="{Binding Criteria.Name}"
             Placeholder="Criteria name" />
 
         <StackLayout Grid.Row="1">
             <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
             <Slider
                 x:Name="CriteriaImportanceSlider"
+                ThumbColor="Green"
+                MinimumTrackColor="Green"
+                Value="{Binding Criteria.ImportanceLevel}"
                 Maximum="10"
                 Minimum="1" />
             <Label x:Name="ImportanceDescriptionLabel" VerticalOptions="CenterAndExpand" />

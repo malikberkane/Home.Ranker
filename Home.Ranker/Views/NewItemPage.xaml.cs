@@ -131,7 +131,7 @@ namespace Home.Ranker.Views
                 CustomPhotoSize = 50,
                 PhotoSize = PhotoSize.MaxWidthHeight,
                 MaxWidthHeight = 2000,
-                DefaultCamera = CameraDevice.Front
+
             });
 
             if (file == null)
@@ -171,15 +171,7 @@ namespace Home.Ranker.Views
 
 
 
-        async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var current = (e.CurrentSelection.FirstOrDefault() as CriteriaViewModel);
-
-            await Navigation.PushModalAsync(new AboutPage() { CurrentCriteria= current});
-
-        }
-
-
+      
 
         protected override void OnAppearing()
         {
@@ -189,7 +181,8 @@ namespace Home.Ranker.Views
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
-            AddCriteriaModalPage = new ItemDetailPage();
+            AddCriteriaModalPage = new ItemDetailPage(new Criteria());
+            AddCriteriaModalPage.Criteria = new Criteria();
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
             await Navigation.PushModalAsync(AddCriteriaModalPage);
 
@@ -204,10 +197,24 @@ namespace Home.Ranker.Views
             {
                 HomeRankerService.InsertCriteria(e.Criteria);
 
-                Criterias.Add(new CriteriaViewModel
+                var newCriteria= new CriteriaViewModel
                 {
                     Criteria = e.Criteria
-                });
+                };
+
+                var existingIndex = Criterias.IndexOf(newCriteria);
+                if (existingIndex != -1)
+                {
+                    Criterias[existingIndex] = newCriteria;
+                }
+                else
+                {
+                    Criterias.Add(new CriteriaViewModel
+                    {
+                        Criteria = e.Criteria
+                    });
+                }
+               
 
             }
             catch (Exception ex)
@@ -230,7 +237,17 @@ namespace Home.Ranker.Views
             var layout = (BindableObject)sender;
             var item = (CriteriaViewModel)layout.BindingContext;
 
-            await Navigation.PushModalAsync(new AboutPage() { CurrentCriteria = item, CurrentApartment= Apartment });
+            await Navigation.PushModalAsync(new AboutPage(item, Apartment));
+        }
+
+        private async void EditItem_Clicked(object sender, EventArgs e)
+        {
+            var layout = (BindableObject)sender;
+            var item = (CriteriaViewModel)layout.BindingContext;
+
+            AddCriteriaModalPage = new ItemDetailPage(item.Criteria);
+            AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
+            await Navigation.PushModalAsync(AddCriteriaModalPage);
         }
     }
 }

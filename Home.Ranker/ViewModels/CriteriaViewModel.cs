@@ -19,6 +19,18 @@ namespace Home.Ranker.ViewModels
             } }
 
 
+        public override bool Equals(object obj)
+        {
+            if(obj is CriteriaViewModel otherCriteria)
+            {
+                return this.Criteria.Id == otherCriteria.Criteria.Id;
+            }
+            return false;
+        }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.rateValue, this.Criteria, this.RateValue);
+        }
     }
 }

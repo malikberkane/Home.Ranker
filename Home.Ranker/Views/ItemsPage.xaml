@@ -53,98 +53,88 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <pancake:PancakeView
-                            BackgroundColor="White"
-                            Margin="15"
-                            Padding="10"
-                            CornerRadius="20,30,0,20"
-                            HeightRequest="150"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="Start">
-                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
+
+                    <SwipeView>
+                        <SwipeView.RightItems>
+
+                            <SwipeItems>
+                                <SwipeItem Text="Delete" />
+                            </SwipeItems>
+
+                        </SwipeView.RightItems>
+                        <Grid>
+                            <pancake:PancakeView
+                                BackgroundColor="White"
+                                Margin="15"
+                                Padding="10"
+                                CornerRadius="20,30,0,20"
+                                HeightRequest="150"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Start">
+                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
 
 
-                                </Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>
 
-                                <Label
-                                    Grid.Column="0"
-                                    Grid.Row="0"
-                                    FontSize="24"
-                                    Margin="10"
-                                    Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        FontSize="24"
+                                        Margin="10"
+                                        Text="{Binding Name}" />
 
-                                <StackLayout
-                                    Margin="10"
-                                    Grid.Row="1"
-                                    Grid.Column="0">
+                                    <StackLayout
+                                        Margin="10"
+                                        Grid.Row="1"
+                                        Grid.Column="0">
 
-                                    <StackLayout Orientation="Horizontal">
-                                        <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
 
-                                        <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
+                                            <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
+
                                     </StackLayout>
 
-                                </StackLayout>
+                                    <StackLayout
+                                        Margin="10"
+                                        Orientation="Horizontal"
+                                        Grid.Row="2"
+                                        Grid.Column="0">
 
-                                <StackLayout
-                                    Margin="10"
-                                    Orientation="Horizontal"
-                                    Grid.Row="2"
-                                    Grid.Column="0">
-
-                                    <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
-                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
+                                        <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
+                                        <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
 
 
-                                </StackLayout>
+                                    </StackLayout>
 
-                                <Image
-                                    Grid.Column="1"
-                                    Grid.RowSpan="3"
-                                    Margin="0,0,10,0"
-                                    Aspect="AspectFill"
-                                    sharedTransitions:Transition.Group="{Binding Name}"
-                                    sharedTransitions:Transition.Name="firstImage"
-                                    HeightRequest="150"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Rotation="0"
-                                    Source="{Binding FirstPictureImageSource}" />
-                            </Grid>
-                            <pancake:PancakeView.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnItemSelected" />
-                            </pancake:PancakeView.GestureRecognizers>
-                        </pancake:PancakeView>
-                    </Grid>
-                    <!--<Grid
-                        ColumnDefinitions="*,5*"
-                        RowDefinitions="100"
-                        Padding="10">
-                        <Image
-                            BackgroundColor="AliceBlue"
-                            Aspect="AspectFit"
-                            Grid.Column="0"
-                            Source="{Binding FirstPictureImageSource}" />
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding Name}"
-                            d:Text="{Binding .}"
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemTextStyle}"
-                            FontSize="16" />
+                                    <Image
+                                        Grid.Column="1"
+                                        Grid.RowSpan="3"
+                                        Margin="0,0,10,0"
+                                        Aspect="AspectFill"
+                                        sharedTransitions:Transition.Group="{Binding Name}"
+                                        sharedTransitions:Transition.Name="firstImage"
+                                        HeightRequest="150"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Rotation="0"
+                                        Source="{Binding FirstPictureImageSource}" />
+                                </Grid>
+                                <pancake:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnItemSelected" />
+                                </pancake:PancakeView.GestureRecognizers>
+                            </pancake:PancakeView>
+                        </Grid>
 
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected" />
-                        </Grid.GestureRecognizers>
-                    </Grid>-->
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

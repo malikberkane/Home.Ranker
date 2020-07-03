@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Home.Ranker.Controls"
     mc:Ignorable="d"
     x:Class="Home.Ranker.Views.AboutPage">
 
@@ -14,10 +15,14 @@
     <Grid RowDefinitions="*,*,*">
 
         <StackLayout Grid.Row="1">
-            <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
+            <Label Text="Note générale" HorizontalOptions="CenterAndExpand" />
+
+            <controls:RatingControl Rating="{Binding CurrentCriteria.RateValue}" />
             <Slider
                 Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
                 Maximum="10"
+                MinimumTrackColor="Green"
+                ThumbColor="Green"
                 Minimum="1" />
             <Label x:Name="RateDescriptionLabel" VerticalOptions="CenterAndExpand" />
 

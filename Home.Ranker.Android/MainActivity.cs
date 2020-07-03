@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 using Android.App;
 using Android.Content.PM;
@@ -19,7 +20,7 @@ namespace Home.Ranker.Droid
 
             base.OnCreate(savedInstanceState);
 
-            global::Xamarin.Forms.Forms.SetFlags(new[] { "CollectionView_Experimental", "Shapes_Experimental" });
+            global::Xamarin.Forms.Forms.SetFlags(new[] { "CollectionView_Experimental", "Shapes_Experimental", "SwipeView_Experimental" });
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
