@@ -14,7 +14,6 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Cancel}, Color=Black, Size=20}" Clicked="Cancel_Clicked" />
         <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Save}, Color=Black, Size=20}" Clicked="Save_Clicked" />
         <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.PhotoCamera}, Color=Black, Size=20}" Clicked="Button_Clicked" />
 
@@ -29,6 +28,7 @@
                 sharedTransitions:Transition.Name="firstImage"
                 IndicatorView="indicatorView"
                 ItemsSource="{Binding Photos}"
+                PeekAreaInsets="75"
                 EmptyView="No pictures taken.">
 
                 <CarouselView.ItemTemplate>
@@ -45,6 +45,21 @@
                 IndicatorColor="LightGray"
                 SelectedIndicatorColor="Red"
                 HorizontalOptions="Center" />
+
+            <StackLayout Orientation="Horizontal">
+                <Editor
+                    Placeholder="Adress"
+                    x:Name="AdressEditor"
+                    Text="{Binding Apartment.Adresse}"
+                    HorizontalOptions="FillAndExpand" />
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                       Glyph={x:Static fonts:IconFont.LocationOn},
+                                       Color=#3f3d56,
+                                       Size=40}"
+                    Clicked="OnGetAdressFromLocationClicked" />
+            </StackLayout>
         </StackLayout>
 
         <CollectionView

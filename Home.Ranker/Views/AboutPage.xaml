@@ -17,7 +17,10 @@
         <StackLayout Grid.Row="1">
             <Label Text="Note générale" HorizontalOptions="CenterAndExpand" />
 
-            <controls:RatingControl Rating="{Binding CurrentCriteria.RateValue}" />
+            <controls:RatingControl
+                Rating="{Binding CurrentCriteria.RateValue}"
+                Max="8"
+                Scale="0.7" />
             <Slider
                 Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
                 Maximum="10"

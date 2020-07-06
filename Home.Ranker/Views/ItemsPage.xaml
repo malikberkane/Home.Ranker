@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     x:Class="Home.Ranker.Views.ItemsPage"
-    BackgroundColor="#EBE8E4"
     NavigationPage.HasNavigationBar="False"
     Title="{Binding Title}"
     x:Name="BrowseItemsPage">
@@ -22,121 +21,153 @@
 
 
 
-    <RefreshView x:Name="refreshView" Refreshing="refreshView_Refreshing">
-        <CollectionView
-            x:Name="ItemsCollectionView"
-            ItemsSource="{Binding Apartments}"
-            ItemSizingStrategy="MeasureAllItems">
 
-            <CollectionView.Header>
-                <pancake:PancakeView
+    <AbsoluteLayout>
+        <Grid
+            RowDefinitions="*,3*"
+            AbsoluteLayout.LayoutFlags="All"
+            AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <AbsoluteLayout
+                Grid.Row="0"
+                x:Name="ImageLayout"
+                BackgroundColor="#3f3d56">
+                <BoxView
+                    BackgroundColor="White"
+                    AbsoluteLayout.LayoutBounds="0,1,.4,.5"
+                    AbsoluteLayout.LayoutFlags="All" />
+                <!--<BoxView
+                    BackgroundColor="White"
+                    AbsoluteLayout.LayoutBounds="0,,.4,1"
+                    AbsoluteLayout.LayoutFlags="All" />-->
+
+
+                <Image x:Name="homeImage" Aspect="AspectFill" />
+
+
+            </AbsoluteLayout>
+
+            <RefreshView
+                x:Name="refreshView"
+                Refreshing="refreshView_Refreshing"
+                Grid.RowSpan="2"
+                Grid.Row="0">
+                <CollectionView
+                    x:Name="ItemsCollectionView"
+                    ItemsSource="{Binding Apartments}"
+                    ItemSizingStrategy="MeasureAllItems">
+
+                    <CollectionView.Header>
+
+                        <BoxView HeightRequest="200" />
+                        <!--<pancake:PancakeView
                     Padding="10"
                     BackgroundColor="White"
                     CornerRadius="0,0,35,35"
-                    VerticalOptions="Start">
+                    VerticalOptions="Start">-->
 
-                    <AbsoluteLayout>
-                        <Image x:Name="homeImage" Aspect="AspectFill" />
+                        <!--</pancake:PancakeView>-->
 
-                        <Button
-                            Text="Start new visit !"
-                            Clicked="AddItem_Clicked"
-                            BackgroundColor="White"
-                            Padding="0"
-                            AbsoluteLayout.LayoutFlags="PositionProportional"
-                            AbsoluteLayout.LayoutBounds="1,1,-1,-1" />
+                    </CollectionView.Header>
 
-                    </AbsoluteLayout>
-                </pancake:PancakeView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
 
-            </CollectionView.Header>
+                            <SwipeView>
+                                <SwipeView.RightItems>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete" />
+                                    </SwipeItems>
 
-                    <SwipeView>
-                        <SwipeView.RightItems>
-
-                            <SwipeItems>
-                                <SwipeItem Text="Delete" />
-                            </SwipeItems>
-
-                        </SwipeView.RightItems>
-                        <Grid>
-                            <pancake:PancakeView
-                                BackgroundColor="White"
-                                Margin="15"
-                                Padding="10"
-                                CornerRadius="20,30,0,20"
-                                HeightRequest="150"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Start">
-                                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-
-
-                                    </Grid.RowDefinitions>
-
-                                    <Label
-                                        Grid.Column="0"
-                                        Grid.Row="0"
-                                        FontSize="24"
-                                        Margin="10"
-                                        Text="{Binding Name}" />
-
-                                    <StackLayout
-                                        Margin="10"
-                                        Grid.Row="1"
-                                        Grid.Column="0">
-
-                                        <StackLayout Orientation="Horizontal">
-                                            <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
-
-                                            <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
-                                        </StackLayout>
-
-                                    </StackLayout>
-
-                                    <StackLayout
-                                        Margin="10"
-                                        Orientation="Horizontal"
-                                        Grid.Row="2"
-                                        Grid.Column="0">
-
-                                        <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
-                                        <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
-
-
-                                    </StackLayout>
-
-                                    <Image
-                                        Grid.Column="1"
-                                        Grid.RowSpan="3"
-                                        Margin="0,0,10,0"
-                                        Aspect="AspectFill"
-                                        sharedTransitions:Transition.Group="{Binding Name}"
-                                        sharedTransitions:Transition.Name="firstImage"
+                                </SwipeView.RightItems>
+                                <Grid>
+                                    <pancake:PancakeView
+                                        BackgroundColor="White"
+                                        Margin="15"
+                                        Padding="10"
+                                        CornerRadius="20,30,0,20"
                                         HeightRequest="150"
-                                        HorizontalOptions="CenterAndExpand"
-                                        Rotation="0"
-                                        Source="{Binding FirstPictureImageSource}" />
-                                </Grid>
-                                <pancake:PancakeView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnItemSelected" />
-                                </pancake:PancakeView.GestureRecognizers>
-                            </pancake:PancakeView>
-                        </Grid>
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="Start">
+                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
 
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+
+                                            </Grid.RowDefinitions>
+
+                                            <Label
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                FontSize="24"
+                                                Margin="10"
+                                                Text="{Binding Name}" />
+
+                                            <StackLayout
+                                                Margin="10"
+                                                Grid.Row="1"
+                                                Grid.Column="0">
+
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+
+                                                    <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
+                                                </StackLayout>
+
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                Margin="10"
+                                                Orientation="Horizontal"
+                                                Grid.Row="2"
+                                                Grid.Column="0">
+
+                                                <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
+                                                <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
+
+
+                                            </StackLayout>
+
+                                            <Image
+                                                Grid.Column="1"
+                                                Grid.RowSpan="3"
+                                                Margin="0,0,10,0"
+                                                Aspect="AspectFill"
+                                                sharedTransitions:Transition.Group="{Binding Name}"
+                                                sharedTransitions:Transition.Name="firstImage"
+                                                HeightRequest="150"
+                                                HorizontalOptions="CenterAndExpand"
+                                                Rotation="0"
+                                                Source="{Binding FirstPictureImageSource}" />
+                                        </Grid>
+                                        <pancake:PancakeView.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnItemSelected" />
+                                        </pancake:PancakeView.GestureRecognizers>
+                                    </pancake:PancakeView>
+                                </Grid>
+
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+
+        <ImageButton
+            AbsoluteLayout.LayoutBounds="0.97,0.97,-1,-1"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="Transparent"
+            Clicked="AddItem_Clicked"
+            Source="{FontImage FontFamily=MaterialFontFamily,
+                               Glyph={x:Static fonts:IconFont.AddCircle},
+                               Color=#3f3d56,
+                               Size=60}" />
+
+    </AbsoluteLayout>
 </ContentPage>

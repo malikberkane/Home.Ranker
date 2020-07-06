@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Collections;
 using System.Reflection;
 using Plugin.SharedTransitions;
+using Xamarin.Essentials;
 
 namespace Home.Ranker.Views
 {
@@ -93,6 +94,9 @@ namespace Home.Ranker.Views
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
+
+
+       
             var newApartmentLabel = await DisplayPromptAsync("New visit","Enter name or adress");
 
             if (!string.IsNullOrEmpty(newApartmentLabel))

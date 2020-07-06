@@ -124,12 +124,14 @@ namespace Home.Ranker.Services
                 if (photos.Any())
                 {
                     apartment.FirstPictureUrl = photos.First().PhotoUrl;
+                    apartment.FirstPictureImageSource = photos.First().Source;
 
                 }
 
                 if (apartment.Id == 0)
                 {
                     unitOfWork.ApartmentRepository.InsertAppartment(apartment);
+
 
                 }
                 else

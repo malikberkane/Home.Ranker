@@ -82,6 +82,7 @@ namespace Home.Ranker.Views
             InitializeComponent();
 
             Apartment = appartment;
+            AdressEditor.Text = Apartment.Adresse;
             BindingContext = this;
 
 
@@ -98,9 +99,10 @@ namespace Home.Ranker.Views
 
            
 
-            Apartment.FirstPictureImageSource = Photos.FirstOrDefault()?.Source;
 
             MessagingCenter.Send(this, "AddItem", Apartment);
+
+            
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
@@ -111,6 +113,22 @@ namespace Home.Ranker.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await TakePicture();
+
+        }
+
+        private async void OnGetAdressFromLocationClicked(object sender, EventArgs e)
+        {
+            var location = await Geolocation.GetLocationAsync();
+
+
+
+            var info = await Geocoding.GetPlacemarksAsync(location);
+
+
+
+            var adress = info.FirstOrDefault();
+
+            Apartment.Adresse = AdressEditor.Text=$"{adress.SubThoroughfare} {adress.Thoroughfare}, {adress.PostalCode} {adress.Locality}";
 
         }
 
@@ -205,14 +223,12 @@ namespace Home.Ranker.Views
                 var existingIndex = Criterias.IndexOf(newCriteria);
                 if (existingIndex != -1)
                 {
+                    newCriteria.RateValue = Criterias[existingIndex].RateValue;
                     Criterias[existingIndex] = newCriteria;
                 }
                 else
                 {
-                    Criterias.Add(new CriteriaViewModel
-                    {
-                        Criteria = e.Criteria
-                    });
+                    Criterias.Add(newCriteria);
                 }
                
 

@@ -40,9 +40,8 @@ namespace Home.Ranker.Data
 
         public void UpdateApartment(Apartment apartment)
         {
-            Apartment appartment = _currentContext.Apartments.Find(apartment.Id);
+            _currentContext.Entry(apartment).State = EntityState.Modified;
 
-            _currentContext.Apartments.Update(appartment);
         }
 
 
