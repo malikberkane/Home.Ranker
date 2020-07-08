@@ -6,30 +6,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Home.Ranker.Controls"
     mc:Ignorable="d"
+    Padding="10"
     x:Class="Home.Ranker.Views.AboutPage">
 
 
 
 
 
-    <Grid RowDefinitions="*,*,*">
 
-        <StackLayout Grid.Row="1">
-            <Label Text="Note générale" HorizontalOptions="CenterAndExpand" />
+    <StackLayout VerticalOptions="CenterAndExpand">
+        <Label x:Name="RateDescriptionLabel" VerticalOptions="CenterAndExpand" />
 
+
+        <AbsoluteLayout>
             <controls:RatingControl
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                Spacing="10"
+                Size="30"
                 Rating="{Binding CurrentCriteria.RateValue}"
-                Max="8"
-                Scale="0.7" />
+                Max="10" />
             <Slider
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                BackgroundColor="Transparent"
+                Opacity="0.4"
+                x:Name="Slider"
+                ValueChanged="Slider_ValueChanged"
                 Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
                 Maximum="10"
-                MinimumTrackColor="Green"
-                ThumbColor="Green"
+                MinimumTrackColor="Transparent"
+                ThumbColor="Transparent"
                 Minimum="1" />
-            <Label x:Name="RateDescriptionLabel" VerticalOptions="CenterAndExpand" />
 
-        </StackLayout>
+        </AbsoluteLayout>
+
 
         <Button
             Text="Validate"
@@ -37,6 +48,9 @@
             HorizontalOptions="Center"
             Clicked="Button_Clicked"
             Grid.Row="2" />
-    </Grid>
+
+    </StackLayout>
+
+
 
 </ContentPage>

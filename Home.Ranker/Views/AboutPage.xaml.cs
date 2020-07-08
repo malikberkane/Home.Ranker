@@ -52,16 +52,27 @@ namespace Home.Ranker.Views
 
             }
 
-            //}
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
 
-            //private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
-            //{
-            //    double value = e.NewValue;
-            //    displayLabel.Text = String.Format("The Slider value is {0}", value);
+           
+                Slider.Value = Math.Round(e.NewValue);
 
+            
 
-            //}
+            RateDescriptionLabel.Text = String.Format("Rating: {0}", Slider.Value);
         }
+
+        //}
+
+        //private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        //{
+        //    double value = e.NewValue;
+        //    displayLabel.Text = String.Format("The Slider value is {0}", value);
+
+
+        //}
+    }
 
     //public class RateValidatedEventArgs : EventArgs
     //{

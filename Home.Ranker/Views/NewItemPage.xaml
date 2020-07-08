@@ -6,8 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     x:Name="CurrentView"
+    BackgroundColor="#EBE8E4"
+    NavigationPage.HasNavigationBar="False"
     x:Class="Home.Ranker.Views.NewItemPage"
     Title="New Item">
 
@@ -20,53 +23,105 @@
     </ContentPage.ToolbarItems>
 
 
-    <Grid RowDefinitions="*,3*">
-        <StackLayout>
-            <CarouselView
-                Margin="10"
-                x:Name="TheCarousel"
-                sharedTransitions:Transition.Name="firstImage"
-                IndicatorView="indicatorView"
-                ItemsSource="{Binding Photos}"
-                PeekAreaInsets="75"
-                EmptyView="No pictures taken.">
 
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image
-                            Aspect="AspectFit"
-                            Source="{Binding Source}"
-                            Grid.Row="0" />
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <IndicatorView
-                x:Name="indicatorView"
-                IndicatorColor="LightGray"
-                SelectedIndicatorColor="Red"
-                HorizontalOptions="Center" />
-
-            <StackLayout Orientation="Horizontal">
-                <Editor
-                    Placeholder="Adress"
-                    x:Name="AdressEditor"
-                    Text="{Binding Apartment.Adresse}"
-                    HorizontalOptions="FillAndExpand" />
-                <ImageButton
-                    BackgroundColor="Transparent"
-                    Source="{FontImage FontFamily=MaterialFontFamily,
-                                       Glyph={x:Static fonts:IconFont.LocationOn},
-                                       Color=#3f3d56,
-                                       Size=40}"
-                    Clicked="OnGetAdressFromLocationClicked" />
-            </StackLayout>
-        </StackLayout>
-
+    <!--<pancake:PancakeView
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Padding="10"
+            CornerRadius="30,0,0,0">-->
+    <RefreshView>
         <CollectionView
             x:Name="collectionView"
-            Grid.Row="1"
             ItemsSource="{Binding Criterias}"
             SelectionMode="Single">
+            <CollectionView.Header>
+
+
+                <StackLayout HeightRequest="500">
+                    <pancake:PancakeView
+                        BackgroundGradientStartColor="#E85D4A"
+                        BackgroundGradientEndColor="LightSalmon"
+                        BackgroundGradientAngle="45"
+                        Padding="10"
+                        CornerRadius="0,0,100,200"
+                        BackgroundColor="Beige">
+
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <ImageButton
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="Transparent"
+                                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                                       Glyph={x:Static fonts:IconFont.NavigateBefore},
+                                                       Color=#3f3d56,
+                                                       Size=30}" />
+                                <ImageButton
+                                    HorizontalOptions="EndAndExpand"
+                                    BackgroundColor="Transparent"
+                                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                                       Glyph={x:Static fonts:IconFont.Save},
+                                                       Color=#3f3d56,
+                                                       Size=30}" />
+
+                            </StackLayout>
+                            <CarouselView
+                                Margin="10"
+                                x:Name="TheCarousel"
+                                sharedTransitions:Transition.Name="firstImage"
+                                IndicatorView="indicatorView"
+                                ItemsSource="{Binding Photos}"
+                                PeekAreaInsets="75"
+                                EmptyView="No pictures taken.">
+
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image
+                                            Aspect="AspectFit"
+                                            Source="{Binding Source}"
+                                            Grid.Row="0" />
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <IndicatorView
+                                x:Name="indicatorView"
+                                IndicatorColor="LightGray"
+                                HorizontalOptions="Center"
+                                SelectedIndicatorColor="Red" />
+                        </StackLayout>
+
+                    </pancake:PancakeView>
+
+
+
+
+
+                    <StackLayout Orientation="Horizontal" Margin="30,0">
+                        <Editor
+                            Placeholder="Adress"
+                            x:Name="AdressEditor"
+                            Text="{Binding Apartment.Adresse}"
+                            HorizontalOptions="FillAndExpand" />
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            Source="{FontImage FontFamily=MaterialFontFamily,
+                                               Glyph={x:Static fonts:IconFont.LocationOn},
+                                               Color=#3f3d56,
+                                               Size=40}"
+                            Clicked="OnGetAdressFromLocationClicked" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="StartAndExpand" Margin="30">
+                        <Label Text="Global rate" />
+                        <Label
+                            Text="6.5/10 ⭐"
+                            TextColor="#E85D4A"
+                            FontSize="Large" />
+
+                    </StackLayout>
+                </StackLayout>
+
+
+            </CollectionView.Header>
 
             <CollectionView.ItemTemplate>
 
@@ -88,27 +143,30 @@
                             </SwipeItems>
 
                         </SwipeView.RightItems>
-                        <Frame>
-                            <StackLayout>
-                                <Label Text="{Binding Criteria.Name}" />
+                        <ContentView Padding="3">
+                            <Frame BackgroundColor="#EBE8E4">
+                                <Grid ColumnDefinitions="5*,*">
+                                    <StackLayout>
+                                        <Label Grid.Column="0" Text="{Binding Criteria.Name}" />
+                                        <Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />
 
-                                <Label Text="{Binding RateValue, StringFormat='Note: {0}'}" />
+                                    </StackLayout>
+                                    <Label Grid.Column="1" Text="{Binding RateValue, StringFormat='{0} ⭐'}" />
 
-                                <Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />
 
 
-                            </StackLayout>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </ContentView>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
             <CollectionView.Footer>
-                <AbsoluteLayout Padding="10">
+                <AbsoluteLayout Padding="10" BackgroundColor="White">
                     <Rectangle
                         AbsoluteLayout.LayoutBounds="0,0,.3,1"
                         AbsoluteLayout.LayoutFlags="All"
@@ -134,5 +192,6 @@
                 </AbsoluteLayout>
             </CollectionView.Footer>
         </CollectionView>
-    </Grid>
+    </RefreshView>
+    <!--</pancake:PancakeView>-->
 </ContentPage>

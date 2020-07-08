@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using Home.Ranker.Models;
 using Home.Ranker.Data;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
-using System.IO;
 using Home.Ranker.ViewModels;
 using Home.Ranker.Services;
 using System.Collections;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
-using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 
 namespace Home.Ranker.Views
 {
-    
+
     public partial class NewItemPage : ContentPage
     {
         public Apartment Apartment { get; set; }
@@ -118,17 +111,22 @@ namespace Home.Ranker.Views
 
         private async void OnGetAdressFromLocationClicked(object sender, EventArgs e)
         {
-            var location = await Geolocation.GetLocationAsync();
+
+            if(await DisplayAlert(string.Empty,"Would you like to get adress from current location?", "Get adress", "Cancel"))
+            {
+                var location = await Geolocation.GetLocationAsync();
 
 
 
-            var info = await Geocoding.GetPlacemarksAsync(location);
+                var info = await Geocoding.GetPlacemarksAsync(location);
 
 
 
-            var adress = info.FirstOrDefault();
+                var adress = info.FirstOrDefault();
 
-            Apartment.Adresse = AdressEditor.Text=$"{adress.SubThoroughfare} {adress.Thoroughfare}, {adress.PostalCode} {adress.Locality}";
+                Apartment.Adresse = AdressEditor.Text = $"{adress.SubThoroughfare} {adress.Thoroughfare}, {adress.PostalCode} {adress.Locality}";
+            }
+           
 
         }
 
