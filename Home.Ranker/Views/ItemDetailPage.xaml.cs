@@ -58,7 +58,7 @@ namespace Home.Ranker.Views
             {
                 CriteriaValidated?.Invoke(this, new CustomEventArgs(Criteria));
 
-                Navigation.PopModalAsync();
+                Shell.Current.Navigation.PopAsync();
 
             }
 

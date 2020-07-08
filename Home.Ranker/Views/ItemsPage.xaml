@@ -9,11 +9,10 @@
     mc:Ignorable="d"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     x:Class="Home.Ranker.Views.ItemsPage"
-    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
     Title="{Binding Title}"
     x:Name="BrowseItemsPage">
 
-    <Shell.NavBarIsVisible>False</Shell.NavBarIsVisible>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />

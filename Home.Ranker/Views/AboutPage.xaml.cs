@@ -47,7 +47,7 @@ namespace Home.Ranker.Views
 
 
 
-                Navigation.PopModalAsync();
+            Shell.Current.Navigation.PopAsync();
 
 
             }

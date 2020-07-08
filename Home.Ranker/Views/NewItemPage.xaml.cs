@@ -100,7 +100,7 @@ namespace Home.Ranker.Views
 
         async void Cancel_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Shell.Current.Navigation.PopAsync();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -200,7 +200,7 @@ namespace Home.Ranker.Views
             AddCriteriaModalPage = new ItemDetailPage(new Criteria());
             AddCriteriaModalPage.Criteria = new Criteria();
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
-            await Navigation.PushModalAsync(AddCriteriaModalPage);
+            await Shell.Current.Navigation.PushAsync(AddCriteriaModalPage);
 
         }
 
@@ -251,7 +251,7 @@ namespace Home.Ranker.Views
             var layout = (BindableObject)sender;
             var item = (CriteriaViewModel)layout.BindingContext;
 
-            await Navigation.PushModalAsync(new AboutPage(item, Apartment));
+            await Shell.Current.Navigation.PushAsync(new AboutPage(item, Apartment));
         }
 
         private async void EditItem_Clicked(object sender, EventArgs e)
@@ -261,7 +261,7 @@ namespace Home.Ranker.Views
 
             AddCriteriaModalPage = new ItemDetailPage(item.Criteria);
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
-            await Navigation.PushModalAsync(AddCriteriaModalPage);
+            await Shell.Current.Navigation.PushAsync(AddCriteriaModalPage);
         }
     }
 }

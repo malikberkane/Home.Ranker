@@ -15,7 +15,7 @@ namespace Home.Ranker
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new SharedTransitionNavigationPage(new ItemsPage());
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

@@ -10,25 +10,12 @@
     mc:Ignorable="d"
     x:Name="CurrentView"
     BackgroundColor="#EBE8E4"
-    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.NewItemPage"
     Title="New Item">
 
 
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Save}, Color=Black, Size=20}" Clicked="Save_Clicked" />
-        <ToolbarItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.PhotoCamera}, Color=Black, Size=20}" Clicked="Button_Clicked" />
-
-    </ContentPage.ToolbarItems>
-
-
-
-    <!--<pancake:PancakeView
-            Grid.Row="0"
-            Grid.RowSpan="2"
-            Padding="10"
-            CornerRadius="30,0,0,0">-->
     <RefreshView>
         <CollectionView
             x:Name="collectionView"
@@ -58,6 +45,7 @@
                                 <ImageButton
                                     HorizontalOptions="EndAndExpand"
                                     BackgroundColor="Transparent"
+                                    Clicked="Save_Clicked"
                                     Source="{FontImage FontFamily=MaterialFontFamily,
                                                        Glyph={x:Static fonts:IconFont.Save},
                                                        Color=#3f3d56,
@@ -193,5 +181,4 @@
             </CollectionView.Footer>
         </CollectionView>
     </RefreshView>
-    <!--</pancake:PancakeView>-->
 </ContentPage>
