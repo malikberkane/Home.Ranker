@@ -10,6 +10,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using System.Linq;
+using System.Collections.Immutable;
 
 namespace Home.Ranker.Views
 {
@@ -223,12 +224,17 @@ namespace Home.Ranker.Views
                 {
                     newCriteria.RateValue = Criterias[existingIndex].RateValue;
                     Criterias[existingIndex] = newCriteria;
+
                 }
                 else
                 {
                     Criterias.Add(newCriteria);
                 }
-               
+
+
+                Criterias.Sort();
+
+
 
             }
             catch (Exception ex)

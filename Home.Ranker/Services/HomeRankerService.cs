@@ -71,7 +71,10 @@ namespace Home.Ranker.Services
         {
             using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                var result = unitOfWork.CriteriaRepository.GetAllCriterias()?.Select(n => new CriteriaViewModel { Criteria = n }).ToList();
+                var result = unitOfWork.CriteriaRepository.GetAllCriterias()?
+                    .Select(n => new CriteriaViewModel { Criteria = n })
+                    .OrderByDescending(n=>n.Criteria.ImportanceLevel)
+                    .ToList();
 
                 if (result != null)
                 {
@@ -85,8 +88,8 @@ namespace Home.Ranker.Services
                 }
 
 
-
-                return result; 
+                return result;
+                 
             }
 
 

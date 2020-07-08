@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Home.Ranker.ViewModels
 {
-    public class CriteriaViewModel : BaseViewModel
+    public class CriteriaViewModel : BaseViewModel, IComparable<CriteriaViewModel>
     {
         private double? rateValue;
 
@@ -18,6 +18,21 @@ namespace Home.Ranker.ViewModels
                 SetProperty(ref rateValue, value);
             } }
 
+        public int CompareTo(CriteriaViewModel other)
+        {
+            if (this.Criteria.ImportanceLevel < other.Criteria.ImportanceLevel)
+            {
+                return 1;
+            }
+            else if (this.Criteria.ImportanceLevel > other.Criteria.ImportanceLevel)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public override bool Equals(object obj)
         {
@@ -27,6 +42,8 @@ namespace Home.Ranker.ViewModels
             }
             return false;
         }
+
+       
 
         public override int GetHashCode()
         {
