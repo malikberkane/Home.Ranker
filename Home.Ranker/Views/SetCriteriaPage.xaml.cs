@@ -13,14 +13,14 @@ namespace Home.Ranker.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class ItemDetailPage : ContentPage
+    public partial class SetCriteriaPage : ContentPage
     {
         public Criteria Criteria { get; set; }
 
         public event EventHandler<CustomEventArgs> CriteriaValidated;
 
 
-        public ItemDetailPage(Criteria criteria)
+        public SetCriteriaPage(Criteria criteria)
         {
             InitializeComponent();
             Criteria = criteria;

@@ -11,7 +11,7 @@ namespace Home.Ranker.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class AboutPage : ContentPage
+    public partial class RateCriteriaPage : ContentPage
     {
 
         //public event EventHandler<RateValidatedEventArgs> RateValidated;
@@ -23,7 +23,7 @@ namespace Home.Ranker.Views
         private HomeRankerService HomeRankerService;
 
 
-        public AboutPage(CriteriaViewModel criteria, Apartment appartment)
+        public RateCriteriaPage(CriteriaViewModel criteria, Apartment appartment)
         {
             InitializeComponent();
             CurrentApartment = appartment;

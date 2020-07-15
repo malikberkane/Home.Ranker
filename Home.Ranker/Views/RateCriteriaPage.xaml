@@ -7,7 +7,7 @@
     xmlns:controls="clr-namespace:Home.Ranker.Controls"
     mc:Ignorable="d"
     Padding="10"
-    x:Class="Home.Ranker.Views.AboutPage">
+    x:Class="Home.Ranker.Views.RateCriteriaPage">
 
 
 

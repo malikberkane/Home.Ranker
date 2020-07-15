@@ -36,6 +36,13 @@ namespace Home.Ranker.Data
             _currentContext.Photos.Remove(Photo);
         }
 
+        public void DeletePhotos(Func<Photo, bool> predicate)
+        {
+            var photosToDelete = _currentContext.Photos.Where(predicate);
+
+            _currentContext.Photos.RemoveRange(photosToDelete);
+        }
+
         public void UpdatePhoto(Photo Photo)
         {
             _currentContext.Entry(Photo).State = EntityState.Modified;

@@ -8,7 +8,7 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
-    x:Class="Home.Ranker.Views.ItemsPage"
+    x:Class="Home.Ranker.Views.HomePage"
     Shell.NavBarIsVisible="False"
     Title="{Binding Title}"
     x:Name="BrowseItemsPage">
@@ -75,7 +75,13 @@
                                 <SwipeView.RightItems>
 
                                     <SwipeItems>
-                                        <SwipeItem Text="Delete" />
+                                        <SwipeItem
+                                            IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                        Glyph={x:Static fonts:IconFont.Delete},
+                                                                        Color=Black,
+                                                                        Size=20}"
+                                            BackgroundColor="Red"
+                                            Invoked="Delete_Apartment_Clicked" />
                                     </SwipeItems>
 
                                 </SwipeView.RightItems>

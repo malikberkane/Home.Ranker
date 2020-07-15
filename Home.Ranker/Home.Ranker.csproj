@@ -25,4 +25,13 @@
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="1.4.2" />  
     <PackageReference Include="Xamarin.Plugin.SharedTransitions" Version="2.2.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\SetApartmentPage.xaml.cs">
+      <DependentUpon>SetApartmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SetCriteriaPage.xaml.cs">
+      <DependentUpon>SetCriteriaPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

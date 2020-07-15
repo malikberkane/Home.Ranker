@@ -33,8 +33,8 @@ namespace Home.Ranker.Data
 
         public void DeleteCriteria(int criteriaId)
         {
-            Criteria student = _currentContext.Criterias.Find(criteriaId);
-            _currentContext.Criterias.Remove(student);
+            Criteria criteria = _currentContext.Criterias.Find(criteriaId);
+            _currentContext.Criterias.Remove(criteria);
         }
 
         public void UpdateCriteria(Criteria criteria)

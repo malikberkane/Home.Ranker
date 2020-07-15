@@ -11,7 +11,7 @@
     x:Name="CurrentView"
     BackgroundColor="#EBE8E4"
     Shell.NavBarIsVisible="False"
-    x:Class="Home.Ranker.Views.NewItemPage"
+    x:Class="Home.Ranker.Views.SetApartmentPage"
     Title="New Item">
 
 
@@ -27,31 +27,42 @@
                 <StackLayout HeightRequest="500">
                     <pancake:PancakeView
                         BackgroundGradientStartColor="#E85D4A"
-                        BackgroundGradientEndColor="LightSalmon"
-                        BackgroundGradientAngle="45"
+                        BackgroundGradientEndColor="#E85D4A"
+                        BackgroundGradientAngle="90"
                         Padding="10"
                         CornerRadius="0,0,100,200"
                         BackgroundColor="Beige">
 
                         <StackLayout>
-                            <StackLayout Orientation="Horizontal">
+                            <Grid ColumnDefinitions="5*,*,*">
                                 <ImageButton
                                     HorizontalOptions="Start"
+                                    Grid.Column="0"
                                     BackgroundColor="Transparent"
                                     Source="{FontImage FontFamily=MaterialFontFamily,
                                                        Glyph={x:Static fonts:IconFont.NavigateBefore},
                                                        Color=#3f3d56,
-                                                       Size=30}" />
+                                                       Size=80}" />
+
                                 <ImageButton
-                                    HorizontalOptions="EndAndExpand"
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    Clicked="Button_Clicked"
+                                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                                       Glyph={x:Static fonts:IconFont.PhotoCamera},
+                                                       Color=#3f3d56,
+                                                       Size=80}" />
+                                <ImageButton
+                                    Grid.Column="2"
                                     BackgroundColor="Transparent"
                                     Clicked="Save_Clicked"
                                     Source="{FontImage FontFamily=MaterialFontFamily,
                                                        Glyph={x:Static fonts:IconFont.Save},
                                                        Color=#3f3d56,
-                                                       Size=30}" />
+                                                       Size=80}" />
 
-                            </StackLayout>
+
+                            </Grid>
                             <CarouselView
                                 Margin="10"
                                 x:Name="TheCarousel"
@@ -118,7 +129,13 @@
                         <SwipeView.RightItems>
 
                             <SwipeItems>
-                                <SwipeItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Delete}, Color=Black, Size=20}" BackgroundColor="Red" />
+                                <SwipeItem
+                                    Invoked="DeleteCriteria_Clicked"
+                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                Glyph={x:Static fonts:IconFont.Delete},
+                                                                Color=Black,
+                                                                Size=20}"
+                                    BackgroundColor="Red" />
                                 <SwipeItem
                                     Text="Edit"
                                     BackgroundColor="Green"

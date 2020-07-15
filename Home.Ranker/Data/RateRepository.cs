@@ -23,7 +23,13 @@ namespace Home.Ranker.Data
             return _currentContext.Rates.Where(predicate);
         }
 
-       
+        public void DeleteRates(Func<Rate, bool> predicate)
+        {
+            var ratesToRemove = _currentContext.Rates.Where(predicate);
+            _currentContext.Rates.RemoveRange(ratesToRemove);
+        }
+
+
 
         public Rate GetRateById(int apartmentId, int criteriaId)
         {

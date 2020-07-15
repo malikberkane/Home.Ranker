@@ -15,11 +15,11 @@ using System.Collections.Immutable;
 namespace Home.Ranker.Views
 {
 
-    public partial class NewItemPage : ContentPage
+    public partial class SetApartmentPage : ContentPage
     {
         public Apartment Apartment { get; set; }
 
-        private  HomeRankerService HomeRankerService;
+        private HomeRankerService HomeRankerService;
 
         public ObservableCollection<Photo> Photos { get; set; } = new ObservableCollection<Photo>();
 
@@ -28,7 +28,7 @@ namespace Home.Ranker.Views
 
 
 
-        public NewItemPage(string name)
+        public SetApartmentPage(string name)
         {
             InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace Home.Ranker.Views
                 }
             }
 
-            
+
 
 
             var criterias = HomeRankerService.GetCriteriasAndRates(Apartment);
@@ -71,7 +71,7 @@ namespace Home.Ranker.Views
         }
 
 
-        public NewItemPage(Apartment appartment)
+        public SetApartmentPage(Apartment appartment)
         {
             InitializeComponent();
 
@@ -85,18 +85,19 @@ namespace Home.Ranker.Views
 
 
 
-        async void Save_Clicked(object sender, EventArgs e)
+        void Save_Clicked(object sender, EventArgs e)
         {
 
 
             HomeRankerService.InsertApartment(Apartment, Photos, Criterias);
 
-           
+
 
 
             MessagingCenter.Send(this, "AddItem", Apartment);
 
-            
+
+
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
@@ -113,7 +114,7 @@ namespace Home.Ranker.Views
         private async void OnGetAdressFromLocationClicked(object sender, EventArgs e)
         {
 
-            if(await DisplayAlert(string.Empty,"Would you like to get adress from current location?", "Get adress", "Cancel"))
+            if (await DisplayAlert(string.Empty, "Would you like to get adress from current location?", "Get adress", "Cancel"))
             {
                 var location = await Geolocation.GetLocationAsync();
 
@@ -127,7 +128,7 @@ namespace Home.Ranker.Views
 
                 Apartment.Adresse = AdressEditor.Text = $"{adress.SubThoroughfare} {adress.Thoroughfare}, {adress.PostalCode} {adress.Locality}";
             }
-           
+
 
         }
 
@@ -136,7 +137,7 @@ namespace Home.Ranker.Views
             await CrossMedia.Current.Initialize();
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await Shell.Current.DisplayAlert("No Camera", ":( No camera available.", "OK");
                 return;
             }
 
@@ -182,13 +183,13 @@ namespace Home.Ranker.Views
             }
             catch (Exception ex)
             {
-
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
             }
         }
 
 
 
-      
+
 
         protected override void OnAppearing()
         {
@@ -198,14 +199,31 @@ namespace Home.Ranker.Views
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
-            AddCriteriaModalPage = new ItemDetailPage(new Criteria());
+            AddCriteriaModalPage = new SetCriteriaPage(new Criteria());
             AddCriteriaModalPage.Criteria = new Criteria();
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
             await Shell.Current.Navigation.PushAsync(AddCriteriaModalPage);
 
         }
 
-        private ItemDetailPage AddCriteriaModalPage;
+        private async void DeleteCriteria_Clicked(object sender, EventArgs e)
+        {
+            var layout = (BindableObject)sender;
+            var item = (CriteriaViewModel)layout.BindingContext;
+
+            try
+            {
+                HomeRankerService.DeleteCriteria(item.Criteria);
+                Criterias.Remove(item);
+            }
+            catch (Exception ex)
+            {
+
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+            }
+        }
+
+        private SetCriteriaPage AddCriteriaModalPage;
 
         private async void NewCriteriaValidatedInModal(object sender, CustomEventArgs e)
         {
@@ -214,7 +232,7 @@ namespace Home.Ranker.Views
             {
                 HomeRankerService.InsertCriteria(e.Criteria);
 
-                var newCriteria= new CriteriaViewModel
+                var newCriteria = new CriteriaViewModel
                 {
                     Criteria = e.Criteria
                 };
@@ -240,7 +258,7 @@ namespace Home.Ranker.Views
             catch (Exception ex)
             {
 
-                await DisplayAlert("Error", ex.Message, "Ok");
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
             }
             finally
             {
@@ -257,7 +275,7 @@ namespace Home.Ranker.Views
             var layout = (BindableObject)sender;
             var item = (CriteriaViewModel)layout.BindingContext;
 
-            await Shell.Current.Navigation.PushAsync(new AboutPage(item, Apartment));
+            await Shell.Current.Navigation.PushAsync(new RateCriteriaPage(item, Apartment));
         }
 
         private async void EditItem_Clicked(object sender, EventArgs e)
@@ -265,7 +283,7 @@ namespace Home.Ranker.Views
             var layout = (BindableObject)sender;
             var item = (CriteriaViewModel)layout.BindingContext;
 
-            AddCriteriaModalPage = new ItemDetailPage(item.Criteria);
+            AddCriteriaModalPage = new SetCriteriaPage(item.Criteria);
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
             await Shell.Current.Navigation.PushAsync(AddCriteriaModalPage);
         }

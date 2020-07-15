@@ -11,8 +11,8 @@ namespace Home.Ranker.Services
 {
     public class HomeRankerService
     {
-     
-        
+
+
         public IEnumerable<Apartment> GetAllApartments()
         {
             using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
@@ -30,17 +30,17 @@ namespace Home.Ranker.Services
                     var allRates = unitOfWork.RateRepository.GetAllRates(n => n.ApartmentId == appart.Id);
                     if (allRates != null && allRates.Any())
                     {
-                        appart.RatesAverage = allRates.WeightedAverage(n=>n.RateValue, w =>
-                        {
-                            var criteria = unitOfWork.CriteriaRepository.GetCriteriaById(w.CriteriaId);
-                            return criteria?.ImportanceLevel ?? default;
-                        });
+                        appart.RatesAverage = allRates.WeightedAverage(n => n.RateValue, w =>
+                          {
+                              var criteria = unitOfWork.CriteriaRepository.GetCriteriaById(w.CriteriaId);
+                              return criteria?.ImportanceLevel ?? default;
+                          });
 
 
                     }
                 }
 
-                return appartments; 
+                return appartments;
             }
         }
 
@@ -61,11 +61,11 @@ namespace Home.Ranker.Services
 
                 }
 
-                return photos; 
+                return photos;
             }
         }
 
-        
+
 
         public IEnumerable<CriteriaViewModel> GetCriteriasAndRates(Apartment appartment)
         {
@@ -73,7 +73,7 @@ namespace Home.Ranker.Services
             {
                 var result = unitOfWork.CriteriaRepository.GetAllCriterias()?
                     .Select(n => new CriteriaViewModel { Criteria = n })
-                    .OrderByDescending(n=>n.Criteria.ImportanceLevel)
+                    .OrderByDescending(n => n.Criteria.ImportanceLevel)
                     .ToList();
 
                 if (result != null)
@@ -89,7 +89,7 @@ namespace Home.Ranker.Services
 
 
                 return result;
-                 
+
             }
 
 
@@ -99,7 +99,7 @@ namespace Home.Ranker.Services
 
         public void InsertCriteria(Criteria criteria)
         {
-            using (var unitOfWork= new UnitOfWork(new HomeRankerContext()))
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
                 if (criteria.Id == 0)
                 {
@@ -119,10 +119,23 @@ namespace Home.Ranker.Services
         }
 
 
+        public void DeleteCriteria(Criteria criteria)
+        {
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
+            {
+
+                unitOfWork.RateRepository.DeleteRates(r => r.CriteriaId == criteria.Id);
+                unitOfWork.CriteriaRepository.DeleteCriteria(criteria.Id);
+                unitOfWork.Complete();
+            }
+
+
+        }
+
         public void InsertApartment(Apartment apartment, IEnumerable<Photo> photos, IEnumerable<CriteriaViewModel> criteriaRates)
         {
 
-            using (var unitOfWork= new UnitOfWork(new HomeRankerContext()))
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
                 if (photos.Any())
                 {
@@ -192,10 +205,28 @@ namespace Home.Ranker.Services
 
                 }
 
-                apartment.RatesAverage = criteriaRates.Where(n => n.RateValue.HasValue).WeightedAverage(c=>c.RateValue.Value, w=>w.Criteria.ImportanceLevel);
+                apartment.RatesAverage = criteriaRates.Where(n => n.RateValue.HasValue).WeightedAverage(c => c.RateValue.Value, w => w.Criteria.ImportanceLevel);
 
             }
-            
+
         }
+
+        public void DeleteApartment(Apartment apartment)
+        {
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
+            {
+
+                unitOfWork.RateRepository.DeleteRates(r => r.ApartmentId == apartment.Id);
+                unitOfWork.PhotoRepository.DeletePhotos(r => r.ApartmentId == apartment.Id);
+
+                unitOfWork.ApartmentRepository.DeleteApartment(apartment.Id);
+
+                unitOfWork.Complete();
+            }
+
+
+        }
+
+
     }
 }

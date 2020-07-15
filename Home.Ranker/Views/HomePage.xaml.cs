@@ -1,40 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using Home.Ranker.Models;
-using Home.Ranker.Views;
-using Home.Ranker.ViewModels;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
 using Home.Ranker.Data;
 using Home.Ranker.Services;
 using System.Collections.ObjectModel;
-using System.Collections;
 using System.Reflection;
 using Plugin.SharedTransitions;
-using Xamarin.Essentials;
 
 namespace Home.Ranker.Views
 {
-    
-    public partial class ItemsPage : ContentPage
+
+    public partial class HomePage : ContentPage
     {
         private  HomeRankerService HomeRankerService;
 
-        public ItemsPage()
+        public HomePage()
         {
             InitializeComponent();
             BindingContext = this;
 
             homeImage.Source = ImageSource.FromResource(
              "Home.Ranker.Images.HomeImage.png",
-                typeof(ItemsPage).GetTypeInfo().Assembly);
+                typeof(HomePage).GetTypeInfo().Assembly);
 
 
         }
@@ -44,7 +31,7 @@ namespace Home.Ranker.Views
             base.OnAppearing();
             homeImage.Source = ImageSource.FromResource(
            "Home.Ranker.Images.HomeImage.png",
-              typeof(ItemsPage).GetTypeInfo().Assembly);
+              typeof(HomePage).GetTypeInfo().Assembly);
         }
         public ObservableCollection<Apartment> Apartments { get; set; }
 
@@ -54,7 +41,7 @@ namespace Home.Ranker.Views
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             LoadItemsCommand.Execute(null);
-            MessagingCenter.Subscribe<NewItemPage, Apartment>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<SetApartmentPage, Apartment>(this, "AddItem", async (obj, item) =>
             {
 
                 if (Apartments == null)
@@ -72,7 +59,7 @@ namespace Home.Ranker.Views
                     Apartments.Add(item);
                 }
 
-                await Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
 
 
             });
@@ -87,11 +74,26 @@ namespace Home.Ranker.Views
             var item = (Apartment)layout.BindingContext;
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.Name);
 
-            await Shell.Current.Navigation.PushAsync(new NewItemPage(item));
-            //await Navigation.PushAsync(new NewItemPage(item));
+            await Shell.Current.Navigation.PushAsync(new SetApartmentPage(item));
 
         }
 
+        async void Delete_Apartment_Clicked(object sender, EventArgs e)
+        {
+            var layout = (BindableObject)sender;
+            var item = (Apartment)layout.BindingContext;
+
+            try
+            {
+                HomeRankerService.DeleteApartment(item);
+                Apartments.Remove(item);
+            }
+            catch (Exception ex)
+            {
+
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+            }
+        }   
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
@@ -102,7 +104,7 @@ namespace Home.Ranker.Views
 
             if (!string.IsNullOrEmpty(newApartmentLabel))
             {
-                await Shell.Current.Navigation.PushAsync(new NewItemPage(newApartmentLabel));
+                await Shell.Current.Navigation.PushAsync(new SetApartmentPage(newApartmentLabel));
 
 
             }
