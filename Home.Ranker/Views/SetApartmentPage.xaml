@@ -11,17 +11,24 @@
     x:Name="CurrentView"
     BackgroundColor="#EBE8E4"
     Shell.NavBarIsVisible="False"
+    Visual="Material"
     x:Class="Home.Ranker.Views.SetApartmentPage"
     Title="New Item">
 
 
 
-        <RefreshView Grid.Row="1">
+    <Grid RowDefinitions="2*,*">
+
+
+        <RefreshView Grid.Row="0" Grid.RowSpan="2">
             <CollectionView
                 x:Name="collectionView"
                 ItemsSource="{Binding Criterias}"
                 SelectionMode="Single">
                 <CollectionView.Header>
+                    <ContentView HeightRequest="500" InputTransparent="True" />
+                </CollectionView.Header>
+                <!--<CollectionView.Header>
 
 
                     <StackLayout HeightRequest="500">
@@ -117,7 +124,7 @@
                     </StackLayout>
 
 
-                </CollectionView.Header>
+                </CollectionView.Header>-->
 
                 <CollectionView.ItemTemplate>
 
@@ -196,5 +203,104 @@
                 </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
-    <Grid RowDefinitions="Auto,*">
+
+        <StackLayout Grid.Row="0" x:Name="HeaderView">
+            <pancake:PancakeView
+                BackgroundGradientStartColor="#E85D4A"
+                BackgroundGradientEndColor="#E85D4A"
+                BackgroundGradientAngle="90"
+                Padding="10"
+                CornerRadius="0,0,100,200"
+                BackgroundColor="Beige">
+
+                <StackLayout>
+                    <Grid ColumnDefinitions="5*,*,*">
+                        <ImageButton
+                            HorizontalOptions="Start"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            Source="{FontImage FontFamily=MaterialFontFamily,
+                                               Glyph={x:Static fonts:IconFont.NavigateBefore},
+                                               Color=#3f3d56,
+                                               Size=80}" />
+
+                        <ImageButton
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            Clicked="Button_Clicked"
+                            Source="{FontImage FontFamily=MaterialFontFamily,
+                                               Glyph={x:Static fonts:IconFont.PhotoCamera},
+                                               Color=#3f3d56,
+                                               Size=80}" />
+                        <ImageButton
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            Clicked="Save_Clicked"
+                            Source="{FontImage FontFamily=MaterialFontFamily,
+                                               Glyph={x:Static fonts:IconFont.Save},
+                                               Color=#3f3d56,
+                                               Size=80}" />
+
+
+                    </Grid>
+                    <CarouselView
+                        Margin="10"
+                        x:Name="TheCarousel"
+                        sharedTransitions:Transition.Name="firstImage"
+                        ItemsSource="{Binding Photos}"
+                        IndicatorView="indicatorView"
+                        PeekAreaInsets="75"
+                        EmptyView="No pictures taken.">
+
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Aspect="AspectFit" Source="{Binding Source}" />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView
+                        x:Name="indicatorView"
+                        IndicatorColor="LightGray"
+                        HorizontalOptions="Center"
+                        SelectedIndicatorColor="Red" />
+                </StackLayout>
+
+            </pancake:PancakeView>
+
+
+
+
+
+            <StackLayout Orientation="Horizontal" Margin="30,0">
+                <Editor
+                    Placeholder="Adress"
+                    x:Name="AdressEditor"
+                    AutoSize="TextChanges"
+                    Text="{Binding Apartment.Adresse}"
+                    HorizontalOptions="FillAndExpand" />
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                       Glyph={x:Static fonts:IconFont.LocationOn},
+                                       Color=#3f3d56,
+                                       Size=40}"
+                    Clicked="OnGetAdressFromLocationClicked" />
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="StartAndExpand"
+                Margin="30">
+                <Editor
+                    Placeholder="Name"
+                    Text="{Binding Apartment.Name}"
+                    AutoSize="TextChanges" />
+                <Label
+                    Text="{Binding Criterias.RatesAverage, StringFormat='{0} ⭐'}"
+                    TextColor="#E85D4A"
+                    FontSize="Large" />
+
+            </StackLayout>
+        </StackLayout>
+    </Grid>
 </ContentPage>

@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using Home.Ranker.Services;
 using Home.Ranker.Views;
 using Plugin.SharedTransitions;
+using Plugin.Media;
 
 namespace Home.Ranker
 {
@@ -13,6 +14,7 @@ namespace Home.Ranker
         public App()
         {
             InitializeComponent();
+            CrossMedia.Current.Initialize();
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();

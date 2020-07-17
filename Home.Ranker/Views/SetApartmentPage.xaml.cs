@@ -24,7 +24,7 @@ namespace Home.Ranker.Views
         private HomeRankerService HomeRankerService;
 
         public ObservableCollection<Photo> Photos { get; set; }
-
+        
         public ObservableCriterias Criterias { get; set; } 
 
 
@@ -35,6 +35,8 @@ namespace Home.Ranker.Views
 
             InitializeComponent();
 
+            collectionView.Scrolled += this.CollectionView_Scrolled;
+
             Apartment = new Apartment
             {
                 Name = name
@@ -43,10 +45,55 @@ namespace Home.Ranker.Views
 
         }
 
+        private void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
+        {
+            if (!_defaultVisibleItemsMesured)
+            {
+                _defaultVisibleItemsNumber = e.LastVisibleItemIndex - e.FirstVisibleItemIndex;
+                _defaultVisibleItemsMesured = true;
+            }
+            CustomAnimation(e.LastVisibleItemIndex,e.FirstVisibleItemIndex, HeaderView);
+        }
+
+        private int _defaultVisibleItemsNumber;
+        private bool _defaultVisibleItemsMesured;
+        public  async Task CustomAnimation(int lastIndexVisible,int firstIndexVisible, StackLayout name)
+        {
+
+            double ecart = lastIndexVisible - firstIndexVisible;
+            var fadeTarget =  1 / Math.Pow((ecart/ _defaultVisibleItemsNumber), 4);
+            await name.FadeTo(fadeTarget, 30, Easing.SinOut);
+            if (fadeTarget < 0.6)
+            {
+                HeaderView.InputTransparent = true;
+            }
+            else
+            {
+                HeaderView.InputTransparent = false;
+
+            }
+            //for (double i = 0; i <= this.Criterias.Count ; i++)
+            //{
+                
+            //    //Change here how you want to change the opacity(can make custom animation)
+            //    var x = 1 - (1.0/ this.Criterias.Count) * i;
+                
+
+
+            //    if (position == i)
+            //    {
+                   
+            //    }
+
+              
+            //}
+        }
+
         public SetApartmentPage(Apartment appartment)
         {
 
             InitializeComponent();
+            collectionView.Scrolled += this.CollectionView_Scrolled;
 
             Apartment = appartment;
             AdressEditor.Text = Apartment.Adresse;
@@ -86,13 +133,11 @@ namespace Home.Ranker.Views
                 Criterias = new ObservableCriterias();
 
             }
+
+
         }
 
-
-
-       
-
-
+      
 
         void Save_Clicked(object sender, EventArgs e)
         {
@@ -135,7 +180,7 @@ namespace Home.Ranker.Views
 
                 var adress = info.FirstOrDefault();
 
-                Apartment.Adresse = AdressEditor.Text = $"{adress.SubThoroughfare} {adress.Thoroughfare}, {adress.PostalCode} {adress.Locality}";
+                Apartment.Adresse = AdressEditor.Text = $"{adress.SubThoroughfare} {adress.Thoroughfare}{Environment.NewLine}{adress.PostalCode} {adress.Locality}";
             }
 
 
@@ -143,7 +188,6 @@ namespace Home.Ranker.Views
 
         private async Task TakePicture()
         {
-            await CrossMedia.Current.Initialize();
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 await Shell.Current.DisplayAlert("No Camera", ":( No camera available.", "OK");

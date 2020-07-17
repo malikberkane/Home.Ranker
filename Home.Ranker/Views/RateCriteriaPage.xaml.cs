@@ -39,7 +39,7 @@ namespace Home.Ranker.Views
         {
 
             Slider.Value = Math.Round(e.NewValue);
-            RateDescriptionLabel.Text = String.Format("Rating: {0}", Slider.Value);
+            RateDescriptionLabel.Text = String.Format("{0}/10", Slider.Value);
         }
 
     }

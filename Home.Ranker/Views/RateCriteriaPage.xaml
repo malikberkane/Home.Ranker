@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Home.Ranker.Controls"
     mc:Ignorable="d"
     Padding="10"
+    Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.RateCriteriaPage">
 
 
@@ -14,43 +15,63 @@
 
 
 
-    <StackLayout VerticalOptions="CenterAndExpand">
-        <Label x:Name="RateDescriptionLabel" VerticalOptions="CenterAndExpand" />
+    <ContentView VerticalOptions="CenterAndExpand">
+        <StackLayout Spacing="30">
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                FontSize="50"
+                VerticalOptions="Start"
+                Text="{Binding CurrentCriteria.Criteria.Name}" />
 
 
-        <AbsoluteLayout>
-            <controls:RatingControl
-                AbsoluteLayout.LayoutFlags="All"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                Spacing="10"
-                Size="30"
-                Rating="{Binding CurrentCriteria.RateValue}"
-                Max="10" />
-            <Slider
-                AbsoluteLayout.LayoutFlags="All"
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                BackgroundColor="Transparent"
-                Opacity="0.4"
-                x:Name="Slider"
-                ValueChanged="Slider_ValueChanged"
-                Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
-                Maximum="10"
-                MinimumTrackColor="Transparent"
-                ThumbColor="Transparent"
-                Minimum="1" />
-
-        </AbsoluteLayout>
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                FontSize="20"
+                VerticalOptions="Start"
+                Text="{Binding CurrentApartment.Name}" />
+            <Label x:Name="RateDescriptionLabel" HorizontalOptions="CenterAndExpand" />
 
 
-        <Button
-            Text="Validate"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            Clicked="Button_Clicked"
-            Grid.Row="2" />
+            <AbsoluteLayout VerticalOptions="CenterAndExpand">
+                <controls:RatingControl
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    Spacing="10"
+                    Size="30"
+                    Rating="{Binding CurrentCriteria.RateValue}"
+                    Max="10" />
+                <Slider
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    BackgroundColor="Transparent"
+                    Opacity="0.4"
+                    x:Name="Slider"
+                    ValueChanged="Slider_ValueChanged"
+                    Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
+                    Maximum="10"
+                    MinimumTrackColor="Transparent"
+                    ThumbColor="Transparent"
+                    Minimum="1" />
 
-    </StackLayout>
+            </AbsoluteLayout>
 
+
+
+            <Editor
+                Placeholder="Notes"
+                x:Name="AdressEditor"
+                AutoSize="TextChanges"
+                Text="{Binding CurrentCriteria.Note}"
+                HorizontalOptions="FillAndExpand" />
+            <Button
+                Text="Validate"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"
+                Grid.Row="2" />
+
+        </StackLayout>
+    </ContentView>
 
 
 </ContentPage>

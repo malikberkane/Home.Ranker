@@ -83,6 +83,7 @@ namespace Home.Ranker.Services
                         var rate = unitOfWork.RateRepository.GetRateById(appartment.Id, item.Criteria.Id);
 
                         item.RateValue = rate?.RateValue;
+                        item.Note = rate?.Note;
                     }
 
                 }
@@ -137,7 +138,7 @@ namespace Home.Ranker.Services
 
             using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                if (photos.Any())
+                if (photos!=null && photos.Any())
                 {
                     apartment.FirstPictureUrl = photos.First().PhotoUrl;
                     apartment.FirstPictureImageSource = photos.First().Source;
@@ -180,6 +181,7 @@ namespace Home.Ranker.Services
                         {
                             CriteriaId = criteria.Criteria.Id,
                             RateValue = criteria.RateValue.Value,
+                            Note=criteria.Note,
                             ApartmentId = apartment.Id
                         };
                         if (unitOfWork.RateRepository.GetRateById(rate.ApartmentId, rate.CriteriaId) == null)

@@ -7,6 +7,7 @@ namespace Home.Ranker.ViewModels
     public class CriteriaViewModel : BaseViewModel, IComparable<CriteriaViewModel>
     {
         private double? rateValue;
+        private string note;
 
         public Criteria Criteria { get; set; }
 
@@ -18,6 +19,13 @@ namespace Home.Ranker.ViewModels
             {
                 SetProperty(ref rateValue, value);
             }
+        }
+
+
+        public string Note { get => note; set 
+            {
+                SetProperty(ref note, value);
+            } 
         }
 
         public int CompareTo(CriteriaViewModel other)

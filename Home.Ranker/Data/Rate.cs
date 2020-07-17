@@ -12,5 +12,8 @@ namespace Home.Ranker.Data
 
         public double RateValue { get; set; }
 
+        public string Note { get; set; }
+
+
     }
 }
