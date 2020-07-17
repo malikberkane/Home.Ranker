@@ -151,11 +151,14 @@
                                                 Rotation="0"
                                                 Source="{Binding FirstPictureImageSource}" />
                                         </Grid>
-                                        <pancake:PancakeView.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnItemSelected" />
-                                        </pancake:PancakeView.GestureRecognizers>
+
                                     </pancake:PancakeView>
                                 </Grid>
+
+                                <SwipeView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnItemSelected" />
+
+                                </SwipeView.GestureRecognizers>
 
                             </SwipeView>
                         </DataTemplate>

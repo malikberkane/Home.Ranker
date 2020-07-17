@@ -16,186 +16,185 @@
 
 
 
-    <RefreshView>
-        <CollectionView
-            x:Name="collectionView"
-            ItemsSource="{Binding Criterias}"
-            SelectionMode="Single">
-            <CollectionView.Header>
+        <RefreshView Grid.Row="1">
+            <CollectionView
+                x:Name="collectionView"
+                ItemsSource="{Binding Criterias}"
+                SelectionMode="Single">
+                <CollectionView.Header>
 
 
-                <StackLayout HeightRequest="500">
-                    <pancake:PancakeView
-                        BackgroundGradientStartColor="#E85D4A"
-                        BackgroundGradientEndColor="#E85D4A"
-                        BackgroundGradientAngle="90"
-                        Padding="10"
-                        CornerRadius="0,0,100,200"
-                        BackgroundColor="Beige">
+                    <StackLayout HeightRequest="500">
+                        <pancake:PancakeView
+                            BackgroundGradientStartColor="#E85D4A"
+                            BackgroundGradientEndColor="#E85D4A"
+                            BackgroundGradientAngle="90"
+                            Padding="10"
+                            CornerRadius="0,0,100,200"
+                            BackgroundColor="Beige">
 
-                        <StackLayout>
-                            <Grid ColumnDefinitions="5*,*,*">
-                                <ImageButton
-                                    HorizontalOptions="Start"
-                                    Grid.Column="0"
-                                    BackgroundColor="Transparent"
-                                    Source="{FontImage FontFamily=MaterialFontFamily,
-                                                       Glyph={x:Static fonts:IconFont.NavigateBefore},
-                                                       Color=#3f3d56,
-                                                       Size=80}" />
+                            <StackLayout>
+                                <Grid ColumnDefinitions="5*,*,*">
+                                    <ImageButton
+                                        HorizontalOptions="Start"
+                                        Grid.Column="0"
+                                        BackgroundColor="Transparent"
+                                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                                           Glyph={x:Static fonts:IconFont.NavigateBefore},
+                                                           Color=#3f3d56,
+                                                           Size=80}" />
 
-                                <ImageButton
-                                    Grid.Column="1"
-                                    BackgroundColor="Transparent"
-                                    Clicked="Button_Clicked"
-                                    Source="{FontImage FontFamily=MaterialFontFamily,
-                                                       Glyph={x:Static fonts:IconFont.PhotoCamera},
-                                                       Color=#3f3d56,
-                                                       Size=80}" />
-                                <ImageButton
-                                    Grid.Column="2"
-                                    BackgroundColor="Transparent"
-                                    Clicked="Save_Clicked"
-                                    Source="{FontImage FontFamily=MaterialFontFamily,
-                                                       Glyph={x:Static fonts:IconFont.Save},
-                                                       Color=#3f3d56,
-                                                       Size=80}" />
-
-
-                            </Grid>
-                            <CarouselView
-                                Margin="10"
-                                x:Name="TheCarousel"
-                                sharedTransitions:Transition.Name="firstImage"
-                                IndicatorView="indicatorView"
-                                ItemsSource="{Binding Photos}"
-                                PeekAreaInsets="75"
-                                EmptyView="No pictures taken.">
-
-                                <CarouselView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Image
-                                            Aspect="AspectFit"
-                                            Source="{Binding Source}"
-                                            Grid.Row="0" />
-                                    </DataTemplate>
-                                </CarouselView.ItemTemplate>
-                            </CarouselView>
-                            <IndicatorView
-                                x:Name="indicatorView"
-                                IndicatorColor="LightGray"
-                                HorizontalOptions="Center"
-                                SelectedIndicatorColor="Red" />
-                        </StackLayout>
-
-                    </pancake:PancakeView>
-
-
-
-
-
-                    <StackLayout Orientation="Horizontal" Margin="30,0">
-                        <Editor
-                            Placeholder="Adress"
-                            x:Name="AdressEditor"
-                            Text="{Binding Apartment.Adresse}"
-                            HorizontalOptions="FillAndExpand" />
-                        <ImageButton
-                            BackgroundColor="Transparent"
-                            Source="{FontImage FontFamily=MaterialFontFamily,
-                                               Glyph={x:Static fonts:IconFont.LocationOn},
-                                               Color=#3f3d56,
-                                               Size=40}"
-                            Clicked="OnGetAdressFromLocationClicked" />
-                    </StackLayout>
-
-                    <StackLayout HorizontalOptions="StartAndExpand" Margin="30">
-                        <Label Text="Global rate" />
-                        <Label
-                            Text="6.5/10 ⭐"
-                            TextColor="#E85D4A"
-                            FontSize="Large" />
-
-                    </StackLayout>
-                </StackLayout>
-
-
-            </CollectionView.Header>
-
-            <CollectionView.ItemTemplate>
-
-                <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-
-                            <SwipeItems>
-                                <SwipeItem
-                                    Invoked="DeleteCriteria_Clicked"
-                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                Glyph={x:Static fonts:IconFont.Delete},
-                                                                Color=Black,
-                                                                Size=20}"
-                                    BackgroundColor="Red" />
-                                <SwipeItem
-                                    Text="Edit"
-                                    BackgroundColor="Green"
-                                    Invoked="EditItem_Clicked"
-                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                Glyph={x:Static fonts:IconFont.Edit},
-                                                                Color=Black,
-                                                                Size=20}" />
-
-                            </SwipeItems>
-
-                        </SwipeView.RightItems>
-                        <ContentView Padding="3">
-                            <Frame BackgroundColor="#EBE8E4">
-                                <Grid ColumnDefinitions="5*,*">
-                                    <StackLayout>
-                                        <Label Grid.Column="0" Text="{Binding Criteria.Name}" />
-                                        <Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />
-
-                                    </StackLayout>
-                                    <Label Grid.Column="1" Text="{Binding RateValue, StringFormat='{0} ⭐'}" />
-
+                                    <ImageButton
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        Clicked="Button_Clicked"
+                                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                                           Glyph={x:Static fonts:IconFont.PhotoCamera},
+                                                           Color=#3f3d56,
+                                                           Size=80}" />
+                                    <ImageButton
+                                        Grid.Column="2"
+                                        BackgroundColor="Transparent"
+                                        Clicked="Save_Clicked"
+                                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                                           Glyph={x:Static fonts:IconFont.Save},
+                                                           Color=#3f3d56,
+                                                           Size=80}" />
 
 
                                 </Grid>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                </Frame.GestureRecognizers>
-                            </Frame>
-                        </ContentView>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                                <CarouselView
+                                    Margin="10"
+                                    x:Name="TheCarousel"
+                                    sharedTransitions:Transition.Name="firstImage"
+                                    ItemsSource="{Binding Photos}"
+                                    IndicatorView="indicatorView"
+                                    PeekAreaInsets="75"
+                                    EmptyView="No pictures taken.">
 
-            <CollectionView.Footer>
-                <AbsoluteLayout Padding="10" BackgroundColor="White">
-                    <Rectangle
-                        AbsoluteLayout.LayoutBounds="0,0,.3,1"
-                        AbsoluteLayout.LayoutFlags="All"
-                        Stroke="Green"
-                        StrokeThickness="2"
-                        StrokeDashArray="1,1"
-                        StrokeDashOffset="6"
-                        HeightRequest="50"
-                        WidthRequest="150" />
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Aspect="AspectFit" Source="{Binding Source}" />
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <IndicatorView
+                                    x:Name="indicatorView"
+                                    IndicatorColor="LightGray"
+                                    HorizontalOptions="Center"
+                                    SelectedIndicatorColor="Red" />
+                            </StackLayout>
 
-                    <ImageButton
-                        BackgroundColor="Transparent"
-                        AbsoluteLayout.LayoutBounds="0.1,.5,-1,-1"
-                        Clicked="ImageButton_Clicked"
-                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                        Source="{FontImage FontFamily=MaterialFontFamily,
-                                           Glyph={x:Static fonts:IconFont.Add},
-                                           Color=Green,
-                                           Size=20}" />
+                        </pancake:PancakeView>
 
 
 
-                </AbsoluteLayout>
-            </CollectionView.Footer>
-        </CollectionView>
-    </RefreshView>
+
+
+                        <StackLayout Orientation="Horizontal" Margin="30,0">
+                            <Editor
+                                Placeholder="Adress"
+                                x:Name="AdressEditor"
+                                Text="{Binding Apartment.Adresse}"
+                                HorizontalOptions="FillAndExpand" />
+                            <ImageButton
+                                BackgroundColor="Transparent"
+                                Source="{FontImage FontFamily=MaterialFontFamily,
+                                                   Glyph={x:Static fonts:IconFont.LocationOn},
+                                                   Color=#3f3d56,
+                                                   Size=40}"
+                                Clicked="OnGetAdressFromLocationClicked" />
+                        </StackLayout>
+
+                        <StackLayout HorizontalOptions="StartAndExpand" Margin="30">
+                            <Label Text="Global rate" />
+                            <Label
+                                Text="{Binding Criterias.RatesAverage, StringFormat='{0} ⭐'}"
+                                TextColor="#E85D4A"
+                                FontSize="Large" />
+
+                        </StackLayout>
+                    </StackLayout>
+
+
+                </CollectionView.Header>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+
+                                <SwipeItems>
+                                    <SwipeItem
+                                        Invoked="DeleteCriteria_Clicked"
+                                        IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                    Glyph={x:Static fonts:IconFont.Delete},
+                                                                    Color=Black,
+                                                                    Size=20}"
+                                        BackgroundColor="Red" />
+                                    <SwipeItem
+                                        Text="Edit"
+                                        BackgroundColor="Green"
+                                        Invoked="EditItem_Clicked"
+                                        IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                    Glyph={x:Static fonts:IconFont.Edit},
+                                                                    Color=Black,
+                                                                    Size=20}" />
+
+                                </SwipeItems>
+
+                            </SwipeView.RightItems>
+                            <ContentView Padding="3">
+                                <Frame BackgroundColor="#EBE8E4">
+                                    <Grid ColumnDefinitions="5*,*">
+                                        <StackLayout>
+                                            <Label Grid.Column="0" Text="{Binding Criteria.Name}" />
+                                            <Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />
+
+                                        </StackLayout>
+                                        <Label Grid.Column="1" Text="{Binding RateValue, StringFormat='{0} ⭐'}" />
+
+
+
+                                    </Grid>
+
+                                </Frame>
+                            </ContentView>
+                            <SwipeView.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </SwipeView.GestureRecognizers>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <AbsoluteLayout Padding="10" BackgroundColor="White">
+                        <Rectangle
+                            AbsoluteLayout.LayoutBounds="0,0,.3,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            Stroke="Green"
+                            StrokeThickness="2"
+                            StrokeDashArray="1,1"
+                            StrokeDashOffset="6"
+                            HeightRequest="50"
+                            WidthRequest="150" />
+
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            AbsoluteLayout.LayoutBounds="0.1,.5,-1,-1"
+                            Clicked="ImageButton_Clicked"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            Source="{FontImage FontFamily=MaterialFontFamily,
+                                               Glyph={x:Static fonts:IconFont.Add},
+                                               Color=Green,
+                                               Size=20}" />
+
+
+
+                    </AbsoluteLayout>
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+    <Grid RowDefinitions="Auto,*">
 </ContentPage>

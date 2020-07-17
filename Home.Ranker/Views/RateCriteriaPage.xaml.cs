@@ -14,13 +14,10 @@ namespace Home.Ranker.Views
     public partial class RateCriteriaPage : ContentPage
     {
 
-        //public event EventHandler<RateValidatedEventArgs> RateValidated;
-
         public CriteriaViewModel CurrentCriteria { get; set; }
 
         public Apartment CurrentApartment { get; set; }
 
-        private HomeRankerService HomeRankerService;
 
 
         public RateCriteriaPage(CriteriaViewModel criteria, Apartment appartment)
@@ -28,59 +25,24 @@ namespace Home.Ranker.Views
             InitializeComponent();
             CurrentApartment = appartment;
             CurrentCriteria = criteria;
-            HomeRankerService = new HomeRankerService();
-
             BindingContext = this;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            //if (!string.IsNullOrEmpty(Cri.Text) && CriteriaRateSlider.Value != 0)
-            //{
-            //    RateValidated?.Invoke(this, new RateValidatedEventArgs(new Rate
-            //    {
-            //        Name = CriteriaNameEntry.Text
-            //    ,
-            //        ImportanceLevel = (int)CriteriaImportanceSlider.Value
-            //    }));
-
-
-
-
             Shell.Current.Navigation.PopAsync();
 
 
-            }
+        }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
 
-           
-                Slider.Value = Math.Round(e.NewValue);
-
-            
-
+            Slider.Value = Math.Round(e.NewValue);
             RateDescriptionLabel.Text = String.Format("Rating: {0}", Slider.Value);
         }
 
-        //}
-
-        //private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
-        //{
-        //    double value = e.NewValue;
-        //    displayLabel.Text = String.Format("The Slider value is {0}", value);
-
-
-        //}
     }
 
-    //public class RateValidatedEventArgs : EventArgs
-    //{
-    //    public RateValidatedEventArgs(Rate rate)
-    //    {
-    //        Rate = rate;
-    //    }
 
-    //    public Rate Rate { get; set; }
-    //}
 }

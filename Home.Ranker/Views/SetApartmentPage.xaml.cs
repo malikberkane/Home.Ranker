@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using System.Linq;
 using System.Collections.Immutable;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace Home.Ranker.Views
 {
@@ -21,42 +23,54 @@ namespace Home.Ranker.Views
 
         private HomeRankerService HomeRankerService;
 
-        public ObservableCollection<Photo> Photos { get; set; } = new ObservableCollection<Photo>();
+        public ObservableCollection<Photo> Photos { get; set; }
 
-        public ObservableCollection<CriteriaViewModel> Criterias { get; set; } = new ObservableCollection<CriteriaViewModel>();
+        public ObservableCriterias Criterias { get; set; } 
 
 
 
 
         public SetApartmentPage(string name)
         {
-            InitializeComponent();
 
+            InitializeComponent();
 
             Apartment = new Apartment
             {
                 Name = name
             };
 
-            BindingContext = this;
 
         }
 
-        protected override void OnBindingContextChanged()
+        public SetApartmentPage(Apartment appartment)
+        {
+
+            InitializeComponent();
+
+            Apartment = appartment;
+            AdressEditor.Text = Apartment.Adresse;
+
+
+
+
+        }
+
+
+        public void LoadData()
         {
             HomeRankerService = new HomeRankerService();
 
 
             var photos = HomeRankerService.GetPhotos(Apartment);
 
-            if (photos != null)
+            if (photos != null && photos.Any())
             {
 
-                foreach (var item in photos)
-                {
-                    Photos.Add(item);
-                }
+                Photos = new ObservableCollection<Photo>(photos);
             }
+           
+
 
 
 
@@ -65,23 +79,18 @@ namespace Home.Ranker.Views
 
             if (criterias != null)
             {
-                Criterias = new ObservableCollection<CriteriaViewModel>(criterias);
+                Criterias = new ObservableCriterias(criterias);
             }
-            base.OnBindingContextChanged();
+            else
+            {
+                Criterias = new ObservableCriterias();
+
+            }
         }
 
 
-        public SetApartmentPage(Apartment appartment)
-        {
-            InitializeComponent();
 
-            Apartment = appartment;
-            AdressEditor.Text = Apartment.Adresse;
-            BindingContext = this;
-
-
-        }
-
+       
 
 
 
@@ -155,12 +164,6 @@ namespace Home.Ranker.Views
             if (file == null)
                 return;
 
-
-
-
-
-
-
             var newPhoto = new Photo
             {
                 PhotoUrl = file.Path,
@@ -174,28 +177,32 @@ namespace Home.Ranker.Views
 
             };
 
-            Photos.Add(newPhoto);
 
-            try
+            if (Photos==null)
             {
-                TheCarousel.Position = ((IList)TheCarousel.ItemsSource).Count - 1;
+                Photos = new ObservableCollection<Photo>() { newPhoto};
+                OnPropertyChanged(nameof(Photos));
 
             }
-            catch (Exception ex)
+            else
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                Photos.Add(newPhoto);
+
             }
+
+
+
+
+
+
         }
 
 
 
 
 
-        protected override void OnAppearing()
-        {
-            var currentCarousel = collectionView.ItemsSource;
-            base.OnAppearing();
-        }
+      
+
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -224,6 +231,7 @@ namespace Home.Ranker.Views
         }
 
         private SetCriteriaPage AddCriteriaModalPage;
+        private bool _isLoaded;
 
         private async void NewCriteriaValidatedInModal(object sender, CustomEventArgs e)
         {

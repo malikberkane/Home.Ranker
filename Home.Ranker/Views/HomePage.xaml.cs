@@ -74,7 +74,10 @@ namespace Home.Ranker.Views
             var item = (Apartment)layout.BindingContext;
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.Name);
 
-            await Shell.Current.Navigation.PushAsync(new SetApartmentPage(item));
+            var newPage = new SetApartmentPage(item);
+            newPage.LoadData();
+            newPage.BindingContext = newPage;
+            await Shell.Current.Navigation.PushAsync(newPage);
 
         }
 
@@ -104,7 +107,10 @@ namespace Home.Ranker.Views
 
             if (!string.IsNullOrEmpty(newApartmentLabel))
             {
-                await Shell.Current.Navigation.PushAsync(new SetApartmentPage(newApartmentLabel));
+                var newPage = new SetApartmentPage(newApartmentLabel);
+                newPage.LoadData();
+                newPage.BindingContext = newPage;
+                await Shell.Current.Navigation.PushAsync(newPage);
 
 
             }
