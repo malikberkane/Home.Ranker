@@ -36,7 +36,6 @@ namespace Home.Ranker.Views
             InitializeComponent();
 
             collectionView.Scrolled += this.CollectionView_Scrolled;
-
             Apartment = new Apartment
             {
                 Name = name

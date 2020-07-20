@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace Home.Ranker.Services
 {
@@ -37,5 +38,7 @@ namespace Home.Ranker.Services
                 }
             }
         }
+
+       
     }
 }

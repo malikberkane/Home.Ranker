@@ -162,12 +162,12 @@ namespace Home.Ranker.Views
 
         public Command LoadItemsCommand { get; set; }
 
-        private void refreshView_Refreshing(object sender, EventArgs e)
-        {
-            refreshView.IsRefreshing = true;
-            LoadItemsCommand.Execute(null);
-            refreshView.IsRefreshing = false;
+        //private void refreshView_Refreshing(object sender, EventArgs e)
+        //{
+        //    refreshView.IsRefreshing = true;
+        //    LoadItemsCommand.Execute(null);
+        //    refreshView.IsRefreshing = false;
 
-        }
+        //}
     }
 }

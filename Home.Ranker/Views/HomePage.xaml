@@ -8,6 +8,8 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+    xmlns:controls="clr-namespace:Home.Ranker.Controls"
     x:Class="Home.Ranker.Views.HomePage"
     Shell.NavBarIsVisible="False"
     Title="{Binding Title}"
@@ -26,7 +28,7 @@
             RowDefinitions="*,3*"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <AbsoluteLayout
+            <Grid
                 Grid.Row="0"
                 x:Name="ImageLayout"
                 BackgroundColor="#3f3d56">
@@ -34,137 +36,48 @@
                     BackgroundColor="White"
                     AbsoluteLayout.LayoutBounds="0,1,.4,.5"
                     AbsoluteLayout.LayoutFlags="All" />
-                <!--<BoxView
+
+                <BoxView
                     BackgroundColor="White"
-                    AbsoluteLayout.LayoutBounds="0,,.4,1"
-                    AbsoluteLayout.LayoutFlags="All" />-->
+                    AbsoluteLayout.LayoutBounds="0,0,.4,1"
+                    AbsoluteLayout.LayoutFlags="All" />
 
 
                 <Image x:Name="homeImage" Aspect="AspectFill" />
 
 
-            </AbsoluteLayout>
+            </Grid>
 
-            <RefreshView
-                x:Name="refreshView"
-                Refreshing="refreshView_Refreshing"
+
+            <ListView
+                CachingStrategy="RetainElement"
                 Grid.RowSpan="2"
-                Grid.Row="0">
-                <CollectionView
-                    x:Name="ItemsCollectionView"
-                    ItemsSource="{Binding Apartments}"
-                    ItemSizingStrategy="MeasureAllItems">
+                Grid.Row="0"
+                RowHeight="180"
+                x:Name="ItemsCollectionView"
+                ItemsSource="{Binding Apartments}">
 
-                    <CollectionView.Header>
+                <ListView.Header>
 
-                        <BoxView HeightRequest="200" />
-                        <!--<pancake:PancakeView
+                    <BoxView HeightRequest="200" />
+                    <!--<pancake:PancakeView
                     Padding="10"
                     BackgroundColor="White"
                     CornerRadius="0,0,35,35"
                     VerticalOptions="Start">-->
 
-                        <!--</pancake:PancakeView>-->
+                    <!--</pancake:PancakeView>-->
 
-                    </CollectionView.Header>
+                </ListView.Header>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
 
-                            <SwipeView>
-                                <SwipeView.RightItems>
+                        <controls:AnimatedCell Apartment="{Binding .}" />
 
-                                    <SwipeItems>
-                                        <SwipeItem
-                                            IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                        Glyph={x:Static fonts:IconFont.Delete},
-                                                                        Color=Black,
-                                                                        Size=20}"
-                                            BackgroundColor="Red"
-                                            Invoked="Delete_Apartment_Clicked" />
-                                    </SwipeItems>
-
-                                </SwipeView.RightItems>
-                                <Grid>
-                                    <pancake:PancakeView
-                                        BackgroundColor="White"
-                                        Margin="15"
-                                        Padding="10"
-                                        CornerRadius="20,30,0,20"
-                                        HeightRequest="150"
-                                        HorizontalOptions="FillAndExpand"
-                                        VerticalOptions="Start">
-                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="*" />
-
-
-                                            </Grid.RowDefinitions>
-
-                                            <Label
-                                                Grid.Column="0"
-                                                Grid.Row="0"
-                                                FontSize="24"
-                                                Margin="10"
-                                                Text="{Binding Name}" />
-
-                                            <StackLayout
-                                                Margin="10"
-                                                Grid.Row="1"
-                                                Grid.Column="0">
-
-                                                <StackLayout Orientation="Horizontal">
-                                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
-
-                                                    <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
-                                                </StackLayout>
-
-                                            </StackLayout>
-
-                                            <StackLayout
-                                                Margin="10"
-                                                Orientation="Horizontal"
-                                                Grid.Row="2"
-                                                Grid.Column="0">
-
-                                                <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
-                                                <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
-
-
-                                            </StackLayout>
-
-                                            <Image
-                                                Grid.Column="1"
-                                                Grid.RowSpan="3"
-                                                Margin="0,0,10,0"
-                                                Aspect="AspectFill"
-                                                sharedTransitions:Transition.Group="{Binding Name}"
-                                                sharedTransitions:Transition.Name="firstImage"
-                                                HeightRequest="150"
-                                                HorizontalOptions="CenterAndExpand"
-                                                Rotation="0"
-                                                Source="{Binding FirstPictureImageSource}" />
-                                        </Grid>
-
-                                    </pancake:PancakeView>
-                                </Grid>
-
-                                <SwipeView.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnItemSelected" />
-
-                                </SwipeView.GestureRecognizers>
-
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
         <ImageButton
