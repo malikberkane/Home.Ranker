@@ -5,36 +5,49 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.SetCriteriaPage">
 
-    <Grid RowDefinitions="*,*,*">
-        <Entry
-            Grid.Row="0"
-            x:Name="CriteriaNameEntry"
-            VerticalOptions="CenterAndExpand"
-            HorizontalOptions="CenterAndExpand"
-            Text="{Binding Criteria.Name}"
-            Placeholder="Criteria name" />
+    <StackLayout>
+        <Label
+            Text="Set criteria"
+            FontSize="40"
+            HorizontalOptions="CenterAndExpand" />
+        <Grid RowDefinitions="*,*,*" VerticalOptions="FillAndExpand">
+            <Editor
+                Grid.Row="0"
+                AutoSize="TextChanges"
+                x:Name="CriteriaNameEntry"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Criteria.Name}"
+                Placeholder="Criteria name" />
 
-        <StackLayout Grid.Row="1">
-            <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
-            <Slider
-                x:Name="CriteriaImportanceSlider"
-                ThumbColor="Green"
-                MinimumTrackColor="Green"
-                Value="{Binding Criteria.ImportanceLevel}"
-                Maximum="10"
-                Minimum="1" />
-            <Label x:Name="ImportanceDescriptionLabel" VerticalOptions="CenterAndExpand" />
+            <StackLayout Grid.Row="1">
+                <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
+                <Slider
+                    x:Name="CriteriaImportanceSlider"
+                    ThumbColor="Green"
+                    MinimumTrackColor="Green"
+                    Value="{Binding Criteria.ImportanceLevel}"
+                    Maximum="10"
+                    Minimum="1" />
+                <Label
+                    x:Name="ImportanceDescriptionLabel"
+                    VerticalOptions="CenterAndExpand"
+                    Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
+                    FontSize="40"
+                    TextColor="Black"
+                    HorizontalOptions="CenterAndExpand" />
 
-        </StackLayout>
+            </StackLayout>
 
-        <Button
-            Text="Validate"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            Clicked="Button_Clicked"
-            Grid.Row="2" />
-    </Grid>
-
+            <Button
+                Text="Validate"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"
+                Grid.Row="2" />
+        </Grid>
+    </StackLayout>
 </ContentPage> 

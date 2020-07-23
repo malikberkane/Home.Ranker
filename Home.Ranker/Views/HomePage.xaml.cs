@@ -70,11 +70,21 @@ namespace Home.Ranker.Views
 
         async void OnItemSelected(object sender, EventArgs args)
         {
+
             var layout = (BindableObject)sender;
+
+          
+
             var item = (Apartment)layout.BindingContext;
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.Name);
 
-            var newPage = new SetApartmentPage(item);
+            var other = new Apartment
+            {
+                Adresse = item.Adresse,
+                Id = item.Id,
+                Name = item.Name
+            };
+            var newPage = new SetApartmentPage(other);
             newPage.LoadData();
             newPage.BindingContext = newPage;
             await Shell.Current.Navigation.PushAsync(newPage);

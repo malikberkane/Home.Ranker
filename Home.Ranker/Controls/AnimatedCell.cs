@@ -1,4 +1,5 @@
 ﻿using Home.Ranker.Data;
+using Home.Ranker.Fonts;
 using Microsoft.EntityFrameworkCore.Internal;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
@@ -52,9 +53,21 @@ namespace Home.Ranker.Controls
             canvasView = new SKCanvasView() { HeightRequest=100};
 
             canvasView.PaintSurface += OnCanvasViewPaintSurface;
-           
-            var contentView= new ContentView() { Padding = new Thickness(10, 25), Content = canvasView };
 
+            //SwipeItem deleteSwipeItem = new SwipeItem
+            //{
+            //    IconImageSource = new FontImageSource { FontFamily = "MaterialFontFamily", Glyph = IconFont.Delete, Color = Color.Black, Size = 20 },
+            //    BackgroundColor = Color.Red
+            //};
+
+            //List<SwipeItem> swipeItems = new List<SwipeItem>() {  deleteSwipeItem };
+
+            var contentView = new ContentView() { Padding = new Thickness(10, 25), Content = canvasView };
+            //SwipeView swipeView = new SwipeView
+            //{
+            //    RightItems = new SwipeItems(swipeItems),
+            //    Content = contentView
+            //};
             View = contentView;
         }
             
@@ -110,7 +123,7 @@ namespace Home.Ranker.Controls
 
                 while (angle>=0)
                 {
-                    angle=angle-12;
+                    angle=angle-9;
 
                     canvasView.InvalidateSurface();
                     await Task.Delay(5);

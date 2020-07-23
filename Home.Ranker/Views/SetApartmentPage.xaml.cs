@@ -71,21 +71,7 @@ namespace Home.Ranker.Views
                 HeaderView.InputTransparent = false;
 
             }
-            //for (double i = 0; i <= this.Criterias.Count ; i++)
-            //{
-                
-            //    //Change here how you want to change the opacity(can make custom animation)
-            //    var x = 1 - (1.0/ this.Criterias.Count) * i;
-                
-
-
-            //    if (position == i)
-            //    {
-                   
-            //    }
-
-              
-            //}
+            
         }
 
         public SetApartmentPage(Apartment appartment)
@@ -153,6 +139,30 @@ namespace Home.Ranker.Views
 
         }
 
+        async void BackButton_Clicked(object sender, EventArgs e)
+        {
+            var actionSheetResult = await Shell.Current.DisplayActionSheet(string.Empty, "Cancel", string.Empty, new string[] { "Enregistrer", "Abandonner" });
+
+            switch (actionSheetResult)
+            {
+                case "Enregistrer":
+                    HomeRankerService.InsertApartment(Apartment, Photos, Criterias);
+                    MessagingCenter.Send(this, "AddItem", Apartment);
+                    await Shell.Current.Navigation.PopAsync();
+                    break;
+                case "Abandonner":
+                    await Shell.Current.Navigation.PopAsync();
+                    break;
+            }
+          
+
+
+
+
+
+
+        }
+
         async void Cancel_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.Navigation.PopAsync();
@@ -169,6 +179,9 @@ namespace Home.Ranker.Views
 
             if (await DisplayAlert(string.Empty, "Would you like to get adress from current location?", "Get adress", "Cancel"))
             {
+
+                LoadingAdressIndicator.IsVisible = true;
+                LoadAdressButton.IsVisible = false;
                 var location = await Geolocation.GetLocationAsync();
 
 
@@ -180,6 +193,11 @@ namespace Home.Ranker.Views
                 var adress = info.FirstOrDefault();
 
                 Apartment.Adresse = AdressEditor.Text = $"{adress.SubThoroughfare} {adress.Thoroughfare}{Environment.NewLine}{adress.PostalCode} {adress.Locality}";
+
+
+                LoadingAdressIndicator.IsVisible = false;
+                LoadAdressButton.IsVisible = true;
+
             }
 
 

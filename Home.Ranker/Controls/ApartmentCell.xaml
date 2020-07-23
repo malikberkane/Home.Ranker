@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    mc:Ignorable="d"
+    x:Class="Home.Ranker.Controls.ApartmentCell">
+    <pancake:PancakeView
+        BackgroundColor="White"
+        Margin="15"
+        Padding="10"
+        CornerRadius="20,30,0,20"
+        HeightRequest="150"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="Start">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+
+
+            </Grid.RowDefinitions>
+
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                FontSize="24"
+                Margin="10"
+                Text="{Binding Name}" />
+
+            <StackLayout
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="0">
+
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+
+                    <Label Text="{Binding RatesAverage}" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+
+            </StackLayout>
+
+            <StackLayout
+                Margin="10"
+                Orientation="Horizontal"
+                Grid.Row="2"
+                Grid.Column="0">
+
+                <Label Text="Condorcet" VerticalOptions="CenterAndExpand" />
+                <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
+
+
+            </StackLayout>
+
+            <Image
+                Grid.Column="1"
+                Grid.RowSpan="3"
+                Margin="0,0,10,0"
+                Aspect="AspectFill"
+                sharedTransitions:Transition.Group="{Binding Name}"
+                sharedTransitions:Transition.Name="firstImage"
+                HeightRequest="150"
+                HorizontalOptions="CenterAndExpand"
+                Rotation="0"
+                Source="{Binding FirstPictureImageSource}" />
+        </Grid>
+
+    </pancake:PancakeView>
+
+</ContentView>

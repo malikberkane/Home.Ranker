@@ -28,7 +28,7 @@
             RowDefinitions="*,3*"
             AbsoluteLayout.LayoutFlags="All"
             AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <Grid
+            <AbsoluteLayout
                 Grid.Row="0"
                 x:Name="ImageLayout"
                 BackgroundColor="#3f3d56">
@@ -36,28 +36,26 @@
                     BackgroundColor="White"
                     AbsoluteLayout.LayoutBounds="0,1,.4,.5"
                     AbsoluteLayout.LayoutFlags="All" />
-
-                <BoxView
+                <!--<BoxView
                     BackgroundColor="White"
-                    AbsoluteLayout.LayoutBounds="0,0,.4,1"
-                    AbsoluteLayout.LayoutFlags="All" />
+                    AbsoluteLayout.LayoutBounds="0,,.4,1"
+                    AbsoluteLayout.LayoutFlags="All" />-->
 
 
                 <Image x:Name="homeImage" Aspect="AspectFill" />
 
 
-            </Grid>
+            </AbsoluteLayout>
 
 
-            <ListView
-                CachingStrategy="RetainElement"
+            <CollectionView
                 Grid.RowSpan="2"
                 Grid.Row="0"
-                RowHeight="180"
+                ItemSizingStrategy="MeasureAllItems"
                 x:Name="ItemsCollectionView"
                 ItemsSource="{Binding Apartments}">
 
-                <ListView.Header>
+                <CollectionView.Header>
 
                     <BoxView HeightRequest="200" />
                     <!--<pancake:PancakeView
@@ -68,16 +66,115 @@
 
                     <!--</pancake:PancakeView>-->
 
-                </ListView.Header>
+                </CollectionView.Header>
 
-                <ListView.ItemTemplate>
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
 
-                        <controls:AnimatedCell Apartment="{Binding .}" />
+                                <SwipeItems>
+                                    <SwipeItem
+                                        IconImageSource="{FontImage FontFamily=MaterialFontFamily,
+                                                                    Glyph={x:Static fonts:IconFont.Delete},
+                                                                    Color=Red,
+                                                                    Size=20}"
+                                        BackgroundColor="Red"
+                                        Invoked="Delete_Apartment_Clicked" />
+                                </SwipeItems>
+
+                            </SwipeView.RightItems>
+                            <Grid>
+                                <pancake:PancakeView
+                                    Opacity="0.9"
+                                    BackgroundColor="#3f3d56"
+                                    Margin="15"
+                                    Padding="10"
+                                    CornerRadius="20,30,0,20"
+                                    HeightRequest="150"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="Start">
+                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+
+
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            FontSize="24"
+                                            TextColor="White"
+                                            Margin="10"
+                                            Text="{Binding Name}" />
+
+                                        <StackLayout
+                                            Margin="10"
+                                            Grid.Row="1"
+                                            Grid.Column="0">
+
+                                            <StackLayout Orientation="Horizontal">
+                                                <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+
+                                                <Label
+                                                    Text="{Binding RatesAverage, StringFormat='{0:N2}'}"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    TextColor="White" />
+                                            </StackLayout>
+
+                                        </StackLayout>
+
+                                        <StackLayout
+                                            Margin="10"
+                                            Orientation="Horizontal"
+                                            Grid.Row="2"
+                                            Grid.Column="0">
+
+                                            <Label
+                                                Text="Adress"
+                                                VerticalOptions="CenterAndExpand"
+                                                TextColor="White" />
+                                            <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
+
+
+                                        </StackLayout>
+
+                                        <Image
+                                            Grid.Column="1"
+                                            Grid.RowSpan="3"
+                                            Margin="0,0,10,0"
+                                            Aspect="AspectFill"
+                                            sharedTransitions:Transition.Group="{Binding Name}"
+                                            sharedTransitions:Transition.Name="firstImage"
+                                            HeightRequest="150"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Rotation="0"
+                                            Source="{Binding FirstPictureImageSource}" />
+                                    </Grid>
+
+                                </pancake:PancakeView>
+                            </Grid>
+
+                            <SwipeView.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemSelected" />
+
+                            </SwipeView.GestureRecognizers>
+
+                        </SwipeView>
+
+
+
 
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
 
         <ImageButton
@@ -87,7 +184,7 @@
             Clicked="AddItem_Clicked"
             Source="{FontImage FontFamily=MaterialFontFamily,
                                Glyph={x:Static fonts:IconFont.AddCircle},
-                               Color=#3f3d56,
+                               Color=White,
                                Size=60}" />
 
     </AbsoluteLayout>

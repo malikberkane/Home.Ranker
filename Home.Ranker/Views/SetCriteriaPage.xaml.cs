@@ -28,27 +28,8 @@ namespace Home.Ranker.Views
             BindingContext = this;
             CriteriaImportanceSlider.ValueChanged += (sender, args) =>
             {
-                if (Enumerable.Range(1, 2).Contains((int)args.NewValue))
-                {
-                    ImportanceDescriptionLabel.Text = "très peu important";
+                CriteriaImportanceSlider.Value = Math.Round(args.NewValue);
 
-                }
-                else if (Enumerable.Range(2, 5).Contains((int)args.NewValue))
-                {
-                    ImportanceDescriptionLabel.Text = "Peu important";
-
-                }
-
-                else if (Enumerable.Range(5, 7).Contains((int)args.NewValue))
-                {
-                    ImportanceDescriptionLabel.Text = "Important";
-
-                }
-                else if (Enumerable.Range(7, 10).Contains((int)args.NewValue))
-                {
-                    ImportanceDescriptionLabel.Text = "Très important";
-
-                }
             };
         }
 
