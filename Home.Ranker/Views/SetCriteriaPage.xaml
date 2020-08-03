@@ -4,50 +4,62 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
+    xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.SetCriteriaPage">
 
-    <StackLayout>
-        <Label
-            Text="Set criteria"
-            FontSize="40"
-            HorizontalOptions="CenterAndExpand" />
-        <Grid RowDefinitions="*,*,*" VerticalOptions="FillAndExpand">
-            <Editor
-                Grid.Row="0"
-                AutoSize="TextChanges"
-                x:Name="CriteriaNameEntry"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                Text="{Binding Criteria.Name}"
-                Placeholder="Criteria name" />
-
-            <StackLayout Grid.Row="1">
-                <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
-                <Slider
-                    x:Name="CriteriaImportanceSlider"
-                    ThumbColor="Green"
-                    MinimumTrackColor="Green"
-                    Value="{Binding Criteria.ImportanceLevel}"
-                    Maximum="10"
-                    Minimum="1" />
-                <Label
-                    x:Name="ImportanceDescriptionLabel"
+    <pancake:PancakeView
+        BackgroundGradientStartColor="FloralWhite"
+        BackgroundGradientEndColor="#FF9190"
+        BackgroundGradientAngle="0">
+        <StackLayout Padding="20">
+            <Label
+                Text="Set criteria"
+                FontSize="40"
+                HorizontalOptions="CenterAndExpand" />
+            <Grid RowDefinitions="*,*,*" VerticalOptions="FillAndExpand">
+                <Editor
+                    Grid.Row="0"
+                    AutoSize="TextChanges"
+                    x:Name="CriteriaNameEntry"
                     VerticalOptions="CenterAndExpand"
-                    Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
-                    FontSize="40"
-                    TextColor="Black"
-                    HorizontalOptions="CenterAndExpand" />
+                    Text="{Binding Criteria.Name}"
+                    Placeholder="Criteria name" />
 
-            </StackLayout>
+                <StackLayout Grid.Row="1">
+                    <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
+                    <Slider
+                        x:Name="CriteriaImportanceSlider"
+                        ThumbColor="Black"
+                        MinimumTrackColor="Black"
+                        Value="{Binding Criteria.ImportanceLevel}"
+                        Maximum="10"
+                        Minimum="1" />
+                    <Label
+                        x:Name="ImportanceDescriptionLabel"
+                        VerticalOptions="CenterAndExpand"
+                        Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
+                        FontSize="40"
+                        TextColor="Black"
+                        HorizontalOptions="CenterAndExpand" />
+
+                </StackLayout>
+
+
+            </Grid>
+
 
             <Button
-                Text="Validate"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Clicked="Button_Clicked"
-                Grid.Row="2" />
-        </Grid>
-    </StackLayout>
+                Margin="30"
+                BackgroundColor="Transparent"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="EndAndExpand"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="OK" />
+        </StackLayout>
+
+    </pancake:PancakeView>
 </ContentPage> 

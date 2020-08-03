@@ -13,6 +13,7 @@ using System.Linq;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using Plugin.SharedTransitions;
 
 namespace Home.Ranker.Views
 {
@@ -356,5 +357,21 @@ namespace Home.Ranker.Views
             AddCriteriaModalPage.CriteriaValidated += this.NewCriteriaValidatedInModal;
             await Shell.Current.Navigation.PushAsync(AddCriteriaModalPage);
         }
+
+        private async void PhotoTapped(object sender, EventArgs e)
+        {
+            var item = (sender as View).BindingContext as Photo;
+
+            var photosPage = new DetailPhotosPage();
+            photosPage.Photos = this.Photos;
+
+            var index = Photos.IndexOf(item);
+            photosPage.SelectedIndex = index == -1 ? 0 : index;
+            photosPage.BindingContext = photosPage;
+            SharedTransitionShell.SetTransitionSelectedGroup(this, item.PhotoUrl);
+
+            await Shell.Current.Navigation.PushAsync(photosPage);
+        }
+
     }
 }

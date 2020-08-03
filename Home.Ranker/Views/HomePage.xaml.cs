@@ -20,7 +20,7 @@ namespace Home.Ranker.Views
             BindingContext = this;
 
             homeImage.Source = ImageSource.FromResource(
-             "Home.Ranker.Images.HomeImage.png",
+             "Home.Ranker.Images.SelectHouse.png",
                 typeof(HomePage).GetTypeInfo().Assembly);
 
 
@@ -30,7 +30,7 @@ namespace Home.Ranker.Views
         {
             base.OnAppearing();
             homeImage.Source = ImageSource.FromResource(
-           "Home.Ranker.Images.HomeImage.png",
+           "Home.Ranker.Images.SelectHouse.png",
               typeof(HomePage).GetTypeInfo().Assembly);
         }
         public ObservableCollection<Apartment> Apartments { get; set; }

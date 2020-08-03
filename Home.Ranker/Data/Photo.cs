@@ -16,6 +16,15 @@ namespace Home.Ranker.Data
 
         public string Base64 { get; set; }
 
-     
+        public override bool Equals(object obj)
+        {
+            if(obj is Photo other)
+            {
+                return other.PhotoUrl == PhotoUrl;
+            }
+            return false;
+        }
+
+
     }
 }

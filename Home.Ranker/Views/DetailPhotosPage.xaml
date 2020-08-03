@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+    xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    mc:Ignorable="d"
+    Shell.NavBarIsVisible="False"
+    x:Class="Home.Ranker.Views.DetailPhotosPage">
+    <ContentPage.Content>
+        <pancake:PancakeView
+            BackgroundGradientStartColor="LightCoral"
+            BackgroundGradientEndColor="#FF9190"
+            BackgroundGradientAngle="90">
+            <Grid RowDefinitions="*,10*">
+                <Grid
+                    Grid.Row="0"
+                    ColumnDefinitions="5*,*,*"
+                    VerticalOptions="Start">
+                    <ImageButton
+                        HorizontalOptions="Start"
+                        Grid.Column="0"
+                        Clicked="BackButton_Clicked"
+                        BackgroundColor="Transparent"
+                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                           Glyph={x:Static fonts:IconFont.NavigateBefore},
+                                           Color=#3f3d56,
+                                           Size=150}" />
+
+                    <ImageButton
+                        Grid.Column="1"
+                        Clicked="TakePhotoClicked"
+                        BackgroundColor="Transparent"
+                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                           Glyph={x:Static fonts:IconFont.PhotoCamera},
+                                           Color=#3f3d56,
+                                           Size=80}" />
+                    <ImageButton
+                        Grid.Column="2"
+                        BackgroundColor="Transparent"
+                        Clicked="DeleteButtonClicked"
+                        Source="{FontImage FontFamily=MaterialFontFamily,
+                                           Glyph={x:Static fonts:IconFont.Delete},
+                                           Color=#3f3d56,
+                                           Size=80}" />
+
+
+                </Grid>
+                <cards:CubeView
+                    Grid.Row="1"
+                    Margin="20"
+                    x:Name="coverFlowView"
+                    IsClippedToBounds="False"
+                    SelectedIndex="{Binding SelectedIndex}"
+                    IsViewReusingEnabled="False"
+                    ItemsSource="{Binding Photos}"
+                    VerticalOptions="FillAndExpand">
+
+
+                    <!--<x:Arguments>
+                <proc:CoverFlowProcessor OpacityFactor="0.5" ScaleFactor="0.7" />
+            </x:Arguments>-->
+
+                    <cards:CubeView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Image
+                                sharedTransitions:Transition.Group="{Binding PhotoUrl}"
+                                sharedTransitions:Transition.Name="photo"
+                                Aspect="AspectFit"
+                                Source="{Binding Source}"
+                                Margin="20" />
+                        </DataTemplate>
+                    </cards:CubeView.ItemTemplate>
+                </cards:CubeView>
+            </Grid>
+        </pancake:PancakeView>
+    </ContentPage.Content>
+</ContentPage>
