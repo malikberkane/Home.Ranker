@@ -29,9 +29,9 @@ namespace Home.Ranker.Data
             _currentContext.Photos.Add(Photo);
         }
 
-        public void DeletePhoto(string url, int appartmentId)
+        public void DeletePhoto(int photoId)
         {
-            var Photo = _currentContext.Photos.Find(url, appartmentId);
+            var Photo = _currentContext.Photos.Find(photoId);
 
             _currentContext.Photos.Remove(Photo);
         }

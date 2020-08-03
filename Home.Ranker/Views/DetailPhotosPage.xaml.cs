@@ -24,6 +24,9 @@ namespace Home.Ranker.Views
 
         public ObservableCollection<Photo> Photos { get; set; }
 
+        public ICollection<Photo> PhotosToDelete { get; set; }
+
+
         public int SelectedIndex { get; set; }
 
         public int CurrentApartmentId { get; set; }
@@ -32,8 +35,15 @@ namespace Home.Ranker.Views
         {
             if (SelectedIndex != -1)
             {
+                var elementToDelete = Photos.ElementAt(SelectedIndex);
+               
+               
+                    PhotosToDelete.Add(elementToDelete);
+                
+
                 Photos.RemoveAt(SelectedIndex);
 
+                
             }
 
         }

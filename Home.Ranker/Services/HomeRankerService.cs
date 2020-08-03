@@ -133,17 +133,51 @@ namespace Home.Ranker.Services
 
         }
 
-        public void InsertApartment(Apartment apartment, IEnumerable<Photo> photos, IEnumerable<CriteriaViewModel> criteriaRates)
+
+        public void PersistPhotos(int apartmentId, IEnumerable<Photo> photosToAdd, IEnumerable<Photo> photosToDelete)
+        {
+            using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
+            {
+                if (photosToAdd != null && photosToAdd.Any())
+                {
+                    foreach (var photo in photosToAdd)
+                    {
+                        photo.ApartmentId = apartmentId;
+
+
+                        unitOfWork.PhotoRepository.InsertPhoto(photo);
+
+
+
+                    }
+
+
+                }
+
+                if (photosToDelete != null && photosToDelete.Any())
+                    foreach (var photo in photosToDelete)
+                    {
+                        photo.ApartmentId = apartmentId;
+
+
+                        unitOfWork.PhotoRepository.DeletePhoto(photo.PhotoId);
+
+
+
+                    }
+
+                unitOfWork.Complete();
+
+            }
+
+        }
+
+        public void InsertApartment(Apartment apartment, IEnumerable<CriteriaViewModel> criteriaRates)
         {
 
             using (var unitOfWork = new UnitOfWork(new HomeRankerContext()))
             {
-                if (photos!=null && photos.Any())
-                {
-                    apartment.FirstPictureUrl = photos.First().PhotoUrl;
-                    apartment.FirstPictureImageSource = photos.First().Source;
 
-                }
 
                 if (apartment.Id == 0)
                 {
@@ -158,20 +192,10 @@ namespace Home.Ranker.Services
 
                 unitOfWork.Complete();
 
-                foreach (var photo in photos)
-                {
-                    photo.ApartmentId = apartment.Id;
-
-                    if (photo.PhotoId == 0)
-                    {
-                        unitOfWork.PhotoRepository.InsertPhoto(photo);
-
-                    }
 
 
-                }
 
-                unitOfWork.Complete();
+
 
                 foreach (var criteria in criteriaRates)
                 {
@@ -181,7 +205,7 @@ namespace Home.Ranker.Services
                         {
                             CriteriaId = criteria.Criteria.Id,
                             RateValue = criteria.RateValue.Value,
-                            Note=criteria.Note,
+                            Note = criteria.Note,
                             ApartmentId = apartment.Id
                         };
                         if (unitOfWork.RateRepository.GetRateById(rate.ApartmentId, rate.CriteriaId) == null)

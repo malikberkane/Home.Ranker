@@ -14,6 +14,7 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using Plugin.SharedTransitions;
+using System.Collections.Generic;
 
 namespace Home.Ranker.Views
 {
@@ -25,7 +26,9 @@ namespace Home.Ranker.Views
         private HomeRankerService HomeRankerService;
 
         public ObservableCollection<Photo> Photos { get; set; }
-        
+
+        public ICollection<Photo> PhotosToDelete { get; set; }
+
         public ObservableCriterias Criterias { get; set; } 
 
 
@@ -102,7 +105,8 @@ namespace Home.Ranker.Views
 
                 Photos = new ObservableCollection<Photo>(photos);
             }
-           
+
+            PhotosToDelete = new List<Photo>();
 
 
 
@@ -127,17 +131,31 @@ namespace Home.Ranker.Views
 
         void Save_Clicked(object sender, EventArgs e)
         {
+            Save();
 
+        }
 
-            HomeRankerService.InsertApartment(Apartment, Photos, Criterias);
+        private void Save()
+        {
+            var photosTaken = Photos != null && Photos.Any();
+            if (photosTaken)
+            {
+                Apartment.FirstPictureUrl = Photos.First().PhotoUrl;
+                Apartment.FirstPictureImageSource = Photos.First().Source;
+
+            }
+            HomeRankerService.InsertApartment(Apartment, Criterias);
+
+            if (photosTaken && Apartment.Id != 0)
+            {
+                HomeRankerService.PersistPhotos(Apartment.Id, Photos.Where(n => n.PhotoId == 0), PhotosToDelete);
+            }
+
 
 
 
 
             MessagingCenter.Send(this, "AddItem", Apartment);
-
-
-
         }
 
         async void BackButton_Clicked(object sender, EventArgs e)
@@ -147,9 +165,7 @@ namespace Home.Ranker.Views
             switch (actionSheetResult)
             {
                 case "Enregistrer":
-                    HomeRankerService.InsertApartment(Apartment, Photos, Criterias);
-                    MessagingCenter.Send(this, "AddItem", Apartment);
-                    await Shell.Current.Navigation.PopAsync();
+                    Save();
                     break;
                 case "Abandonner":
                     await Shell.Current.Navigation.PopAsync();
@@ -367,6 +383,7 @@ namespace Home.Ranker.Views
 
             var index = Photos.IndexOf(item);
             photosPage.SelectedIndex = index == -1 ? 0 : index;
+            photosPage.PhotosToDelete = PhotosToDelete;
             photosPage.BindingContext = photosPage;
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.PhotoUrl);
 
