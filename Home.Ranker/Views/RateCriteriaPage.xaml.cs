@@ -28,7 +28,7 @@ namespace Home.Ranker.Views
             BindingContext = this;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OkButton_Clicked(object sender, EventArgs e)
         {
             Shell.Current.Navigation.PopAsync();
 

@@ -120,6 +120,7 @@
             FontAttributes="Bold"
             FontSize="Large"
             Margin="30"
+            Clicked="OkButton_Clicked"
             Text="OK" />
     </Grid>
 

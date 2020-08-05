@@ -6,13 +6,13 @@ using Home.Ranker.Services;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using Plugin.SharedTransitions;
-
+using System.Collections.Immutable;
 namespace Home.Ranker.Views
 {
 
     public partial class HomePage : ContentPage
     {
-        private  HomeRankerService HomeRankerService;
+        private HomeRankerService HomeRankerService;
 
         public HomePage()
         {
@@ -25,7 +25,7 @@ namespace Home.Ranker.Views
 
 
         }
-        
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -52,12 +52,15 @@ namespace Home.Ranker.Views
                 var existingIndex = Apartments.IndexOf(item);
                 if (existingIndex != -1)
                 {
-                    Apartments[existingIndex] = item;
+                    Apartments[existingIndex].UpdateInstance(item, resetFirstImageUrl: Apartments[existingIndex].FirstPictureUrl != item.FirstPictureUrl);
+
                 }
                 else
                 {
                     Apartments.Add(item);
                 }
+
+                Apartments.Sort();
 
                 await Shell.Current.Navigation.PopAsync();
 
@@ -73,7 +76,7 @@ namespace Home.Ranker.Views
 
             var layout = (BindableObject)sender;
 
-          
+
 
             var item = (Apartment)layout.BindingContext;
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.Name);
@@ -106,14 +109,14 @@ namespace Home.Ranker.Views
 
                 await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
             }
-        }   
+        }
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
 
 
-       
-            var newApartmentLabel = await DisplayPromptAsync("New visit","Enter name or adress");
+
+            var newApartmentLabel = await DisplayPromptAsync("New visit", "Enter name or adress");
 
             if (!string.IsNullOrEmpty(newApartmentLabel))
             {
@@ -126,7 +129,7 @@ namespace Home.Ranker.Views
             }
         }
 
-       
+
 
 
         async Task ExecuteLoadItemsCommand()
@@ -139,7 +142,7 @@ namespace Home.Ranker.Views
 
                 var items = HomeRankerService.GetAllApartments();
 
-                if(items!=null)
+                if (items != null)
                 {
                     if (Apartments == null)
                     {
@@ -158,7 +161,7 @@ namespace Home.Ranker.Views
                 }
 
 
-               
+
             }
             catch (Exception ex)
             {

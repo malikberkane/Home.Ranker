@@ -309,7 +309,6 @@ namespace Home.Ranker.Views
         }
 
         private SetCriteriaPage AddCriteriaModalPage;
-        private bool _isLoaded;
 
         private async void NewCriteriaValidatedInModal(object sender, CustomEventArgs e)
         {

@@ -33,7 +33,7 @@ namespace Home.Ranker.Views
             };
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OkButton_Clicked(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(CriteriaNameEntry.Text) && CriteriaImportanceSlider.Value != 0)
             {
@@ -45,7 +45,7 @@ namespace Home.Ranker.Views
 
         }
 
-
+        
     }
 
     public class CustomEventArgs : EventArgs

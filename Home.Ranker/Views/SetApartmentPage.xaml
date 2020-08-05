@@ -122,8 +122,8 @@
         <StackLayout Grid.Row="0" x:Name="HeaderView">
             <pancake:PancakeView
                 BackgroundGradientStartColor="#FF9190"
-                BackgroundGradientEndColor="#FF9190"
-                BackgroundGradientAngle="90"
+                BackgroundGradientEndColor="FloralWhite"
+                BackgroundGradientAngle="147"
                 Padding="10"
                 CornerRadius="0,0,100,200"
                 BackgroundColor="Beige">
@@ -221,16 +221,15 @@
 
             </StackLayout>
 
-            <StackLayout
-                Orientation="Horizontal"
-                HorizontalOptions="StartAndExpand"
-                Margin="30">
+            <StackLayout Orientation="Horizontal" Margin="30">
                 <Editor
                     Placeholder="Name"
                     Text="{Binding Apartment.Name}"
                     AutoSize="TextChanges" />
                 <Label
                     Text="{Binding Criterias.RatesAverage, StringFormat='{0:N2} ⭐'}"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="CenterAndExpand"
                     TextColor="#E85D4A"
                     FontSize="Large"
                     IsVisible="{Binding Criterias.RatesAverage, Converter={StaticResource IsNotNullToBoolConverter}}" />

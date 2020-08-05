@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
-    xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.SetCriteriaPage">
 
@@ -57,6 +56,7 @@
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="EndAndExpand"
                 FontAttributes="Bold"
+                Clicked="OkButton_Clicked"
                 FontSize="Large"
                 Text="OK" />
         </StackLayout>

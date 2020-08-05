@@ -40,7 +40,7 @@ namespace Home.Ranker.Services
                     }
                 }
 
-                return appartments;
+                return appartments.OrderByDescending(n=>n.RatesAverage);
             }
         }
 

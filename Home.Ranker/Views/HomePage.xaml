@@ -17,8 +17,8 @@
 
     <pancake:PancakeView
         BackgroundGradientStartColor="LightCoral"
-        BackgroundGradientEndColor="#FF9190"
-        BackgroundGradientAngle="90">
+        BackgroundGradientEndColor="FloralWhite"
+        BackgroundGradientAngle="147">
         <AbsoluteLayout>
             <Grid
                 RowDefinitions="*,3*"
@@ -152,7 +152,10 @@
                                                 Grid.Row="2"
                                                 Grid.Column="0">
 
-                                                <Label Text="Adress" VerticalOptions="CenterAndExpand" />
+                                                <Label
+                                                    Text="{Binding Adresse}"
+                                                    MaxLines="1"
+                                                    VerticalOptions="CenterAndExpand" />
                                                 <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
 
 
