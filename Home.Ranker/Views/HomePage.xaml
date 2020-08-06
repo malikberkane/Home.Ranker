@@ -8,16 +8,14 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
-    xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
-    xmlns:controls="clr-namespace:Home.Ranker.Controls"
     x:Class="Home.Ranker.Views.HomePage"
     Shell.NavBarIsVisible="False"
     Title="{Binding Title}"
     x:Name="BrowseItemsPage">
 
     <pancake:PancakeView
-        BackgroundGradientStartColor="LightCoral"
-        BackgroundGradientEndColor="FloralWhite"
+        BackgroundGradientStartColor="#E85D4A"
+        BackgroundGradientEndColor="#EC7D6E"
         BackgroundGradientAngle="147">
         <AbsoluteLayout>
             <Grid
@@ -46,7 +44,7 @@
                         Grid.Column="0"
                         Grid.RowSpan="2"
                         Grid.ColumnSpan="3"
-                        Fill="White"
+                        Fill="#EBE8E4"
                         Aspect="Fill"
                         Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z" />
                     <Image
@@ -57,7 +55,8 @@
                         x:Name="homeImage"
                         Aspect="AspectFill" />
                     <Label
-                        Text="Home Ranker 🏁"
+                        Text="Home Ranker"
+                        TextColor="#514242"
                         Margin="30"
                         FontSize="18"
                         Grid.Column="1"
@@ -98,13 +97,10 @@
 
                                 </SwipeView.RightItems>
                                 <Grid>
-                                    <pancake:PancakeView
-                                        BackgroundGradientStartColor="White"
-                                        BackgroundGradientEndColor="FloralWhite"
-                                        BackgroundGradientAngle="180"
+                                    <Frame
                                         Margin="15"
                                         Padding="10"
-                                        CornerRadius="30"
+                                        CornerRadius="20"
                                         HeightRequest="150"
                                         HorizontalOptions="FillAndExpand"
                                         VerticalOptions="Start">
@@ -174,7 +170,7 @@
                                                 Source="{Binding FirstPictureImageSource}" />
                                         </Grid>
 
-                                    </pancake:PancakeView>
+                                    </Frame>
                                 </Grid>
 
                                 <SwipeView.GestureRecognizers>
@@ -198,8 +194,8 @@
                 BackgroundColor="Transparent"
                 Clicked="AddItem_Clicked"
                 Source="{FontImage FontFamily=MaterialFontFamily,
-                                   Glyph={x:Static fonts:IconFont.AddCircle},
-                                   Color=DarkGreen,
+                                   Glyph={x:Static fonts:IconFont.AddCircleOutline},
+                                   Color=#EBE8E4,
                                    Size=60}" />
 
         </AbsoluteLayout>

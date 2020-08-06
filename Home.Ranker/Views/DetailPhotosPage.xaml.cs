@@ -97,6 +97,8 @@ namespace Home.Ranker.Views
 
 
             Photos.Add(newPhoto);
+
+            SelectedIndex = Photos.Count - 1;
         }
 
        

@@ -9,7 +9,7 @@
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     x:Name="CurrentView"
-    BackgroundColor="FloralWhite"
+    BackgroundColor="#EBE8E4"
     Shell.NavBarIsVisible="False"
     Visual="Material"
     x:Class="Home.Ranker.Views.SetApartmentPage"
@@ -54,34 +54,33 @@
                                 </SwipeItems>
 
                             </SwipeView.RightItems>
-                            <ContentView Padding="1,0,1,1" BackgroundColor="Gray">
-                                <Grid
-                                    ColumnDefinitions="5*,*"
-                                    Padding="10"
-                                    BackgroundColor="FloralWhite">
-                                    <StackLayout>
+                            <ContentView Padding="10">
+                                <Frame BackgroundColor="White" CornerRadius="20">
+                                    <Grid ColumnDefinitions="5*,*">
+                                        <StackLayout>
+                                            <Label
+                                                Grid.Column="0"
+                                                Text="{Binding Criteria.Name}"
+                                                FontSize="18"
+                                                TextColor="#514242" />
+                                            <!--<Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />-->
+                                            <Label
+                                                Text="{Binding Note}"
+                                                MaxLines="1"
+                                                FontSize="12"
+                                                FontFamily="sans-serif"
+                                                FontAttributes="Italic" />
+
+                                        </StackLayout>
                                         <Label
-                                            Grid.Column="0"
-                                            Text="{Binding Criteria.Name}"
-                                            FontSize="18"
-                                            TextColor="DarkSlateBlue" />
-                                        <!--<Label Text="{Binding Criteria.ImportanceLevel, StringFormat='Importance: {0}'}" />-->
-                                        <Label
-                                            Text="{Binding Note}"
-                                            MaxLines="1"
-                                            FontSize="12"
-                                            FontFamily="sans-serif"
-                                            FontAttributes="Italic" />
-
-                                    </StackLayout>
-                                    <Label
-                                        Grid.Column="1"
-                                        Text="{Binding RateValue, StringFormat='{0} ⭐'}"
-                                        IsVisible="{Binding RateValue, Converter={StaticResource IsNotNullToBoolConverter}}" />
+                                            Grid.Column="1"
+                                            Text="{Binding RateValue, StringFormat='{0} ⭐'}"
+                                            IsVisible="{Binding RateValue, Converter={StaticResource IsNotNullToBoolConverter}}" />
 
 
 
-                                </Grid>
+                                    </Grid>
+                                </Frame>
                             </ContentView>
                             <SwipeView.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
@@ -91,39 +90,22 @@
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.Footer>
-                    <AbsoluteLayout Padding="10" BackgroundColor="White">
-                        <Rectangle
-                            AbsoluteLayout.LayoutBounds="0,0,.3,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            Stroke="Green"
-                            StrokeThickness="2"
-                            StrokeDashArray="1,1"
-                            StrokeDashOffset="6"
-                            HeightRequest="50"
-                            WidthRequest="150" />
+                    <ContentView Padding="20" BackgroundColor="AliceBlue">
 
-                        <ImageButton
-                            BackgroundColor="Transparent"
-                            AbsoluteLayout.LayoutBounds="0.1,.5,-1,-1"
-                            Clicked="ImageButton_Clicked"
-                            AbsoluteLayout.LayoutFlags="PositionProportional"
-                            Source="{FontImage FontFamily=MaterialFontFamily,
-                                               Glyph={x:Static fonts:IconFont.Add},
-                                               Color=Green,
-                                               Size=20}" />
+                        <Label Text="+ Add new criteria" />
+                        <ContentView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ImageButton_Clicked" />
+                        </ContentView.GestureRecognizers>
+                    </ContentView>
 
-
-
-                    </AbsoluteLayout>
                 </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
 
         <StackLayout Grid.Row="0" x:Name="HeaderView">
             <pancake:PancakeView
-                BackgroundGradientStartColor="#FF9190"
-                BackgroundGradientEndColor="FloralWhite"
-                BackgroundGradientAngle="147"
+                BackgroundGradientStartColor="#E85D4A"
+                BackgroundGradientEndColor="#EC7D6E"
                 Padding="10"
                 CornerRadius="0,0,100,200"
                 BackgroundColor="Beige">
@@ -162,20 +144,17 @@
                     <CarouselView
                         Margin="10"
                         x:Name="TheCarousel"
-                        sharedTransitions:Transition.Name="firstImage"
                         ItemsSource="{Binding Photos}"
+                        sharedTransitions:Transition.Name="firstImage"
                         IndicatorView="indicatorView"
                         PeekAreaInsets="75"
                         EmptyView="No pictures taken.">
 
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
-                                <Grid sharedTransitions:Transition.Group="{Binding PhotoUrl}" sharedTransitions:Transition.Name="photo">
-                                    <Image
-                                        Aspect="AspectFit"
-                                        Source="{Binding Source}"
-                                        sharedTransitions:Transition.Group="{Binding Name}"
-                                        sharedTransitions:Transition.Name="firstImage">
+                                <Grid>
+                                    <Image Aspect="AspectFit" Source="{Binding Source}">
+
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="PhotoTapped" />
                                         </Image.GestureRecognizers>
