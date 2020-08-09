@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using Plugin.SharedTransitions;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Home.Ranker.Views
 {
@@ -29,10 +30,9 @@ namespace Home.Ranker.Views
 
         public ICollection<Photo> PhotosToDelete { get; set; }
 
-        public ObservableCriterias Criterias { get; set; } 
+        public ObservableCriterias Criterias { get; set; }
 
-
-
+        private string _initialApartmentStateHash;
 
         public SetApartmentPage(string name)
         {
@@ -124,10 +124,34 @@ namespace Home.Ranker.Views
 
             }
 
+            _initialApartmentStateHash = GetApartmentStateHash();
 
         }
 
-      
+        private string GetApartmentStateHash()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (Photos!=null)
+            {
+                foreach (var item in Photos)
+                {
+                    sb.Append(item.PhotoUrl);
+                    
+                } 
+            }
+
+            if (Criterias!=null)
+            {
+                foreach (var item in Criterias)
+                {
+                    sb.Append($"{item.Criteria.Id}{item.Note}{item.RateValue}");
+                } 
+            }
+
+            sb.Append($"{Apartment.Adresse}{Apartment.Name}");
+
+            return sb.ToString();
+        }
 
         void Save_Clicked(object sender, EventArgs e)
         {
@@ -160,24 +184,31 @@ namespace Home.Ranker.Views
 
         async void BackButton_Clicked(object sender, EventArgs e)
         {
-            var actionSheetResult = await Shell.Current.DisplayActionSheet(string.Empty, "Cancel", string.Empty, new string[] { "Enregistrer", "Abandonner" });
+            await NavBackImplementation();
 
-            switch (actionSheetResult)
+        }
+
+        public async Task NavBackImplementation()
+        {
+            if (_initialApartmentStateHash == GetApartmentStateHash())
             {
-                case "Enregistrer":
-                    Save();
-                    break;
-                case "Abandonner":
-                    await Shell.Current.Navigation.PopAsync();
-                    break;
+                await Shell.Current.Navigation.PopAsync();
+
             }
-          
+            else
+            {
+                var actionSheetResult = await Shell.Current.DisplayActionSheet(string.Empty, AppResources.Cancel, string.Empty, new string[] { AppResources.Save, AppResources.Discard });
 
+                if (actionSheetResult == AppResources.Save)
+                {
+                    Save();
+                    return;
+                }
 
+                await Shell.Current.Navigation.PopAsync();
 
-
-
-
+               
+            }
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
@@ -194,7 +225,7 @@ namespace Home.Ranker.Views
         private async void OnGetAdressFromLocationClicked(object sender, EventArgs e)
         {
 
-            if (await DisplayAlert(string.Empty, "Would you like to get adress from current location?", "Get adress", "Cancel"))
+            if (await DisplayAlert(string.Empty, AppResources.GetCurrentAdressPrompt, AppResources.AcceptGetCurrentAdress, AppResources.Cancel))    
             {
 
                 LoadingAdressIndicator.IsVisible = true;
@@ -228,10 +259,11 @@ namespace Home.Ranker.Views
                 return;
             }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
                 Directory = "Test",
                 SaveToAlbum = true,
+                
                 CompressionQuality = 100,
                 CustomPhotoSize = 50,
                 PhotoSize = PhotoSize.MaxWidthHeight,
@@ -267,7 +299,6 @@ namespace Home.Ranker.Views
                 Photos.Add(newPhoto);
 
             }
-
 
 
 
@@ -309,6 +340,8 @@ namespace Home.Ranker.Views
         }
 
         private SetCriteriaPage AddCriteriaModalPage;
+        private string initialPhotoSetHash;
+        private string initialCriteriaSetHash;
 
         private async void NewCriteriaValidatedInModal(object sender, CustomEventArgs e)
         {
@@ -336,7 +369,6 @@ namespace Home.Ranker.Views
 
 
                 Criterias.Sort();
-
 
 
             }
@@ -387,6 +419,8 @@ namespace Home.Ranker.Views
             SharedTransitionShell.SetTransitionSelectedGroup(this, item.PhotoUrl);
 
             await Shell.Current.Navigation.PushAsync(photosPage);
+
+
         }
 
     }

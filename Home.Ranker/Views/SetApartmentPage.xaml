@@ -5,6 +5,7 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
+    xmlns:main="clr-namespace:Home.Ranker"
     xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
@@ -24,7 +25,7 @@
             <CollectionView
                 x:Name="collectionView"
                 ItemsSource="{Binding Criterias}"
-                SelectionMode="Single">
+                SelectionMode="None">
                 <CollectionView.Header>
                     <ContentView HeightRequest="500" InputTransparent="True" />
                 </CollectionView.Header>
@@ -37,18 +38,17 @@
 
                                 <SwipeItems>
                                     <SwipeItem
+                                        BackgroundColor="Transparent"
                                         Invoked="DeleteCriteria_Clicked"
                                         IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                    Glyph={x:Static fonts:IconFont.Delete},
-                                                                    Color=Black,
-                                                                    Size=20}"
-                                        BackgroundColor="Red" />
+                                                                    Glyph={x:Static fonts:IconFont.Clear},
+                                                                    Size=10}" />
                                     <SwipeItem
                                         BackgroundColor="Transparent"
                                         Invoked="EditItem_Clicked"
                                         IconImageSource="{FontImage FontFamily=MaterialFontFamily,
                                                                     Glyph={x:Static fonts:IconFont.Edit},
-                                                                    Color=#E85D4A,
+                                                                    Color=Green,
                                                                     Size=10}" />
 
                                 </SwipeItems>
@@ -81,6 +81,8 @@
 
                                     </Grid>
                                 </Frame>
+
+
                             </ContentView>
                             <SwipeView.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
@@ -92,7 +94,7 @@
                 <CollectionView.Footer>
                     <ContentView Padding="20" BackgroundColor="AliceBlue">
 
-                        <Label Text="+ Add new criteria" />
+                        <Label Text="{x:Static main:AppResources.AddCriteriaPrompt}" />
                         <ContentView.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ImageButton_Clicked" />
                         </ContentView.GestureRecognizers>
@@ -178,7 +180,7 @@
 
             <StackLayout Orientation="Horizontal" Margin="30,0">
                 <Editor
-                    Placeholder="Adress"
+                    Placeholder="{x:Static main:AppResources.AdressPlaceholder}"
                     x:Name="AdressEditor"
                     AutoSize="TextChanges"
                     Text="{Binding Apartment.Adresse}"
@@ -202,7 +204,7 @@
 
             <StackLayout Orientation="Horizontal" Margin="30">
                 <Editor
-                    Placeholder="Name"
+                    Placeholder="{x:Static main:AppResources.NamePlaceholder}"
                     Text="{Binding Apartment.Name}"
                     AutoSize="TextChanges" />
                 <Label

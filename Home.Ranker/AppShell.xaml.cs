@@ -1,4 +1,5 @@
-﻿using Plugin.SharedTransitions;
+﻿using Home.Ranker.Views;
+using Plugin.SharedTransitions;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,22 @@ namespace Home.Ranker
         public AppShell()
         {
             InitializeComponent();
+        }
+
+
+        protected override bool OnBackButtonPressed()
+        {
+            var page = (Current?.CurrentItem?.CurrentItem as IShellSectionController)?.PresentedPage;
+
+            if (!(page is SetApartmentPage setAptPage)) return base.OnBackButtonPressed();
+
+            if (Current.Navigation.NavigationStack.Count > 1)
+            {
+                setAptPage.NavBackImplementation();
+            }
+
+            return true;
+
         }
     }
 }

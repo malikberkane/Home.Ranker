@@ -48,7 +48,48 @@ namespace Home.Ranker.Data
 
 
 
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id=1,
+                Name = AppResources.PriceCriteria,
 
+            });
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id = 2,
+
+                Name = AppResources.SecurityCriteria,
+
+            });
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id = 3,
+
+                Name = AppResources.IsolationCriteria,
+
+            });
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id = 4,
+
+                Name = AppResources.ParkingCriteria,
+
+            });
+
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id = 5,
+
+                Name = AppResources.LightCriteria,
+
+            });
+            modelBuilder.Entity<Criteria>().HasData(new Criteria()
+            {
+                Id = 6,
+
+                Name = AppResources.StorageCriteria,
+
+            });
 
         }
 

@@ -4,18 +4,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:main="clr-namespace:Home.Ranker"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
     Shell.NavBarIsVisible="False"
     x:Class="Home.Ranker.Views.SetCriteriaPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <pancake:PancakeView
-        BackgroundGradientStartColor="FloralWhite"
-        BackgroundGradientEndColor="#FF9190"
-        BackgroundGradientAngle="0">
+        BackgroundGradientStartColor="#E85D4A"
+        BackgroundGradientEndColor="#E85D4A"
+        BackgroundGradientAngle="45">
         <StackLayout Padding="20">
             <Label
-                Text="Set criteria"
+                Text="{x:Static main:AppResources.SetCriteriaTitle}"
+                TextColor="White"
                 FontSize="40"
                 HorizontalOptions="CenterAndExpand" />
             <Grid RowDefinitions="*,*,*" VerticalOptions="FillAndExpand">
@@ -25,23 +35,23 @@
                     x:Name="CriteriaNameEntry"
                     VerticalOptions="CenterAndExpand"
                     Text="{Binding Criteria.Name}"
-                    Placeholder="Criteria name" />
+                    TextColor="White"
+                    Placeholder="{x:Static main:AppResources.NamePlaceholder}" />
 
                 <StackLayout Grid.Row="1">
-                    <Label Text="Importance level" HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{x:Static main:AppResources.ImportanceLevelTitle}" HorizontalOptions="CenterAndExpand" />
                     <Slider
                         x:Name="CriteriaImportanceSlider"
-                        ThumbColor="Black"
-                        MinimumTrackColor="Black"
+                        ThumbColor="#EBE8E4"
+                        MinimumTrackColor="#EBE8E4"
                         Value="{Binding Criteria.ImportanceLevel}"
                         Maximum="10"
-                        Minimum="1" />
+                        Minimum="0" />
                     <Label
                         x:Name="ImportanceDescriptionLabel"
                         VerticalOptions="CenterAndExpand"
                         Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
                         FontSize="40"
-                        TextColor="Black"
                         HorizontalOptions="CenterAndExpand" />
 
                 </StackLayout>
@@ -52,13 +62,14 @@
 
             <Button
                 Margin="30"
+                TextColor="White"
                 BackgroundColor="Transparent"
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="EndAndExpand"
                 FontAttributes="Bold"
                 Clicked="OkButton_Clicked"
                 FontSize="Large"
-                Text="OK" />
+                Text="{x:Static main:AppResources.Ok}" />
         </StackLayout>
 
     </pancake:PancakeView>

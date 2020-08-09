@@ -116,7 +116,7 @@ namespace Home.Ranker.Views
 
 
 
-            var newApartmentLabel = await DisplayPromptAsync("New visit", "Enter name or adress");
+            var newApartmentLabel = await DisplayPromptAsync(AppResources.NewEvaluationTitle, AppResources.EnterNamePrompt, AppResources.Ok, AppResources.Cancel);
 
             if (!string.IsNullOrEmpty(newApartmentLabel))
             {

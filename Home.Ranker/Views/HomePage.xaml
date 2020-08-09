@@ -7,6 +7,7 @@
     xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     mc:Ignorable="d"
+    xmlns:main="clr-namespace:Home.Ranker"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     x:Class="Home.Ranker.Views.HomePage"
     Shell.NavBarIsVisible="False"
@@ -15,24 +16,13 @@
 
     <pancake:PancakeView
         BackgroundGradientStartColor="#E85D4A"
-        BackgroundGradientEndColor="#EC7D6E"
+        BackgroundGradientEndColor="#F3AEA4"
         BackgroundGradientAngle="147">
         <AbsoluteLayout>
             <Grid
                 RowDefinitions="*,3*"
                 AbsoluteLayout.LayoutFlags="All"
                 AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <!--<AbsoluteLayout Grid.Row="0" x:Name="ImageLayout">
-
-
-                <Grid RowDefinitions="*,*">
-
-                    <Path
-                        Grid.Row="0"
-                        Fill="#007fff"
-                        Stroke="#007fff"
-                        Aspect="Fill"
-                        Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z" />-->
                 <Grid
                     Grid.Row="0"
                     ColumnDefinitions="*,*,*"
@@ -53,9 +43,9 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"
                         x:Name="homeImage"
-                        Aspect="AspectFill" />
+                        Aspect="AspectFit" />
                     <Label
-                        Text="Home Ranker"
+                        Text="Bébou land"
                         TextColor="#514242"
                         Margin="30"
                         FontSize="18"
@@ -71,8 +61,17 @@
                     Grid.Row="0"
                     ItemSizingStrategy="MeasureAllItems"
                     x:Name="ItemsCollectionView"
-                    EmptyView="Add an item to start"
                     ItemsSource="{Binding Apartments}">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+
+                            <Label
+                                FontSize="Large"
+                                Text="{x:Static main:AppResources.NoEvaluationMessage}"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand" />
+                        </ContentView>
+                    </CollectionView.EmptyView>
 
                     <CollectionView.Header>
 
@@ -86,13 +85,7 @@
                                 <SwipeView.RightItems>
 
                                     <SwipeItems>
-                                        <SwipeItem
-                                            IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                        Glyph={x:Static fonts:IconFont.Delete},
-                                                                        Color=Red,
-                                                                        Size=20}"
-                                            BackgroundColor="Red"
-                                            Invoked="Delete_Apartment_Clicked" />
+                                        <SwipeItem IconImageSource="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Delete}, Size=20}" Invoked="Delete_Apartment_Clicked" />
                                     </SwipeItems>
 
                                 </SwipeView.RightItems>
@@ -188,15 +181,25 @@
                 </CollectionView>
             </Grid>
 
-            <ImageButton
-                AbsoluteLayout.LayoutBounds="0.97,0.97,-1,-1"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                BackgroundColor="Transparent"
-                Clicked="AddItem_Clicked"
-                Source="{FontImage FontFamily=MaterialFontFamily,
-                                   Glyph={x:Static fonts:IconFont.AddCircleOutline},
-                                   Color=#EBE8E4,
-                                   Size=60}" />
+            <Grid
+                BackgroundColor="#EBE8E4"
+                AbsoluteLayout.LayoutBounds="0.90,0.97,-1,-1"
+                AbsoluteLayout.LayoutFlags="PositionProportional">
+                <ImageButton
+                    HorizontalOptions="EndAndExpand"
+                    BackgroundColor="Transparent"
+                    Clicked="AddItem_Clicked"
+                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                       Glyph={x:Static fonts:IconFont.Add},
+                                       Color=#E85D4A,
+                                       Size=50}" />
+                <Grid.Clip>
+                    <EllipseGeometry
+                        Center="50,75"
+                        RadiusX="80"
+                        RadiusY="75" />
+                </Grid.Clip>
+            </Grid>
 
         </AbsoluteLayout>
     </pancake:PancakeView>

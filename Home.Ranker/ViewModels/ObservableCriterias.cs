@@ -90,6 +90,7 @@ namespace Home.Ranker.ViewModels
 
             GC.SuppressFinalize(this);
         }
+
     }
 
 }

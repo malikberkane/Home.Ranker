@@ -33,6 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\SetApartmentPage.xaml.cs">
       <DependentUpon>SetApartmentPage.xaml</DependentUpon>
     </Compile>
@@ -44,6 +49,10 @@
   <ItemGroup>
     <EmbeddedResource Update="Controls\ApartmentCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DetailPhotosPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
