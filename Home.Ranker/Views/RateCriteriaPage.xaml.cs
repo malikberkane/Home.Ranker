@@ -13,6 +13,7 @@ namespace Home.Ranker.Views
     [DesignTimeVisible(false)]
     public partial class RateCriteriaPage : ContentPage
     {
+        private bool hasRate;
 
         public CriteriaViewModel CurrentCriteria { get; set; }
 
@@ -20,11 +21,45 @@ namespace Home.Ranker.Views
 
 
 
+        public bool HasRate
+        {
+            get => hasRate; set
+            {
+
+                hasRate = value;
+                if (value == false)
+                {
+                    if (CurrentCriteria.RateValue.HasValue)
+                    {
+                        CurrentCriteria.RateValue = 0;
+                        CurrentCriteria.RateValue = null;
+                    }
+
+                   
+
+
+                }
+                else
+                {
+                    RatingControl.Opacity=1;
+                    if (!CurrentCriteria.RateValue.HasValue)
+                    {
+                        CurrentCriteria.RateValue = 0;
+                    }
+
+
+                }
+
+                OnPropertyChanged(nameof(HasRate));
+            }
+        }
+
         public RateCriteriaPage(CriteriaViewModel criteria, Apartment appartment)
         {
             InitializeComponent();
             CurrentApartment = appartment;
             CurrentCriteria = criteria;
+            HasRate = CurrentCriteria.RateValue.HasValue;
             BindingContext = this;
         }
 
@@ -37,7 +72,12 @@ namespace Home.Ranker.Views
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-
+            if(!hasRate && e.NewValue > 0)
+            {
+                HasRate = true;
+            }
+            
+          
             Slider.Value = Math.Round(e.NewValue);
             RateDescriptionLabel.Text = String.Format("{0}/10", Slider.Value);
         }

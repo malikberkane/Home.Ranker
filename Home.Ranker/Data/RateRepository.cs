@@ -43,9 +43,13 @@ namespace Home.Ranker.Data
 
         public void DeleteRate(int apartmentId, int criteriaId)
         {
-            var rate = _currentContext.Rates.Find(apartmentId, criteriaId);
+            var rate = _currentContext.Rates.FirstOrDefault(r=> r.ApartmentId==apartmentId && r.CriteriaId==criteriaId);
 
-            _currentContext.Rates.Remove(rate);
+            if (rate != null)
+            {
+                _currentContext.Rates.Remove(rate);
+
+            }
         }
 
         public void UpdateRate(Rate Rate)

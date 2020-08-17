@@ -121,13 +121,20 @@ namespace Home.Ranker.Views
             if (!string.IsNullOrEmpty(newApartmentLabel))
             {
                 var newPage = new SetApartmentPage(newApartmentLabel);
+
+                IsBusy = true;
                 newPage.LoadData();
                 newPage.BindingContext = newPage;
+
+                IsBusy = false;
+
                 await Shell.Current.Navigation.PushAsync(newPage);
 
+                
 
             }
         }
+
 
 
 

@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="Home.Ranker.Views.RateCriteriaPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Home.Ranker.Controls"
-    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    xmlns:main="clr-namespace:Home.Ranker"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
-    mc:Ignorable="d"
+    xmlns:main="clr-namespace:Home.Ranker"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.NavBarIsVisible="False"
-    x:Class="Home.Ranker.Views.RateCriteriaPage">
+    mc:Ignorable="d">
 
 
 
@@ -18,17 +18,17 @@
 
 
 
-    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
 
         <pancake:PancakeView
             Grid.Row="0"
+            Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Grid.RowSpan="2"
-            BackgroundGradientStartColor="#E85D4A"
-            BackgroundGradientEndColor="#F3AEA4"
+            Padding="10"
             BackgroundGradientAngle="45"
-            Padding="10">
+            BackgroundGradientEndColor="#F3AEA4"
+            BackgroundGradientStartColor="#E85D4A">
             <pancake:PancakeView.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Label">
@@ -38,56 +38,61 @@
             </pancake:PancakeView.Resources>
             <StackLayout Spacing="30">
                 <Label
-                    HorizontalOptions="CenterAndExpand"
                     FontSize="50"
-                    VerticalOptions="Start"
-                    Text="{Binding CurrentCriteria.Criteria.Name}" />
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding CurrentCriteria.Criteria.Name}"
+                    VerticalOptions="Start" />
 
 
                 <Label
-                    HorizontalOptions="CenterAndExpand"
                     FontSize="20"
-                    VerticalOptions="Start"
-                    Text="{Binding CurrentApartment.Name}" />
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding CurrentApartment.Name}"
+                    VerticalOptions="Start" />
                 <Label
                     x:Name="RateDescriptionLabel"
-                    HorizontalOptions="CenterAndExpand"
+                    FontAttributes="Bold"
                     FontFamily="sans-serif"
-                    FontAttributes="Bold" />
+                    HorizontalOptions="CenterAndExpand" />
 
 
                 <AbsoluteLayout>
                     <controls:RatingControl
-                        AbsoluteLayout.LayoutFlags="All"
+                        x:Name="RatingControl"
                         AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        Spacing="10"
-                        Size="30"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Max="10"
                         Rating="{Binding CurrentCriteria.RateValue}"
-                        Max="10" />
+                        Size="30"
+                        Spacing="10" />
                     <Slider
-                        AbsoluteLayout.LayoutFlags="All"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        BackgroundColor="Transparent"
-                        Opacity="0"
                         x:Name="Slider"
-                        ValueChanged="Slider_ValueChanged"
-                        Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        BackgroundColor="Transparent"
                         Maximum="10"
+                        Minimum="0"
                         MinimumTrackColor="Transparent"
+                        Opacity="0"
                         ThumbColor="Transparent"
-                        Minimum="1" />
+                        ValueChanged="Slider_ValueChanged"
+                        Value="{Binding CurrentCriteria.RateValue, Mode=TwoWay}" />
 
                 </AbsoluteLayout>
 
 
 
                 <Editor
-                    Placeholder="{x:Static main:AppResources.NotesPlaceholder}"
                     x:Name="AdressEditor"
                     AutoSize="TextChanges"
-                    Text="{Binding CurrentCriteria.Note}"
-                    HorizontalOptions="FillAndExpand" />
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="{x:Static main:AppResources.NotesPlaceholder}"
+                    Text="{Binding CurrentCriteria.Note}" />
 
+                <StackLayout HorizontalOptions="EndAndExpand" Orientation="Horizontal">
+                    <Label Text="{x:Static main:AppResources.RateCurrentCriteria}" VerticalOptions="CenterAndExpand" />
+                    <CheckBox IsChecked="{Binding HasRate}" Color="White" />
+                </StackLayout>
 
             </StackLayout>
         </pancake:PancakeView>
@@ -96,9 +101,9 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Aspect="Fill"
+            Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z"
             Fill="FloralWhite"
-            RotationX="180"
-            Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z" />
+            RotationX="180" />
 
         <!--<ImageButton
             Grid.Row="1"
@@ -115,14 +120,14 @@
         <Button
             Grid.Row="1"
             Grid.Column="1"
+            Margin="30"
             BackgroundColor="FloralWhite"
-            VerticalOptions="EndAndExpand"
-            HorizontalOptions="EndAndExpand"
+            Clicked="OkButton_Clicked"
             FontAttributes="Bold"
             FontSize="Large"
-            Margin="30"
-            Clicked="OkButton_Clicked"
-            Text="{x:Static main:AppResources.Ok}" />
+            HorizontalOptions="EndAndExpand"
+            Text="{x:Static main:AppResources.Ok}"
+            VerticalOptions="EndAndExpand" />
     </Grid>
 
 </ContentPage>

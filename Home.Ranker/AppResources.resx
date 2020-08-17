@@ -168,6 +168,9 @@
   <data name="PriceCriteria" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="RateCurrentCriteria" xml:space="preserve">
+    <value>Rate this criteria</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>

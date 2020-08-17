@@ -193,10 +193,6 @@ namespace Home.Ranker.Services
                 unitOfWork.Complete();
 
 
-
-
-
-
                 foreach (var criteria in criteriaRates)
                 {
                     if (criteria.RateValue.HasValue)
@@ -220,9 +216,13 @@ namespace Home.Ranker.Services
                         }
 
 
-
-
-
+                    }
+                    else
+                    {
+                        if (unitOfWork.RateRepository.GetRateById(apartment.Id, criteria.Criteria.Id) != null)
+                        {
+                            unitOfWork.RateRepository.DeleteRate(apartment.Id, criteria.Criteria.Id);
+                        }
                     }
 
                     unitOfWork.Complete();

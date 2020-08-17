@@ -214,6 +214,15 @@ namespace Home.Ranker {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rate this criteria.
+        /// </summary>
+        internal static string RateCurrentCriteria {
+            get {
+                return ResourceManager.GetString("RateCurrentCriteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Save {

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="Home.Ranker.Views.SetCriteriaPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:main="clr-namespace:Home.Ranker"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    mc:Ignorable="d"
     Shell.NavBarIsVisible="False"
-    x:Class="Home.Ranker.Views.SetCriteriaPage">
+    mc:Ignorable="d">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -19,40 +19,40 @@
     </ContentPage.Resources>
 
     <pancake:PancakeView
-        BackgroundGradientStartColor="#E85D4A"
+        BackgroundGradientAngle="45"
         BackgroundGradientEndColor="#E85D4A"
-        BackgroundGradientAngle="45">
+        BackgroundGradientStartColor="#E85D4A">
         <StackLayout Padding="20">
             <Label
-                Text="{x:Static main:AppResources.SetCriteriaTitle}"
-                TextColor="White"
                 FontSize="40"
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                Text="{x:Static main:AppResources.SetCriteriaTitle}"
+                TextColor="White" />
             <Grid RowDefinitions="*,*,*" VerticalOptions="FillAndExpand">
                 <Editor
+                    x:Name="CriteriaNameEntry"
                     Grid.Row="0"
                     AutoSize="TextChanges"
-                    x:Name="CriteriaNameEntry"
-                    VerticalOptions="CenterAndExpand"
+                    Placeholder="{x:Static main:AppResources.NamePlaceholder}"
                     Text="{Binding Criteria.Name}"
                     TextColor="White"
-                    Placeholder="{x:Static main:AppResources.NamePlaceholder}" />
+                    VerticalOptions="CenterAndExpand" />
 
                 <StackLayout Grid.Row="1">
-                    <Label Text="{x:Static main:AppResources.ImportanceLevelTitle}" HorizontalOptions="CenterAndExpand" />
+                    <Label HorizontalOptions="CenterAndExpand" Text="{x:Static main:AppResources.ImportanceLevelTitle}" />
                     <Slider
                         x:Name="CriteriaImportanceSlider"
-                        ThumbColor="#EBE8E4"
-                        MinimumTrackColor="#EBE8E4"
-                        Value="{Binding Criteria.ImportanceLevel}"
                         Maximum="10"
-                        Minimum="0" />
+                        Minimum="1"
+                        MinimumTrackColor="#EBE8E4"
+                        ThumbColor="#EBE8E4"
+                        Value="{Binding Criteria.ImportanceLevel}" />
                     <Label
                         x:Name="ImportanceDescriptionLabel"
-                        VerticalOptions="CenterAndExpand"
-                        Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
                         FontSize="40"
-                        HorizontalOptions="CenterAndExpand" />
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding Source={x:Reference CriteriaImportanceSlider}, Path=Value}"
+                        VerticalOptions="CenterAndExpand" />
 
                 </StackLayout>
 
@@ -62,14 +62,14 @@
 
             <Button
                 Margin="30"
-                TextColor="White"
                 BackgroundColor="Transparent"
-                VerticalOptions="EndAndExpand"
-                HorizontalOptions="EndAndExpand"
-                FontAttributes="Bold"
                 Clicked="OkButton_Clicked"
+                FontAttributes="Bold"
                 FontSize="Large"
-                Text="{x:Static main:AppResources.Ok}" />
+                HorizontalOptions="EndAndExpand"
+                Text="{x:Static main:AppResources.Ok}"
+                TextColor="White"
+                VerticalOptions="EndAndExpand" />
         </StackLayout>
 
     </pancake:PancakeView>

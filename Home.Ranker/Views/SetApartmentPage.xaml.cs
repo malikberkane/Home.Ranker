@@ -48,14 +48,14 @@ namespace Home.Ranker.Views
 
         }
 
-        private void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
+        private async void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
         {
             if (!_defaultVisibleItemsMesured)
             {
                 _defaultVisibleItemsNumber = e.LastVisibleItemIndex - e.FirstVisibleItemIndex;
                 _defaultVisibleItemsMesured = true;
             }
-            CustomAnimation(e.LastVisibleItemIndex,e.FirstVisibleItemIndex, HeaderView);
+            await CustomAnimation(e.LastVisibleItemIndex,e.FirstVisibleItemIndex, HeaderView);
         }
 
         private int _defaultVisibleItemsNumber;
@@ -64,6 +64,10 @@ namespace Home.Ranker.Views
         {
 
             double ecart = lastIndexVisible - firstIndexVisible;
+            if (ecart == Criterias.Count)
+            {
+                return;
+            }
             var fadeTarget =  1 / Math.Pow((ecart/ _defaultVisibleItemsNumber), 4);
             await name.FadeTo(fadeTarget, 30, Easing.SinOut);
             if (fadeTarget < 0.6)

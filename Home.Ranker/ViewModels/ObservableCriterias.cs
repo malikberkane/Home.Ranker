@@ -68,9 +68,9 @@ namespace Home.Ranker.ViewModels
         protected override void RemoveItem(int index)
         {
             this[index].PropertyChanged -= this.Item_PropertyChanged;
+            base.RemoveItem(index);
 
             AvgCalculation();
-            base.RemoveItem(index);
         }
 
         private void AvgCalculation()
