@@ -53,22 +53,27 @@ namespace Home.Ranker.Views
             if (!_defaultVisibleItemsMesured)
             {
                 _defaultVisibleItemsNumber = e.LastVisibleItemIndex - e.FirstVisibleItemIndex;
-                _defaultVisibleItemsMesured = true;
+                _defaultVisibleItemsMesured = _defaultVisibleItemsNumber <= Criterias.Count;
+
             }
-            await CustomAnimation(e.LastVisibleItemIndex,e.FirstVisibleItemIndex, HeaderView);
+
+            if (_defaultVisibleItemsMesured)
+            {
+                
+                await CustomAnimation(e.LastVisibleItemIndex, e.FirstVisibleItemIndex, HeaderView);
+
+            }
         }
 
         private int _defaultVisibleItemsNumber;
         private bool _defaultVisibleItemsMesured;
+        private bool _performAnimation;
         public  async Task CustomAnimation(int lastIndexVisible,int firstIndexVisible, StackLayout name)
         {
 
             double ecart = lastIndexVisible - firstIndexVisible;
-            if (ecart == Criterias.Count)
-            {
-                return;
-            }
-            var fadeTarget =  1 / Math.Pow((ecart/ _defaultVisibleItemsNumber), 4);
+           
+            var fadeTarget =  1 / Math.Pow((ecart/ _defaultVisibleItemsNumber), 5);
             await name.FadeTo(fadeTarget, 30, Easing.SinOut);
             if (fadeTarget < 0.6)
             {
