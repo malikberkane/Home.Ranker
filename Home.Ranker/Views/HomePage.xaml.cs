@@ -13,13 +13,14 @@ namespace Home.Ranker.Views
     public partial class HomePage : ContentPage
     {
         private HomeRankerService HomeRankerService;
+        private bool isLoading;
 
         public HomePage()
         {
             InitializeComponent();
             BindingContext = this;
 
-          
+
 
 
         }
@@ -79,9 +80,33 @@ namespace Home.Ranker.Views
                 Name = item.Name
             };
             var newPage = new SetApartmentPage(other);
-            newPage.LoadData();
-            newPage.BindingContext = newPage;
-            await Shell.Current.Navigation.PushAsync(newPage);
+            try
+            {
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Loader.IsRunning = true;
+                });
+
+
+                newPage.LoadData();
+                newPage.BindingContext = newPage;
+                await Shell.Current.Navigation.PushAsync(newPage);
+
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert(string.Empty, ex.Message, AppResources.Ok);
+            }
+
+            finally
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Loader.IsRunning = false;
+                });
+            }
 
         }
 
@@ -98,7 +123,7 @@ namespace Home.Ranker.Views
             catch (Exception ex)
             {
 
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                await Shell.Current.DisplayAlert("Error", ex.Message, AppResources.Ok);
             }
         }
 
@@ -113,26 +138,54 @@ namespace Home.Ranker.Views
             {
                 var newPage = new SetApartmentPage(newApartmentLabel);
 
-                IsBusy = true;
-                newPage.LoadData();
-                newPage.BindingContext = newPage;
+                try
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Loader.IsRunning = true;
+                    });
 
-                IsBusy = false;
 
-                await Shell.Current.Navigation.PushAsync(newPage);
+                    newPage.LoadData();
+                    newPage.BindingContext = newPage;
+                    await Shell.Current.Navigation.PushAsync(newPage);
 
-                
+
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert(string.Empty,ex.Message, AppResources.Ok);
+                }
+
+                finally
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Loader.IsRunning = false; ;
+                    });
+                }
+
+
+
 
             }
         }
 
 
 
+        public bool IsLoading
+        {
+            get => isLoading; set
+            {
+                isLoading = value;
+
+            }
+        }
 
 
         async Task ExecuteLoadItemsCommand()
         {
-            IsBusy = true;
+            IsLoading = true;
 
             try
             {
@@ -167,18 +220,11 @@ namespace Home.Ranker.Views
             }
             finally
             {
-                IsBusy = false;
+                IsLoading = false;
             }
         }
 
         public Command LoadItemsCommand { get; set; }
 
-        //private void refreshView_Refreshing(object sender, EventArgs e)
-        //{
-        //    refreshView.IsRefreshing = true;
-        //    LoadItemsCommand.Execute(null);
-        //    refreshView.IsRefreshing = false;
-
-        //}
     }
 }

@@ -7,7 +7,6 @@
     xmlns:fonts="clr-namespace:Home.Ranker.Fonts"
     xmlns:main="clr-namespace:Home.Ranker"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
     xmlns:utils="clr-namespace:Home.Ranker.Utils"
     x:Name="BrowseItemsPage"
@@ -16,12 +15,7 @@
     mc:Ignorable="d">
 
     <AbsoluteLayout>
-        <!--<pancake:PancakeView
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            BackgroundGradientAngle="147"
-            BackgroundGradientEndColor="#F3AEA4"
-            BackgroundGradientStartColor="#E85D4A">-->
+
         <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <AbsoluteLayout.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -218,8 +212,9 @@
         </AbsoluteLayout>
 
         <ActivityIndicator
-            AbsoluteLayout.LayoutBounds=".5,.8,-1,-1"
+            x:Name="Loader"
+            AbsoluteLayout.LayoutBounds=".5,.5,-1,-1"
             AbsoluteLayout.LayoutFlags="PositionProportional"
-            Color="#E85D4A" />
+            Color="Black" />
     </AbsoluteLayout>
 </ContentPage>
