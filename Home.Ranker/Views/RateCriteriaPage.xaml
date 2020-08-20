@@ -97,31 +97,21 @@
             </StackLayout>
         </pancake:PancakeView>
 
-        <Path
+        <!--<Path
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Aspect="Fill"
             Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z"
             Fill="FloralWhite"
-            RotationX="180" />
+            RotationX="180" />-->
 
-        <!--<ImageButton
-            Grid.Row="1"
-            Grid.Column="1"
-            BackgroundColor="Transparent"
-            VerticalOptions="EndAndExpand"
-            HorizontalOptions="EndAndExpand"
-            Margin="30"
-            Source="{FontImage FontFamily=MaterialFontFamily,
-                               Glyph={x:Static fonts:IconFont.CheckCircle},
-                               Color=DarkOliveGreen,
-                               Size=50}" />-->
+
 
         <Button
             Grid.Row="1"
             Grid.Column="1"
             Margin="30"
-            BackgroundColor="FloralWhite"
+            BackgroundColor="Transparent"
             Clicked="OkButton_Clicked"
             FontAttributes="Bold"
             FontSize="Large"

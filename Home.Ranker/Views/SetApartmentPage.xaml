@@ -9,16 +9,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
+    xmlns:utils="clr-namespace:Home.Ranker.Utils"
     x:Name="CurrentView"
-    Title="New Item"
     BackgroundColor="#EBE8E4"
     Shell.NavBarIsVisible="False"
     Visual="Material"
     mc:Ignorable="d">
 
-
-
-    <Grid RowDefinitions="2*,*">
+    <Grid RowDefinitions="2.5*,*">
 
 
         <CollectionView
@@ -28,7 +26,7 @@
             ItemsSource="{Binding Criterias}"
             SelectionMode="None">
             <CollectionView.Header>
-                <ContentView HeightRequest="500" InputTransparent="True" />
+                <ContentView x:Name="HeaderContentView" InputTransparent="True" />
             </CollectionView.Header>
 
             <CollectionView.ItemTemplate>
@@ -39,17 +37,13 @@
 
                             <SwipeItems>
                                 <SwipeItem
+                                    x:Name="DeleteSwipeItem"
                                     BackgroundColor="Transparent"
-                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                Glyph={x:Static fonts:IconFont.Clear},
-                                                                Size=10}"
+                                    IconImageSource="{utils:ImageResource Source=Home.Ranker.Images.delete.png}"
                                     Invoked="DeleteCriteria_Clicked" />
                                 <SwipeItem
                                     BackgroundColor="Transparent"
-                                    IconImageSource="{FontImage FontFamily=MaterialFontFamily,
-                                                                Glyph={x:Static fonts:IconFont.Edit},
-                                                                Color=Green,
-                                                                Size=10}"
+                                    IconImageSource="{utils:ImageResource Source=Home.Ranker.Images.edit.png}"
                                     Invoked="EditItem_Clicked" />
 
                             </SwipeItems>
@@ -121,7 +115,7 @@
                             Source="{FontImage FontFamily=MaterialFontFamily,
                                                Glyph={x:Static fonts:IconFont.NavigateBefore},
                                                Color=#3f3d56,
-                                               Size=150}" />
+                                               Size=80}" />
 
                         <ImageButton
                             Grid.Column="1"
@@ -130,7 +124,7 @@
                             Source="{FontImage FontFamily=MaterialFontFamily,
                                                Glyph={x:Static fonts:IconFont.PhotoCamera},
                                                Color=#3f3d56,
-                                               Size=80}" />
+                                               Size=250}" />
                         <ImageButton
                             Grid.Column="2"
                             BackgroundColor="Transparent"

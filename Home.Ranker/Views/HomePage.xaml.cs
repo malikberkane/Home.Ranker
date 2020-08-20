@@ -19,20 +19,11 @@ namespace Home.Ranker.Views
             InitializeComponent();
             BindingContext = this;
 
-            homeImage.Source = ImageSource.FromResource(
-             "Home.Ranker.Images.SelectHouse.png",
-                typeof(HomePage).GetTypeInfo().Assembly);
+          
 
 
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            homeImage.Source = ImageSource.FromResource(
-           "Home.Ranker.Images.SelectHouse.png",
-              typeof(HomePage).GetTypeInfo().Assembly);
-        }
         public ObservableCollection<Apartment> Apartments { get; set; }
 
         protected override void OnBindingContextChanged()

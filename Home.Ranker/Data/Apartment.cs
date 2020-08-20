@@ -72,11 +72,20 @@ namespace Home.Ranker.Data
 
         public int CompareTo(Apartment other)
         {
-            if (this.RatesAverage < other.RatesAverage)
+            if(!RatesAverage.HasValue && other.RatesAverage.HasValue)
             {
                 return 1;
             }
-            else if (this.RatesAverage > other.RatesAverage)
+            else if(RatesAverage.HasValue && !other.RatesAverage.HasValue)
+            {
+                return -1;
+            }
+
+            if (RatesAverage < other.RatesAverage)
+            {
+                return 1;
+            }
+            else if (RatesAverage > other.RatesAverage)
             {
                 return -1;
             }

@@ -20,7 +20,7 @@
 
     <pancake:PancakeView
         BackgroundGradientAngle="45"
-        BackgroundGradientEndColor="#E85D4A"
+        BackgroundGradientEndColor="#F3AEA4"
         BackgroundGradientStartColor="#E85D4A">
         <StackLayout Padding="20">
             <Label

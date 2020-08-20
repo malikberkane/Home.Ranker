@@ -16,6 +16,7 @@ using System.ComponentModel;
 using Plugin.SharedTransitions;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace Home.Ranker.Views
 {
@@ -39,6 +40,8 @@ namespace Home.Ranker.Views
 
             InitializeComponent();
 
+            HeaderView.SizeChanged += HeaderView_SizeChanged;
+
             collectionView.Scrolled += this.CollectionView_Scrolled;
             Apartment = new Apartment
             {
@@ -46,6 +49,12 @@ namespace Home.Ranker.Views
             };
 
 
+        }
+
+        private void HeaderView_SizeChanged(object sender, EventArgs e)
+        {
+
+            HeaderContentView.HeightRequest = HeaderView.Height;
         }
 
         private async void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
@@ -91,6 +100,8 @@ namespace Home.Ranker.Views
         {
 
             InitializeComponent();
+            HeaderView.SizeChanged += HeaderView_SizeChanged;
+
             collectionView.Scrolled += this.CollectionView_Scrolled;
 
             Apartment = appartment;
@@ -135,6 +146,9 @@ namespace Home.Ranker.Views
 
             _initialApartmentStateHash = GetApartmentStateHash();
 
+          
+
+          
         }
 
         private string GetApartmentStateHash()
