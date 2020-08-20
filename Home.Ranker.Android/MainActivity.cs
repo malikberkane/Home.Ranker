@@ -20,7 +20,7 @@ namespace Home.Ranker.Droid
 
             base.OnCreate(savedInstanceState);
 
-            global::Xamarin.Forms.Forms.SetFlags(new[] { "CollectionView_Experimental", "Shapes_Experimental", "SwipeView_Experimental" });
+            global::Xamarin.Forms.Forms.SetFlags(new[] { "CollectionView_Experimental", "Shapes_Experimental", "SwipeView_Experimental", "Brush_Experimental" });
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);

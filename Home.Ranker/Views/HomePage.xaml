@@ -16,199 +16,206 @@
     mc:Ignorable="d">
 
     <AbsoluteLayout>
-        <pancake:PancakeView
+        <!--<pancake:PancakeView
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             BackgroundGradientAngle="147"
             BackgroundGradientEndColor="#F3AEA4"
-            BackgroundGradientStartColor="#E85D4A">
-            <AbsoluteLayout>
+            BackgroundGradientStartColor="#E85D4A">-->
+        <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <AbsoluteLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0" Color="#F3AEA4" />
+
+                    <GradientStop Offset="1" Color="#E85D4A" />
+
+                </LinearGradientBrush>
+            </AbsoluteLayout.Background>
+            <Grid
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                RowDefinitions="*,3*">
                 <Grid
-                    AbsoluteLayout.LayoutBounds="0,0,1,1"
-                    AbsoluteLayout.LayoutFlags="All"
-                    RowDefinitions="*,3*">
-                    <Grid
-                        Grid.Row="0"
-                        ColumnDefinitions="*,*,*"
-                        RowDefinitions="*,*">
+                    Grid.Row="0"
+                    ColumnDefinitions="*,*,*"
+                    RowDefinitions="*,*">
 
 
-                        <Path
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3"
-                            Aspect="Fill"
-                            Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z"
-                            Fill="#EBE8E4" />
-                        <Image
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Margin="16"
-                            Aspect="AspectFit"
-                            Source="{utils:ImageResource Source=Home.Ranker.Images.SelectHouse.png}" />
-                        <Label
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            Margin="30"
-                            FontSize="18"
-                            Text="Home Ranker"
-                            TextColor="#514242" />
-                    </Grid>
-
-
-                    <CollectionView
-                        x:Name="ItemsCollectionView"
+                    <Path
                         Grid.Row="0"
                         Grid.RowSpan="2"
-                        ItemSizingStrategy="MeasureAllItems"
-                        ItemsSource="{Binding Apartments}">
-                        <CollectionView.EmptyView>
-                            <ContentView>
-
-                                <Label
-                                    FontSize="Large"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="{x:Static main:AppResources.NoEvaluationMessage}"
-                                    VerticalOptions="CenterAndExpand" />
-                            </ContentView>
-                        </CollectionView.EmptyView>
-
-                        <CollectionView.Header>
-
-                            <BoxView HeightRequest="200" />
-
-                        </CollectionView.Header>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <SwipeView BackgroundColor="Transparent">
-                                    <SwipeView.RightItems>
-
-                                        <SwipeItems>
-                                            <SwipeItem IconImageSource="{utils:ImageResource Source=Home.Ranker.Images.delete.png}" Invoked="Delete_Apartment_Clicked" />
-                                        </SwipeItems>
-
-                                    </SwipeView.RightItems>
-                                    <Grid>
-                                        <Frame
-                                            Margin="15"
-                                            Padding="10"
-                                            CornerRadius="20"
-                                            HeightRequest="150"
-                                            HorizontalOptions="FillAndExpand"
-                                            VerticalOptions="Start">
-                                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                                <Grid.Resources>
-                                                    <Style TargetType="Label">
-                                                        <Setter Property="TextColor" Value="DarkSlateBlue" />
-                                                    </Style>
-                                                </Grid.Resources>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*" />
-                                                    <RowDefinition Height="*" />
-                                                    <RowDefinition Height="*" />
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Aspect="Fill"
+                        Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z"
+                        Fill="#EBE8E4" />
+                    <Image
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Margin="16"
+                        Aspect="AspectFit"
+                        Source="{utils:ImageResource Source=Home.Ranker.Images.SelectHouse.png}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="30"
+                        FontSize="18"
+                        Text="Home Ranker"
+                        TextColor="#514242" />
+                </Grid>
 
 
-                                                </Grid.RowDefinitions>
+                <CollectionView
+                    x:Name="ItemsCollectionView"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    ItemSizingStrategy="MeasureAllItems"
+                    ItemsSource="{Binding Apartments}">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+
+                            <Label
+                                FontSize="Large"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="{x:Static main:AppResources.NoEvaluationMessage}"
+                                VerticalOptions="CenterAndExpand" />
+                        </ContentView>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.Header>
+
+                        <BoxView HeightRequest="200" />
+
+                    </CollectionView.Header>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView BackgroundColor="Transparent">
+                                <SwipeView.RightItems>
+
+                                    <SwipeItems>
+                                        <SwipeItem IconImageSource="{utils:ImageResource Source=Home.Ranker.Images.delete.png}" Invoked="Delete_Apartment_Clicked" />
+                                    </SwipeItems>
+
+                                </SwipeView.RightItems>
+                                <Grid>
+                                    <Frame
+                                        Margin="15"
+                                        Padding="10"
+                                        CornerRadius="20"
+                                        HeightRequest="150"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="Start">
+                                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Grid.Resources>
+                                                <Style TargetType="Label">
+                                                    <Setter Property="TextColor" Value="DarkSlateBlue" />
+                                                </Style>
+                                            </Grid.Resources>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+
+
+                                            </Grid.RowDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Margin="10"
+                                                FontSize="20"
+                                                Text="{Binding Name}" />
+
+                                            <StackLayout
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Margin="10">
+
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
+
+                                                    <Label Text="{Binding RatesAverage, StringFormat='{0:N2}'}" VerticalOptions="CenterAndExpand" />
+                                                </StackLayout>
+
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Margin="10"
+                                                IsVisible="{Binding Adresse, Converter={StaticResource IsNotNullToBoolConverter}}}"
+                                                Orientation="Horizontal">
 
                                                 <Label
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="10"
-                                                    FontSize="24"
-                                                    Text="{Binding Name}" />
-
-                                                <StackLayout
-                                                    Grid.Row="1"
-                                                    Grid.Column="0"
-                                                    Margin="10">
-
-                                                    <StackLayout Orientation="Horizontal">
-                                                        <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Star}, Color=Gold, Size=20}" />
-
-                                                        <Label Text="{Binding RatesAverage, StringFormat='{0:N2}'}" VerticalOptions="CenterAndExpand" />
-                                                    </StackLayout>
-
-                                                </StackLayout>
-
-                                                <StackLayout
-                                                    Grid.Row="2"
-                                                    Grid.Column="0"
-                                                    Margin="10"
-                                                    IsVisible="{Binding Adresse, Converter={StaticResource IsNotNullToBoolConverter}}}"
-                                                    Orientation="Horizontal">
-
-                                                    <Label
-                                                        LineBreakMode="TailTruncation"
-                                                        MaxLines="1"
-                                                        Text="{Binding Adresse}"
-                                                        VerticalOptions="CenterAndExpand" />
-                                                    <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
+                                                    LineBreakMode="TailTruncation"
+                                                    MaxLines="1"
+                                                    Text="{Binding Adresse}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                                <Image Source="{FontImage FontFamily=MaterialFontFamily, Glyph={x:Static fonts:IconFont.Room}, Color=Gold, Size=20}" />
 
 
-                                                </StackLayout>
+                                            </StackLayout>
 
-                                                <Image
-                                                    Grid.RowSpan="3"
-                                                    Grid.Column="1"
-                                                    Margin="0,0,10,0"
-                                                    sharedTransitions:Transition.Group="{Binding Name}"
-                                                    sharedTransitions:Transition.Name="firstImage"
-                                                    Aspect="AspectFill"
-                                                    HeightRequest="150"
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    Rotation="0"
-                                                    Source="{Binding FirstPictureImageSource}" />
-                                            </Grid>
+                                            <Image
+                                                Grid.RowSpan="3"
+                                                Grid.Column="1"
+                                                Margin="0,0,10,0"
+                                                sharedTransitions:Transition.Group="{Binding Name}"
+                                                sharedTransitions:Transition.Name="firstImage"
+                                                Aspect="AspectFill"
+                                                HeightRequest="150"
+                                                HorizontalOptions="CenterAndExpand"
+                                                Rotation="0"
+                                                Source="{Binding FirstPictureImageSource}" />
+                                        </Grid>
 
-                                        </Frame>
-                                    </Grid>
+                                    </Frame>
+                                </Grid>
 
-                                    <SwipeView.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnItemSelected" />
+                                <SwipeView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnItemSelected" />
 
-                                    </SwipeView.GestureRecognizers>
+                                </SwipeView.GestureRecognizers>
 
-                                </SwipeView>
+                            </SwipeView>
 
 
 
 
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
 
-                <Grid
-                    AbsoluteLayout.LayoutBounds="0.90,0.97,-1,-1"
-                    AbsoluteLayout.LayoutFlags="PositionProportional"
-                    BackgroundColor="DarkSlateGray">
-                    <ImageButton
-                        BackgroundColor="Transparent"
-                        Clicked="AddItem_Clicked"
-                        HorizontalOptions="EndAndExpand"
-                        Source="{FontImage FontFamily=MaterialFontFamily,
-                                           Glyph={x:Static fonts:IconFont.Add},
-                                           Color=#E85D4A,
-                                           Size=50}" />
-                    <Grid.Clip>
-                        <EllipseGeometry
-                            Center="50,75"
-                            RadiusX="80"
-                            RadiusY="75" />
-                    </Grid.Clip>
-                </Grid>
+            <Grid
+                AbsoluteLayout.LayoutBounds="0.90,0.97,-1,-1"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="DarkSlateGray">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Clicked="AddItem_Clicked"
+                    HorizontalOptions="EndAndExpand"
+                    Source="{FontImage FontFamily=MaterialFontFamily,
+                                       Glyph={x:Static fonts:IconFont.Add},
+                                       Color=#E85D4A,
+                                       Size=50}" />
+                <Grid.Clip>
+                    <EllipseGeometry
+                        Center="50,75"
+                        RadiusX="80"
+                        RadiusY="75" />
+                </Grid.Clip>
+            </Grid>
 
-            </AbsoluteLayout>
-        </pancake:PancakeView>
+        </AbsoluteLayout>
 
         <ActivityIndicator
             AbsoluteLayout.LayoutBounds=".5,.8,-1,-1"

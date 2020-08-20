@@ -100,10 +100,10 @@
         <StackLayout x:Name="HeaderView" Grid.Row="0">
             <pancake:PancakeView
                 Padding="10"
-                BackgroundColor="Beige"
-                BackgroundGradientEndColor="#EC7D6E"
-                BackgroundGradientStartColor="#E85D4A"
+                BackgroundColor="#E85D4A"
                 CornerRadius="0,0,100,200">
+
+
 
                 <StackLayout>
                     <Grid ColumnDefinitions="5*,*,*">

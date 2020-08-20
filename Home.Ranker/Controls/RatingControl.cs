@@ -121,7 +121,7 @@ namespace Home.Ranker.Controls
             {
                 Points = halfStarPoints,
                 Fill = fillColor,
-                Stroke = Color.Transparent,
+                Stroke = Brush.Transparent,
                 StrokeThickness = 0,
             };
 
@@ -174,15 +174,15 @@ namespace Home.Ranker.Controls
         }
 
 
-        private Color fillColor = Color.Yellow;
-        public Color FillColor
+        private Brush fillColor = Brush.Yellow;
+        public Brush FillColor
         {
             get => fillColor;
             set => Set(ref fillColor, value);
         }
 
-        private Color strokeColor = Color.Black;
-        public Color StrokeColor
+        private Brush strokeColor = Brush.Black;
+        public Brush StrokeColor
         {
             get => strokeColor;
             set => Set(ref strokeColor, value);

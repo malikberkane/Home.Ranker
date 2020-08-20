@@ -20,22 +20,29 @@
 
     <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
 
-        <pancake:PancakeView
+        <ContentView
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Padding="10"
-            BackgroundGradientAngle="45"
-            BackgroundGradientEndColor="#F3AEA4"
-            BackgroundGradientStartColor="#E85D4A">
-            <pancake:PancakeView.Resources>
+            Padding="10">
+
+            <ContentView.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Label">
                         <Setter Property="TextColor" Value="White" />
                     </Style>
                 </ResourceDictionary>
-            </pancake:PancakeView.Resources>
+            </ContentView.Resources>
+
+            <ContentView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0" Color="#E85D4A" />
+
+                    <GradientStop Offset="1" Color="#F3AEA4" />
+
+                </LinearGradientBrush>
+            </ContentView.Background>
             <StackLayout Spacing="30">
                 <Label
                     FontSize="50"
@@ -95,7 +102,7 @@
                 </StackLayout>
 
             </StackLayout>
-        </pancake:PancakeView>
+        </ContentView>
 
         <!--<Path
             Grid.Row="1"

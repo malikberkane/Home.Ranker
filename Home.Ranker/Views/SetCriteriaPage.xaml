@@ -18,10 +18,16 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <pancake:PancakeView
-        BackgroundGradientAngle="45"
-        BackgroundGradientEndColor="#F3AEA4"
-        BackgroundGradientStartColor="#E85D4A">
+    <ContentView>
+        <ContentView.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#E85D4A" />
+
+                <GradientStop Offset="1" Color="#F3AEA4" />
+
+            </LinearGradientBrush>
+        </ContentView.Background>
+
         <StackLayout Padding="20">
             <Label
                 FontSize="40"
@@ -72,5 +78,5 @@
                 VerticalOptions="EndAndExpand" />
         </StackLayout>
 
-    </pancake:PancakeView>
+    </ContentView>
 </ContentPage> 
