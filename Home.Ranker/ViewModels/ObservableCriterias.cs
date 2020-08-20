@@ -51,18 +51,19 @@ namespace Home.Ranker.ViewModels
         {
             this[index].PropertyChanged -= Item_PropertyChanged;
             item.PropertyChanged+= Item_PropertyChanged;
+            base.SetItem(index, item);
+
             AvgCalculation();
 
-            base.SetItem(index, item);
         }
 
         protected override void InsertItem(int index, CriteriaViewModel item)
         {
             item.PropertyChanged += this.Item_PropertyChanged;
+            base.InsertItem(index, item);
 
             AvgCalculation();
 
-            base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)

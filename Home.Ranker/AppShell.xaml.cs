@@ -19,12 +19,23 @@ namespace Home.Ranker
         {
             var page = (Current?.CurrentItem?.CurrentItem as IShellSectionController)?.PresentedPage;
 
-            if (!(page is SetApartmentPage setAptPage)) return base.OnBackButtonPressed();
-
-            if (Current.Navigation.NavigationStack.Count > 1)
+            switch (page)
             {
-                setAptPage.NavBackImplementation();
+                case SetApartmentPage setAptPage:
+                    if (Current.Navigation.NavigationStack.Count > 1)
+                    {
+                        setAptPage.NavBackImplementation();
+                    }
+                    break;
+                case SetCriteriaPage setCriteriaPage:
+                    setCriteriaPage.NavBackImplementation();
+                    break;
+                default:
+                    return base.OnBackButtonPressed();
             }
+
+
+            
 
             return true;
 

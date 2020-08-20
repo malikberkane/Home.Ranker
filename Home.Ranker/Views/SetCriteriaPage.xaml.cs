@@ -7,6 +7,7 @@ using Home.Ranker.Models;
 using Home.Ranker.ViewModels;
 using Home.Ranker.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Home.Ranker.Views
 {
@@ -20,7 +21,7 @@ namespace Home.Ranker.Views
         public event EventHandler<CustomEventArgs> CriteriaValidated;
 
 
-        public SetCriteriaPage(Criteria criteria)
+        public SetCriteriaPage(Criteria criteria)   
         {
             InitializeComponent();
             Criteria = criteria;
@@ -45,7 +46,16 @@ namespace Home.Ranker.Views
 
         }
 
-        
+        public async void NavBackImplementation()
+        {
+            CriteriaValidated?.Invoke(this, new CustomEventArgs(Criteria));
+
+            await Shell.Current.Navigation.PopAsync();
+
+        }
+
+
+
     }
 
     public class CustomEventArgs : EventArgs

@@ -13,7 +13,6 @@ namespace Home.Ranker.Views
     public partial class HomePage : ContentPage
     {
         private HomeRankerService HomeRankerService;
-        private bool isLoading;
 
         public HomePage()
         {
@@ -30,7 +29,7 @@ namespace Home.Ranker.Views
         protected override void OnBindingContextChanged()
         {
             HomeRankerService = new HomeRankerService();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadItemsCommand = new Command(() => ExecuteLoadItemsCommand());
 
             LoadItemsCommand.Execute(null);
             MessagingCenter.Subscribe<SetApartmentPage, Apartment>(this, "AddItem", async (obj, item) =>
@@ -83,10 +82,6 @@ namespace Home.Ranker.Views
             try
             {
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Loader.IsRunning = true;
-                });
 
 
                 newPage.LoadData();
@@ -100,13 +95,7 @@ namespace Home.Ranker.Views
                 await DisplayAlert(string.Empty, ex.Message, AppResources.Ok);
             }
 
-            finally
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Loader.IsRunning = false;
-                });
-            }
+           
 
         }
 
@@ -140,10 +129,7 @@ namespace Home.Ranker.Views
 
                 try
                 {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        Loader.IsRunning = true;
-                    });
+                   
 
 
                     newPage.LoadData();
@@ -157,13 +143,7 @@ namespace Home.Ranker.Views
                     await DisplayAlert(string.Empty,ex.Message, AppResources.Ok);
                 }
 
-                finally
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        Loader.IsRunning = false; ;
-                    });
-                }
+               
 
 
 
@@ -173,19 +153,11 @@ namespace Home.Ranker.Views
 
 
 
-        public bool IsLoading
+
+
+
+        void ExecuteLoadItemsCommand()
         {
-            get => isLoading; set
-            {
-                isLoading = value;
-
-            }
-        }
-
-
-        async Task ExecuteLoadItemsCommand()
-        {
-            IsLoading = true;
 
             try
             {
@@ -218,10 +190,7 @@ namespace Home.Ranker.Views
             {
                 //Do nothing
             }
-            finally
-            {
-                IsLoading = false;
-            }
+
         }
 
         public Command LoadItemsCommand { get; set; }
